@@ -16,7 +16,7 @@ Modifications by jyohukuchan, 2026-10-06:
 - Model/index/quantization metadata and release documentation generated for
   the EXL3 pack. Source-model serving scripts are replaced by the ROCm launcher.
 
-Runtime: https://github.com/jyohukuchan/rocm_exl3
+Runtime: https://github.com/jyohukuchan/rocm_exl3_forme
 The launcher is MIT-licensed (LICENSE-code). The engine has its own MIT license;
 that code license does not replace the Apache-2.0 model license.
 

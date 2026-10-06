@@ -74,7 +74,7 @@ def main():
     metadata = {
         'source_model': 'autotrust/JEV-27B-VL',
         'source_revision': (source/'source_revision.txt').read_text().strip(),
-        'engine': 'https://github.com/jyohukuchan/rocm_exl3',
+        'engine': 'https://github.com/jyohukuchan/rocm_exl3_forme',
         'tested_engine_revision': '7675fa26cdf52fbe5a90060a69c60c752855fd8f',
         'proposed_hub_repository': args.repo_id,
         'license': 'Apache-2.0 (weights), MIT (launcher)',

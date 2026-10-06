@@ -10,6 +10,7 @@ tags:
   - exl3
   - rocm
   - rocm_exl3
+  - rocm_exl3_forme
   - jev
   - quantized
   - mixed-precision
@@ -20,7 +21,7 @@ tags:
 
 # JEV-27B-VL — EXL3 4bpw, ROCm
 
-**Use [jyohukuchan/rocm_exl3](https://github.com/jyohukuchan/rocm_exl3) for
+**Use [jyohukuchan/rocm_exl3_forme](https://github.com/jyohukuchan/rocm_exl3_forme) for
 the complete JEV System 1 decision runtime in this release.** These are EXL3
 quantized weights, not standard Transformers/vLLM weights. No hosted inference
 provider, generic EXL3 runtime compatibility, or NVIDIA execution is claimed.
@@ -59,10 +60,10 @@ logits.** `FILE_MANIFEST.json` records the release file sizes and SHA256 values.
 
 ## Run
 
-The tested engine revision is
-[`7675fa26cdf52fbe5a90060a69c60c752855fd8f`](https://github.com/jyohukuchan/rocm_exl3/tree/7675fa26cdf52fbe5a90060a69c60c752855fd8f).
+The tested runtime commit is retained unchanged in the independent repository:
+[`7675fa26cdf52fbe5a90060a69c60c752855fd8f`](https://github.com/jyohukuchan/rocm_exl3_forme/tree/7675fa26cdf52fbe5a90060a69c60c752855fd8f).
 Follow that revision's
-[ROCm build requirements](https://github.com/jyohukuchan/rocm_exl3/blob/7675fa26cdf52fbe5a90060a69c60c752855fd8f/README.md#requirements).
+[ROCm build requirements](https://github.com/jyohukuchan/rocm_exl3_forme/blob/7675fa26cdf52fbe5a90060a69c60c752855fd8f/README.md#requirements).
 Build the native extension for `gfx1030` (V620) or `gfx1201` (R9700); a standard
 PyPI ExLlamaV3 install alone does not provide this fork's JEV server. The
 validation stack used Python 3.12, PyTorch `2.12.0+rocm7.2` and a custom ROCm
@@ -74,8 +75,8 @@ After installing that engine and `fastapi`, `uvicorn`, `transformers` and
 
 ```sh
 hf download jyohukuchan/JEV-27B-VL-exl3-4bpw --local-dir ./JEV-27B-VL-exl3-4bpw
-git clone https://github.com/jyohukuchan/rocm_exl3
-cd rocm_exl3
+git clone https://github.com/jyohukuchan/rocm_exl3_forme
+cd rocm_exl3_forme
 git checkout 7675fa26cdf52fbe5a90060a69c60c752855fd8f
 # Build/install the native extension following the linked ROCm requirements.
 ulimit -n 65536
@@ -100,7 +101,7 @@ System 1 returns calibrated option probabilities for `noul`, six-level
 invokes the base reasoning model for noul/choice and mixes its result with
 System 1. The server also implements llama.cpp-style `/v1/systemone` and
 non-streaming text/image `/v1/chat/completions`.
-See the pinned [JEV runtime/API guide](https://github.com/jyohukuchan/rocm_exl3/blob/7675fa26cdf52fbe5a90060a69c60c752855fd8f/doc/jev.md)
+See the pinned [JEV runtime/API guide](https://github.com/jyohukuchan/rocm_exl3_forme/blob/7675fa26cdf52fbe5a90060a69c60c752855fd8f/doc/jev.md)
 for supported fields and limitations. Video input, streaming, tools and
 constrained output schemas are not implemented by this JEV server.
 
@@ -130,8 +131,8 @@ cap; prompts span 388–532 tokens. Timing includes image preprocessing, vision,
 language inference, probability readout and HTTP; model loading, browser
 rendering and PNG encoding are excluded. It is not directly comparable to the
 upstream README's 260 ms because its serving/image/concurrency conditions differ.
-See [full raw latency evidence](https://github.com/jyohukuchan/rocm_exl3/tree/7675fa26cdf52fbe5a90060a69c60c752855fd8f/doc/jev_latency_20261006)
-and [BF16 fidelity evidence](https://github.com/jyohukuchan/rocm_exl3/tree/7675fa26cdf52fbe5a90060a69c60c752855fd8f/doc/jev_validation).
+See [full raw latency evidence](https://github.com/jyohukuchan/rocm_exl3_forme/tree/7675fa26cdf52fbe5a90060a69c60c752855fd8f/doc/jev_latency_20261006)
+and [BF16 fidelity evidence](https://github.com/jyohukuchan/rocm_exl3_forme/tree/7675fa26cdf52fbe5a90060a69c60c752855fd8f/doc/jev_validation).
 
 These are bounded regression and synthetic-task checks. Broad quality,
 recalibration, reasoning quality and maximum context are not established for
