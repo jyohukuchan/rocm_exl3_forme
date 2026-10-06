@@ -1,26 +1,33 @@
 
-# <img src="doc/cat.png" width="40"> ExLlamaV3 — ROCm / RDNA fork (experimental V620 branch)
+# <img src="doc/cat.png" width="40"> rocm_exl3_forme — EXL3 inference and quantization for ROCm
 
-This repository is an **experimental branch of the ROCm fork of
-[ExLlamaV3](https://github.com/turboderp-org/exllamav3)** by turboderp. Ancestry:
+**rocm_exl3_forme** is a personally maintained, experimental EXL3 engine for
+AMD GPUs. Work here covers V620 tensor-parallel inference, MTP, RAM-offloaded
+Engram, Qwen3.8 architecture support, quantization, quality/latency evaluation,
+and native JEV text/vision decisions on V620 and R9700.
+
+This standalone project derives from
+[ExLlamaV3](https://github.com/turboderp-org/exllamav3) by turboderp and
+[CarouselAether's ROCm port](https://github.com/CarouselAether/rocm_exl3).
+Project lineage:
 
 - Upstream base: [`turboderp-org/exllamav3`](https://github.com/turboderp-org/exllamav3) (tracking v1.5.0).
 - Direct parent: [`CarouselAether/rocm_exl3`](https://github.com/CarouselAether/rocm_exl3)
   at `dd7a670065f37943f09a5eeb53818f38e9751472` — the RDNA2/3/4 port this fork was branched from.
-- This repo: [`jyohukuchan/rocm_exl3`](https://github.com/jyohukuchan/rocm_exl3) — a
-  **gfx1030 (Radeon Pro V620) first** research fork. Two V620s, tensor-parallel loading, the
-  Qwen3.8-Flash-Next architecture (QSA sparse attention + PLE n-gram embeddings + 512-expert
-  MoE) and its packed MTP draft head are what has been driven hardest and measured here.
+- Previous GitHub fork: [`jyohukuchan/rocm_exl3`](https://github.com/jyohukuchan/rocm_exl3),
+  retained for historical links and upstream pull requests.
+- Active project: [`jyohukuchan/rocm_exl3_forme`](https://github.com/jyohukuchan/rocm_exl3_forme).
+  All published branches, commit history and attribution were preserved during
+  the 2026-10-06 migration.
 
 The Python package is still named `exllamav3`, so it is a drop-in for code that imports it.
 The MIT licence and all vendor notices from the parent and upstream are preserved.
 
-**Read the scope honestly:** this is a *fork of a fork*. It makes no universal AMD or CUDA
-support claims. Sections inherited from the parent/upstream are labelled where they begin;
-they describe generic ExLlamaV3 and CUDA behaviour that has **not** been revalidated on this
-branch.
+Hardware coverage is specific to the models and paths listed below. Sections
+inherited from the parent/upstream are labelled where they begin; their generic
+AMD/CUDA behavior has not all been revalidated by this project.
 
-### Supported / verified matrix (this branch)
+### Supported / verified matrix
 
 | Capability | Hardware | Status on this fork | Evidence |
 |---|---|---|---|
@@ -81,8 +88,8 @@ dependency that earlier ROCm forks required is gone.
 ### Quick start (build for gfx1030)
 
 ```sh
-git clone https://github.com/jyohukuchan/rocm_exl3
-cd rocm_exl3
+git clone https://github.com/jyohukuchan/rocm_exl3_forme
+cd rocm_exl3_forme
 
 python3 -m venv .venv
 source .venv/bin/activate
@@ -154,7 +161,8 @@ batch 2–4 long-context maximums are not established.
   validated on 2026-10-01 with TP2/RCCL, the original 3-bit MTP head, K5/V4, and
   one locked Engram RAM table at a 32,768-token API context. See the
   [server guide](rocm_tools/exl3_server/README.md).
-- Vision/multimodal remains untested on ROCm (inherited status).
+- Vision verification is model-specific: JEV-27B-VL image decisions and generation
+  are tested on V620 and R9700; see [doc/jev.md](doc/jev.md) for the measured scope.
 - Full Qwen3.8-Flash-Next target-model quantization is not validated here. Smaller
   Qwen3.5-2B full conversions on R9700 are covered by the
   [conversion study](doc/r9700_conversion_optimization.md). A limited official-source MTP
