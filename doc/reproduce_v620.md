@@ -43,8 +43,8 @@ checkpoint revision above (original 3.05 bpw pack with its packed MTP component)
 ## 2. Build
 
 ```bash
-git clone https://github.com/jyohukuchan/rocm_exl3
-cd rocm_exl3
+git clone https://github.com/jyohukuchan/rocm_exl3_forme
+cd rocm_exl3_forme
 
 python3 -m venv .venv
 source .venv/bin/activate
