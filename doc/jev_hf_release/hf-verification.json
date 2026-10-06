@@ -1,14 +1,14 @@
 {
   "repo": "jyohukuchan/JEV-27B-VL-exl3-4bpw",
   "url": "https://huggingface.co/jyohukuchan/JEV-27B-VL-exl3-4bpw",
-  "revision": "9a811e2f521a4d2436da23937a056f299f0cfd3d",
+  "revision": "dde678d36be0a4fe188e8dbd969a7660460cbd5d",
   "private": false,
   "release_files": 44,
-  "checked_file_bytes": 17445032892,
+  "checked_file_bytes": 17445033206,
   "safetensors_files": 19,
   "all_remote_sizes_and_digests_match": true,
   "downloaded_metadata_match": true,
-  "verified_utc": "2026-10-06T08:34:04.589459+00:00",
+  "verified_utc": "2026-10-06T09:07:22.566424+00:00",
   "files": [
     {
       "path": "EVALUATION_SUMMARY.json",
@@ -24,26 +24,26 @@
     },
     {
       "path": "LICENSE-code",
-      "bytes": 1065,
-      "sha256": "27a32b6263fcd96c79d3beeecf221c4366780bdf15ad51986f48650bd7369bff",
+      "bytes": 1129,
+      "sha256": "465c20dba79ed70622fb3277ef15159cacc7da41e76eea134ca2d914cc8d626f",
       "method": "Git blob SHA1"
     },
     {
       "path": "NOTICE",
-      "bytes": 1142,
-      "sha256": "99e3460769df95d9157bd47500fd27455e3e00e93ecfe204ed211a28bf7c5d6a",
+      "bytes": 1148,
+      "sha256": "d59058936a632b26a339eba481dee377b8f9d03ba2dc3a73c7ca784e7bd2fc85",
       "method": "Git blob SHA1"
     },
     {
       "path": "README.md",
-      "bytes": 7545,
-      "sha256": "5a1e6fe8ba7762b118349876550abad16c1f63e2921837236a3069ce9901097e",
+      "bytes": 7668,
+      "sha256": "a5ea82f97c49c65903557dd6469228237324e847aaba03fa6f9c67c7cdbc58dd",
       "method": "Git blob SHA1"
     },
     {
       "path": "RELEASE_METADATA.json",
-      "bytes": 606,
-      "sha256": "2cbb2395575f99020fd7456c0caa4510b6cecad3c21fd0b63e2298fd74856040",
+      "bytes": 727,
+      "sha256": "3523cbcb28b2a7d6a04fae4708962838288fadf72d349e1474e2a17ddf2badfe",
       "method": "Git blob SHA1"
     },
     {
@@ -271,7 +271,7 @@
     {
       "path": "FILE_MANIFEST.json",
       "bytes": 7054,
-      "sha256": "fe91dd349036c9b059d2755ffbff07cb95e8a330e90ce62904fca58449f8a6e3",
+      "sha256": "973a65565b71f0d7a8f58f8bc10b2ba49f1b8f773efdf3b9a928369bfacb0d17",
       "method": "Git blob SHA1"
     }
   ],

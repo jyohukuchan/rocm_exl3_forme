@@ -2,7 +2,12 @@
 
 Published on 2026-10-06:
 [jyohukuchan/JEV-27B-VL-exl3-4bpw](https://huggingface.co/jyohukuchan/JEV-27B-VL-exl3-4bpw),
-revision `9a811e2f521a4d2436da23937a056f299f0cfd3d`.
+initial revision `9a811e2f521a4d2436da23937a056f299f0cfd3d`.
+The current metadata revision is `dde678d36be0a4fe188e8dbd969a7660460cbd5d`:
+engine links now point to the independent
+[rocm_exl3_forme](https://github.com/jyohukuchan/rocm_exl3_forme) repository.
+The 19 safetensors are unchanged; only README, attribution/provenance, code
+copyright and the file manifest were updated.
 All 44 release files match the local manifest by size and LFS/Xet SHA256 or
 Git blob digest; all 19 safetensors are verified. Downloaded README/manifest/
 metadata also match, and public metadata is readable without authentication.
@@ -19,9 +24,9 @@ python -m rocm_tools.prepare_jev_hf_release \
   --repo-id jyohukuchan/JEV-27B-VL-exl3-4bpw
 ```
 
-The current staged release has 44 files, 17,445,032,892 bytes (16.247 GiB),
-and 19 hardlinked safetensors files. All 36 retained original files have the
-same SHA256 as the validated pack. The source README is archived as
+The current staged release has 44 files, 17,445,033,206 bytes (16.247 GiB),
+and 19 hardlinked safetensors files. The retained model/adapter/config assets
+have the same SHA256 as the validated pack. The source README is archived as
 `SOURCE_MODEL_CARD.md`; the new card names the EXL3 format and required ROCm
 engine, removes the source Transformers-library claim, and describes only this
 release's verified quality/latency results. Source vLLM serving scripts are not
