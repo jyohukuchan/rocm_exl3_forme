@@ -3,7 +3,7 @@ import math
 from types import SimpleNamespace
 import pytest
 import torch
-from rocm_tools.jev_runtime import JEVRuntime
+from rocm_tools.jev_runtime import JEVRuntime,parse_cache_quant
 
 
 def runtime(p1):
@@ -62,3 +62,24 @@ def test_session_keeps_cache_clearing_and_request_in_inference_mode():
         state.add_(1)
         assert state.item()==1
     assert torch.is_inference_mode_enabled()==before
+
+
+def test_cache_quantization_accepts_independent_widths_and_rejects_invalid_policy():
+    assert parse_cache_quant(None) is None
+    assert parse_cache_quant('5,4') == (5,4)
+    assert parse_cache_quant((2,8)) == (2,8)
+    for value in ['5','5,4,3','1,4','5,9','five,4',(True,4),(5,4.0)]:
+        with pytest.raises(ValueError):parse_cache_quant(value)
+
+
+def test_cache_report_reads_actual_layer_bits_and_tensor_storage():
+    class CacheLayer_quant:
+        k_bits=5;v_bits=4
+        def get_tensors(self):return [torch.zeros(16,dtype=torch.int32),torch.zeros(8,dtype=torch.float16)]
+    r=JEVRuntime.__new__(JEVRuntime);r.cache_quant=(5,4);r.context=65536
+    r.cache=SimpleNamespace(layers={0:CacheLayer_quant(),1:CacheLayer_quant()},recurrent_layers={2:object()})
+    info=r.cache_info()
+    assert info['layer_classes']=={'CacheLayer_quant':2}
+    assert info['observed_bits']==[[5,4]]
+    assert info['kv_tensor_bytes']==160
+    assert info['recurrent_layers']==1

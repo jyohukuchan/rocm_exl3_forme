@@ -11,9 +11,25 @@ import time
 import resource
 
 
+def parse_cache_quant(value):
+    """Return independent K/V widths; None preserves the FP16 baseline."""
+    if value is None:
+        return None
+    if isinstance(value, str):
+        try:
+            value = tuple(int(part.strip()) for part in value.split(','))
+        except ValueError as exc:
+            raise ValueError('cache_quant must be k_bits,v_bits in 2..8') from exc
+    if (not isinstance(value, (tuple, list)) or len(value) != 2
+            or any(type(bits) is not int or not 2 <= bits <= 8 for bits in value)):
+        raise ValueError('cache_quant must be k_bits,v_bits in 2..8')
+    return tuple(value)
+
+
 class JEVRuntime:
     def __init__(self, directory, *, context=16384, chunk_size=1024, vision=True, gpu_split=None,
-                 load_no_forward=False):
+                 load_no_forward=False, cache_quant=None):
+        self.cache_quant = parse_cache_quant(cache_quant)
         if resource.getrlimit(resource.RLIMIT_NOFILE)[0] < 4096:
             raise ValueError('JEV requires at least 4096 open files; launch with ulimit -n 65536')
         import torch
@@ -36,7 +52,12 @@ class JEVRuntime:
         self.profile = DecisionProfile.from_directory(directory,
             lambda s: self.tokenizer.encode(s).flatten().tolist())
         self.model = Model.from_config(self.config)
-        self.cache = Cache(self.model, max_num_tokens=context, max_batch_size=1)
+        cache_kwargs = {}
+        if self.cache_quant is not None:
+            from exllamav3.cache import CacheLayer_quant
+            cache_kwargs = {'layer_type': CacheLayer_quant,
+                            'k_bits': self.cache_quant[0], 'v_bits': self.cache_quant[1]}
+        self.cache = Cache(self.model, max_num_tokens=context, max_batch_size=1, **cache_kwargs)
         load_args = {'use_per_device':gpu_split} if gpu_split else {'device':'cuda:0'}
         self.model.load(**load_args, max_chunk_size=chunk_size, max_output_size=1,
                         autosplit_no_forward=load_no_forward)
@@ -62,6 +83,29 @@ class JEVRuntime:
             self.vision_model = Model.from_config(self.config, component='vision')
             self.vision_model.load(device='cuda:0', max_chunk_size=1024)
             self.config.vision_pp.max_pixels = min(self.config.vision_pp.max_pixels,262144)
+
+    def cache_info(self):
+        """Report actual resident KV tensors, not just the requested cache flags."""
+        classes, widths, byte_count = {}, set(), 0
+        sample = None
+        for layer in self.cache.layers.values():
+            name = type(layer).__name__
+            classes[name] = classes.get(name, 0) + 1
+            bits = (getattr(layer, 'k_bits', None), getattr(layer, 'v_bits', None))
+            widths.add(bits)
+            tensors = [tensor for tensor in layer.get_tensors() if tensor is not None]
+            byte_count += sum(tensor.numel()*tensor.element_size() for tensor in tensors)
+            if sample is None:
+                sample = {'class': name, 'k_bits': bits[0], 'v_bits': bits[1],
+                          'tensors': [{'shape': list(tensor.shape), 'dtype': str(tensor.dtype),
+                                       'device': str(tensor.device),
+                                       'bytes': tensor.numel()*tensor.element_size()} for tensor in tensors]}
+        return {'requested': list(self.cache_quant) if self.cache_quant else 'fp16',
+                'context': self.context, 'layer_classes': classes,
+                'observed_bits': [list(bits) for bits in sorted(widths, key=str)],
+                'kv_tensor_bytes': byte_count, 'sample': sample,
+                'recurrent_layers': len(self.cache.recurrent_layers),
+                'recurrent_quantization': 'unchanged; KV widths do not quantize GDN state'}
 
     def state_parts(self, value):
         """Preserve image/text order using the same MM embeddings as ordinary VL."""

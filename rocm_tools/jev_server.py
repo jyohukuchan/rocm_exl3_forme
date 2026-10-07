@@ -97,6 +97,8 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
     async def info():
         return {'model':model_name,'protocol':'jev27-bare-v1','max_options':len(runtime.profile.labels),
                 'temperatures':runtime.profile.temperatures,'context':runtime.context,
+                'model_max_context':getattr(getattr(runtime,'config',None),'max_position_embeddings',None),
+                'cache':runtime.cache_info() if hasattr(runtime,'cache_info') else None,
                 'thinking':['off','auto','on'],'strategies':['single','permute','tournament']}
     @app.post('/v1/decide')
     async def decide(request:Request):
@@ -152,6 +154,7 @@ def main():
     ap.add_argument('-m','--model',required=True)
     ap.add_argument('--context',type=int,default=16384)
     ap.add_argument('--chunk-size',type=int,default=1024)
+    ap.add_argument('--cache-quant',help='Quantized KV cache widths k_bits,v_bits (2..8); omit for FP16')
     ap.add_argument('--host',default='127.0.0.1')
     ap.add_argument('--port',type=int,default=3960)
     ap.add_argument('--model-name',default='jev27-local')
@@ -168,7 +171,7 @@ def main():
     import uvicorn
     split=[float(v) for v in args.gpu_split.split(',')] if args.gpu_split else None
     runtime=JEVRuntime(args.model,context=args.context,chunk_size=args.chunk_size,
-                       vision=not args.no_vision,gpu_split=split)
+                       vision=not args.no_vision,gpu_split=split,cache_quant=args.cache_quant)
     uvicorn.run(create_app(runtime,model_name=args.model_name,api_key=args.api_key),host=args.host,port=args.port)
 
 

@@ -133,6 +133,45 @@ non-streaming responses. Tools, response-format constraints and top-p/top-k
 controls are explicitly rejected; use the existing general EXL3 server when
 those features are required for ordinary generation.
 
+### Quantized KV cache and context capacity
+
+`--cache-quant k_bits,v_bits` selects independent 2..8-bit key/value caches.
+Omitting it retains the original FP16 cache. These widths apply to the
+full-attention KV layers, not to GDN recurrent state. `/v1/decide/info` reports
+the requested policy, actual layer classes/widths/resident tensor bytes, and
+`model_max_context`, so an accepted flag is not mistaken for actual quantization.
+
+On 2026-10-07, JEV's 4bpw pack completed near-limit image/text prompts on one
+R9700 using K5/V4, chunk size 1024, and the default 262144-pixel image cap:
+
+| Context | Actual input tokens | KV bytes including scales | Peak torch allocation | Prefill + answer |
+| ---: | ---: | ---: | ---: | ---: |
+| 65,536 | 65,472 | 1.25 GiB | 15.96 GiB | 62.0 s |
+| 131,072 | 131,008 | 2.50 GiB | 17.47 GiB | 163.5 s |
+| 262,144 | 262,080 | 5.00 GiB | 20.48 GiB | 492.6 s |
+
+Each prompt included one real 800x600 Minecraft PNG plus synthetic text
+padding, followed by an instruction to answer `OK`; all three returned `OK`.
+The final run left 10.79 GiB of whole-device free VRAM. Peak torch allocation
+is not total driver/device usage. The timings exclude model loading and image
+encoding. This establishes execution/capacity, not long-context task accuracy.
+The model's configured maximum is 262144; no RoPE or weight changes were made.
+All 16 full-attention cache layers were audited as `CacheLayer_quant` with
+K5/V4; the 48 GDN recurrent layers remained at their existing precision.
+
+The host-specific probe checks the R9700 UUID and single-device visibility:
+
+```sh
+python -m rocm_tools.jev_context_probe --context 262144 --cache-quant 5,4 \
+  --image /path/to/game.png --output /path/to/new-probe-directory
+```
+
+The probe raises its file-descriptor soft limit to 65536, audits the live
+cache tensors, and saves exact prompt length/hashes, generated output, memory,
+timing and source hashes. It preserves failed attempts. Run each capacity
+point in a separate process with the existing JEV server stopped to avoid
+loading two copies of the model on the same GPU.
+
 ## Validation tools
 
 `rocm_tools/jev_quality.py` creates eight frozen text/vision cases, collects an
