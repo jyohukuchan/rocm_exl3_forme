@@ -69,3 +69,13 @@ def test_thinking_mode_is_fixed_at_setup_and_used_for_later_turns(monkeypatch):
     assert flags==[True,True] and s.info()['enable_thinking'] is True
     assert state.position==12
     with pytest.raises(ValueError,match='boolean'):JEVConversation(r,'controls',enable_thinking='on')
+
+
+def test_forced_reasoning_boundary_is_committed_to_the_same_cached_ids(monkeypatch):
+    r,state,calls=make_runtime(monkeypatch)
+    r.reasoning_end_id=88;r.reasoning_close_ids=torch.tensor([[88,10]])
+    s=JEVConversation(r,'controls',enable_thinking=True)
+    out=s.append('frame',1,reasoning_budget=0)
+    assert out['reasoning_budget_reached'] is True
+    assert s.ids.tolist()==[[1,2,3,88,10,7,99,10]] and state.position==8
+    assert calls==[(3,0),(1,3),(1,4),(1,5),(2,6)]

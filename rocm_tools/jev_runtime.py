@@ -55,6 +55,9 @@ class JEVRuntime:
         generation = json.loads(generation_path.read_text()) if generation_path.exists() else {}
         eos = generation.get('eos_token_id',self.hf_tokenizer.eos_token_id or self.tokenizer.eos_token_id)
         self.eos_ids = eos if isinstance(eos,list) else [eos]
+        self.reasoning_end_id=self.hf_tokenizer.get_added_vocab().get('</think>')
+        self.reasoning_close_ids=(self.tokenizer.encode('\n</think>\n\n',encode_special_tokens=True)
+                                  if self.reasoning_end_id is not None else None)
         if decision:
             self.profile = DecisionProfile.from_directory(directory,
                 lambda s: self.tokenizer.encode(s).flatten().tolist())
@@ -280,13 +283,13 @@ class JEVRuntime:
             self.conversation=JEVConversation(self,system,enable_thinking=enable_thinking)
         return self.conversation.info()
 
-    def append_conversation(self, session_id, content, turn, max_tokens=384, temperature=0.0):
+    def append_conversation(self, session_id, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None):
         from rocm_tools.jev_conversation import ConversationConflict
         self.expire_conversation()
         if self.conversation is None or self.conversation.id!=session_id:
             raise ConversationConflict('Unknown or expired chat session')
         with self.torch.inference_mode():
-            return self.conversation.append(content,turn,max_tokens,temperature)
+            return self.conversation.append(content,turn,max_tokens,temperature,reasoning_budget=reasoning_budget)
 
     def close_conversation(self, session_id):
         from rocm_tools.jev_conversation import ConversationConflict

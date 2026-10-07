@@ -208,6 +208,16 @@ R9700 diagnostic reference paths recalled its initial marker/key on turn two
 and reported 844 cached tokens. This validates continuing thinking generation,
 not optimized MoE kernel performance or game-playing ability.
 
+Qwen templates with the native `</think>` token additionally accept
+`reasoning_budget` on an append request. The overall `max_tokens` limit still
+includes reasoning and the final answer. If the reasoning budget is reached,
+the server commits the native closing delimiter through single-token decode,
+then lets the model generate its final answer. Those formatting token IDs are
+kept in the same KV/GDN history; no state is rewound and no action JSON is
+substituted. `reasoning_budget_reached` identifies a forced boundary. Templates
+without that supported delimiter reject the budget override. An R9700 2B image
+probe with budget8 returned a complete JSON answer and consistent cached IDs.
+
 Responses include `session`, cumulative prompt length,
 `usage.prompt_tokens_details.cached_tokens`, and `usage.prefilled_tokens`.
 Turns must be consecutive; repeated/out-of-order turns return 409 without

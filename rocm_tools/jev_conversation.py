@@ -38,7 +38,7 @@ class JEVConversation:
             self.embeddings.clear()
             self.closed=True
 
-    def append(self, content, turn, max_tokens=384, temperature=0.0):
+    def append(self, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None):
         r=self.runtime;t=r.torch
         if self.closed or type(turn) is not int or turn!=self.turn+1:
             raise ConversationConflict('Session turn is closed, repeated or out of order')
@@ -46,6 +46,11 @@ class JEVConversation:
             raise ValueError('Invalid completion budget')
         if not isinstance(temperature,(int,float)) or not 0<=temperature<=2:
             raise ValueError('Invalid temperature')
+        reasoning_close=getattr(r,'reasoning_close_ids',None)
+        if reasoning_budget is not None:
+            if (not self.enable_thinking or reasoning_close is None or type(reasoning_budget) is not int
+                    or not 0<=reasoning_budget<max_tokens-32):
+                raise ValueError('Reasoning budget requires a supported thinking template and room for a final answer')
         before=self.state.position
         try:
             text,new_embeddings=r.state_parts(content)
@@ -78,14 +83,25 @@ class JEVConversation:
             for start,end in chunks:
                 if end<new_ids.shape[-1]:r.model.prefill(new_ids[:,start:end],params())
                 else:logits=r.model.forward(new_ids[:,start:end],params())[0,-1].float()
-            tokens=[];reason='length'
-            for _ in range(max_tokens):
+            tokens=[];reason='length';in_thought=self.enable_thinking;budget_reached=False
+            while len(tokens)<max_tokens:
+                if reasoning_budget is not None and in_thought and len(tokens)>=reasoning_budget:
+                    forced=reasoning_close.flatten().tolist()
+                    if len(tokens)+len(forced)>=max_tokens:raise ValueError('No room for reasoning boundary')
+                    # Use ordinary single-token decode for injected formatting;
+                    # keep exact state positions without a new short-prefill path.
+                    for forced_token in forced:
+                        forced_id=t.tensor([[forced_token]],dtype=t.long)
+                        logits=r.model.forward(forced_id,params())[0,-1].float()
+                        tokens.append(forced_token)
+                    in_thought=False;budget_reached=True
                 logits=logits[:r.tokenizer.actual_vocab_size]
                 if not bool(t.isfinite(logits).all()):raise RuntimeError('Non-finite session logits')
                 token=(int(logits.argmax()) if temperature==0 else int(t.multinomial(t.softmax(logits/temperature,dim=-1),1)))
                 if token in r.eos_ids:
                     reason='stop';break
                 tokens.append(token)
+                if token==getattr(r,'reasoning_end_id',None):in_thought=False
                 ids=t.tensor([[token]],dtype=t.long)
                 logits=r.model.forward(ids,params())[0,-1].float()
             if reason=='length':
@@ -100,6 +116,7 @@ class JEVConversation:
             self.turn=turn;self.last_activity=time.monotonic()
             answer=r.tokenizer.decode(generated[0],decode_special_tokens=True) if tokens else ''
             return {'text':answer,'finish_reason':reason,'session':self.info(),
+                    'reasoning_budget':reasoning_budget,'reasoning_budget_reached':budget_reached,
                     'usage':{'prompt_tokens':input_end,'completion_tokens':len(tokens),
                              'total_tokens':input_end+len(tokens),
                              'prompt_tokens_details':{'cached_tokens':before},

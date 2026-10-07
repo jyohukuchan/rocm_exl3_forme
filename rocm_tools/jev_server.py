@@ -166,10 +166,11 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
     async def append_session(session_id:str,request:Request):
         body=await body_of(request)
         out=await run(runtime.append_conversation,session_id,body.get('content'),body.get('turn'),
-                      max_tokens=body.get('max_tokens',384),temperature=body.get('temperature',0))
+                      max_tokens=body.get('max_tokens',384),temperature=body.get('temperature',0),reasoning_budget=body.get('reasoning_budget'))
         return {'model':model_name,'choices':[{'index':0,'message':{'role':'assistant','content':out['text']},
                 'finish_reason':out['finish_reason']}],'usage':out['usage'],'session':out['session'],
                 'input_images_added':out['input_images_added'],
+                'reasoning_budget':out.get('reasoning_budget'),'reasoning_budget_reached':out.get('reasoning_budget_reached'),
                 'image_preprocessing':out.get('image_preprocessing')}
     @app.delete('/v1/chat/sessions/{session_id}')
     async def close_session(session_id:str,request:Request):
