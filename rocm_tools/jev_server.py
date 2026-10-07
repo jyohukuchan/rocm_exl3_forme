@@ -102,6 +102,7 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
                 'decision_enabled':decision,'max_options':len(runtime.profile.labels) if decision else 0,
                 'temperatures':runtime.profile.temperatures if decision else None,'context':runtime.context,
                 'model_max_context':getattr(getattr(runtime,'config',None),'max_position_embeddings',None),
+                'chat_template_source':getattr(runtime,'chat_template_source','tokenizer'),
                 'cache':runtime.cache_info() if hasattr(runtime,'cache_info') else None,
                 'vision':runtime.vision_info() if hasattr(runtime,'vision_info') else None,
                 'chat_sessions':{'supported':hasattr(runtime,'open_conversation'),'exclusive':True,

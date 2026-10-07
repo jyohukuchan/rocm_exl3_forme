@@ -135,6 +135,36 @@ those features are required for ordinary generation.
 
 ### Generation-only checkpoints
 
+The runtime also supports KV-only models without GDN/SWA state. Their cache
+leases track position and release the slot; a missing state class on a model
+that actually has recurrent layers remains an error. Both normal generation
+and capacity-probe state allocation use this rule.
+
+For multimodal checkpoints with `chat_template.json`, the runtime uses the
+processor's native template, matching `AutoProcessor`. Some ShowUI checkpoints
+otherwise pick up an older tokenizer template that inserts an extra default
+system message. `/v1/decide/info` reports `chat_template_source`; explicit
+session instructions are still sent once and cached history is preserved.
+
+Experimental `Qwen2VLForConditionalGeneration` support adds its original
+LayerNorm, ordinary QuickGELU MLP and full vision attention, distinct from the
+Qwen2.5-VL vision tower. ShowUI's original pickle checkpoint can be exported
+to safetensors on CPU with a weights-only loader; quantized vision conversion
+is not validated. `rocm_tools.check_qwen2_vl_vision` compares the encoder
+against Transformers in separate GPU processes at two resolutions. On the
+tested ShowUI GUI image, FP16 embedding relative L2 errors were 0.0063 and
+0.0474, with FP64 cosine similarities 0.999981 and 0.998874. These are
+experimental results, not proof of numerical equivalence. ShowUI's location
+responses also changed between FP16 and 5/4-bit KV, so cache precision must
+be included in GUI accuracy comparisons.
+
+Fused unquantized projections now request FP32-to-FP16 conversion just like
+ordinary Linear loads. This is required by UI-TARS-1.5-7B's FP32 checkpoint:
+its vision QKV slices otherwise remain FP32 and fail against FP16 inputs.
+For this Qwen2.5-VL derivative, native GUI coordinates refer to the resized
+image's pixels; use `image_preprocessing[].preprocessed_size` to convert them
+to the game window. A fixed 0..1000 conversion is incorrect for this model.
+
 `--generation-only` skips the JEV adapter, calibration and decision rows so the
 same serialized chat/session server can screen ordinary EXL3 VLM checkpoints:
 

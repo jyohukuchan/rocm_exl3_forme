@@ -45,6 +45,7 @@ from .olmohybrid import OlmoHybridModel
 from .phi3 import Phi3Model
 from .qwen2 import Qwen2Model
 from .qwen2_5_vl import Qwen2_5VLModel
+from .qwen2_vl import Qwen2VLModel
 from .qwen3 import Qwen3Model
 from .qwen3_5 import Qwen3_5Model, Qwen3_5MoeModel, Qwen3_5VLModel, Qwen3_5VLMoeModel
 from .qwen4_exp import Qwen4ExpModel
@@ -114,6 +115,7 @@ ARCHITECTURES = {
         Phi3Model,
         Qwen2Model,
         Qwen2_5VLModel,
+        Qwen2VLModel,
         Qwen3Model,
         Qwen3_5Model,
         Qwen3_5MoeModel,

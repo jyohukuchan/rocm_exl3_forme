@@ -2,7 +2,7 @@ from types import SimpleNamespace
 import pytest
 import torch
 from fastapi.testclient import TestClient
-from rocm_tools.jev_runtime import JEVRuntime
+from rocm_tools.jev_runtime import JEVRuntime, apply_processor_chat_template
 from rocm_tools.jev_server import create_app
 
 
@@ -11,6 +11,29 @@ class Template:
     def apply_chat_template(self,messages,add_generation_prompt=False,**kwargs):
         result=self.bos+''.join('<'+m['role']+'>'+m['content']+self.closing for m in messages)
         return result+('<assistant>' if add_generation_prompt else '')
+
+
+def test_processor_template_removes_the_tokenizers_untrained_default_system_message(tmp_path):
+    import json
+    from tokenizers import Tokenizer
+    from tokenizers.models import WordLevel
+    from transformers import PreTrainedTokenizerFast
+    native = "{% for m in messages %}<|im_start|>{{ m['role'] }}\n{{ m['content'] }}<|im_end|>\n{% endfor %}{% if add_generation_prompt %}<|im_start|>assistant\n{% endif %}"
+    tokenizer = PreTrainedTokenizerFast(
+        tokenizer_object=Tokenizer(WordLevel({'[UNK]': 0}, unk_token='[UNK]')),
+        chat_template='<|im_start|>system\nYou are a helpful assistant.<|im_end|>\n'+native)
+    messages = [{'role':'user','content':'Locate the crafting cell'}]
+    assert 'helpful assistant' in tokenizer.apply_chat_template(messages,tokenize=False)
+    (tmp_path/'chat_template.json').write_text(json.dumps({'chat_template': native}))
+    assert apply_processor_chat_template(tokenizer,tmp_path)=='processor:chat_template.json'
+    assert tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True)==(
+        '<|im_start|>user\nLocate the crafting cell<|im_end|>\n<|im_start|>assistant\n')
+
+
+def test_absent_processor_template_preserves_tokenizer_template(tmp_path):
+    tokenizer=SimpleNamespace(chat_template='existing native template')
+    assert apply_processor_chat_template(tokenizer,tmp_path)=='tokenizer'
+    assert tokenizer.chat_template=='existing native template'
 
 
 @pytest.mark.parametrize('bos,closing',[('', '<|im_end|>\n'),('<bos>','<end_of_turn>\n')])

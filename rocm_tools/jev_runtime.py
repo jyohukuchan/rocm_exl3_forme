@@ -27,6 +27,26 @@ def parse_cache_quant(value):
     return tuple(value)
 
 
+def apply_processor_chat_template(tokenizer, directory):
+    """Honor a VL processor's template when its tokenizer has an older one.
+
+    Some Qwen2-VL checkpoints ship chat_template.json for AutoProcessor while
+    AutoTokenizer still uses tokenizer_config.json and inserts a default system
+    message. Use the same native template for stateless and continuing requests.
+    """
+    path = Path(directory) / 'chat_template.json'
+    if not path.exists():
+        return 'tokenizer'
+    template = json.loads(path.read_text())['chat_template']
+    if not (isinstance(template, str) and template.strip() or
+            isinstance(template, dict) and template and
+            all(isinstance(k, str) and isinstance(v, str) and v.strip()
+                for k, v in template.items())):
+        raise ValueError('Invalid processor chat template metadata')
+    tokenizer.chat_template = template
+    return 'processor:chat_template.json'
+
+
 class JEVRuntime:
     def __init__(self, directory, *, context=16384, chunk_size=1024, vision=True, gpu_split=None,
                  load_no_forward=False, cache_quant=None, decision=True, vision_max_pixels=262144):
@@ -51,6 +71,7 @@ class JEVRuntime:
             raise ValueError('Context must be a multiple of 256 within the model limit')
         self.tokenizer = Tokenizer.from_config(self.config)
         self.hf_tokenizer = AutoTokenizer.from_pretrained(directory)
+        self.chat_template_source = apply_processor_chat_template(self.hf_tokenizer, directory)
         generation_path=self.directory/'generation_config.json'
         generation = json.loads(generation_path.read_text()) if generation_path.exists() else {}
         eos = generation.get('eos_token_id',self.hf_tokenizer.eos_token_id or self.tokenizer.eos_token_id)

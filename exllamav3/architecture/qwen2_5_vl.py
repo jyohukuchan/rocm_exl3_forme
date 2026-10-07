@@ -39,7 +39,7 @@ class Qwen2_5VLConfig(Config):
     ):
         super().__init__(
             directory,
-            {"text": Qwen2_5VLModel, "vision": Qwen2_5VLVisionModel},
+            kwargs.pop("model_classes", {"text": Qwen2_5VLModel, "vision": Qwen2_5VLVisionModel}),
             **kwargs
         )
 
@@ -71,7 +71,7 @@ class Qwen2_5VLConfig(Config):
 
         # Vision model settings
         read_vision_config = self.read_cfg(dict, "vision_config", no_default)
-        self.vision = read_qwen2_5_vl_vision_config(read_vision_config)
+        self.vision = self.read_vision_config(read_vision_config)
 
         prep_path = os.path.join(self.directory, "preprocessor_config.json")
         with open(prep_path, encoding = "utf8") as f:
@@ -80,6 +80,9 @@ class Qwen2_5VLConfig(Config):
 
         self.vision_start_token_id = self.read_cfg(int, "vision_start_token_id", 151652)
         self.vision_end_token_id = self.read_cfg(int, "vision_end_token_id", 151653)
+
+    def read_vision_config(self, config_dict):
+        return read_qwen2_5_vl_vision_config(config_dict)
 
 
 def read_qwen2_5_vl_vision_config(config_dict: dict):
@@ -402,12 +405,7 @@ class Qwen2_5VLVisionModel(Model):
             v.spatial_merge_size,
             v.rope_theta
         )
-        window_index, window_cu_seqlens = get_qwen2_window_index(
-            [grid_thw],
-            v.window_size,
-            v.spatial_merge_size,
-            v.patch_size
-        )
+        window_index, window_cu_seqlens = self.image_attention_layout(grid_thw)
         window_cu_seqlens = torch.unique_consecutive(torch.tensor(window_cu_seqlens, dtype = torch.int))
         max_seqlen = (window_cu_seqlens[1:] - window_cu_seqlens[:-1]).max().item()
         params = {
@@ -452,6 +450,10 @@ class Qwen2_5VLVisionModel(Model):
             mmes.append(mme)
 
         return mmes if return_batch else mmes[0]
+
+    def image_attention_layout(self, grid_thw):
+        v=self.config.vision
+        return get_qwen2_window_index([grid_thw],v.window_size,v.spatial_merge_size,v.patch_size)
 
 
     @override

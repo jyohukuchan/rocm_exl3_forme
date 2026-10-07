@@ -331,13 +331,24 @@ class Cache:
         self.recurrent_layers[layer_instance].free()
 
 
+    def _state_class(self):
+        state_cls = self.recurrent_state_cls
+        if state_cls is None:
+            from .state import KVState
+            if self.recurrent_layers:
+                raise ValueError('Recurrent model has no state class')
+            state_cls = KVState
+        return state_cls
+
+
     def get_new_state(self):
         """
         Allocate a new, empty state
         """
         assert len(self.free_list) > 0, "Cannot create new state: no available slots"
+        state_cls = self._state_class()
         handle = self.free_list.popleft()
-        return self.recurrent_state_cls(
+        return state_cls(
             self,
             handle,
             0,
@@ -351,8 +362,9 @@ class Cache:
         not be a valid recurrent state for the model.
         """
         assert len(self.free_list) > 0, "Cannot create new state: no available slots"
+        state_cls = self._state_class()
         handle = self.free_list.popleft()
-        return self.recurrent_state_cls(
+        return state_cls(
             self,
             handle,
             position,

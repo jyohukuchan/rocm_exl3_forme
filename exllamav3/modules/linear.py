@@ -247,7 +247,8 @@ class Linear(Module):
                 self.device,
                 transpose = self.transpose_fused_weights,
                 no_defer = True,
-                fidx = self.fidx
+                fidx = self.fidx,
+                float2half = True,
             )
             if weight.dtype in (torch.float8_e4m3fn, torch.float8_e5m2):
                 # fp8 batch tensor (Mistral-Small-4): per-expert scalar scale stored as
@@ -344,7 +345,8 @@ class Linear(Module):
             weight = self.config.stc.get_tensor(
                 self.fkey + ".weight",
                 self.device,
-                no_defer = True
+                no_defer = True,
+                float2half = True,
             )
             # Fused checkpoint tensor in FP8/FP4-block form (DeepSeek-V4 wo_a): dequantize the
             # whole tensor before slicing out this group's rows
