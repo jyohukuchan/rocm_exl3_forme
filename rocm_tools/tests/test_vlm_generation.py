@@ -2,7 +2,7 @@ from types import SimpleNamespace
 import pytest
 import torch
 from fastapi.testclient import TestClient
-from rocm_tools.jev_runtime import JEVRuntime, apply_processor_chat_template
+from rocm_tools.jev_runtime import JEVRuntime, apply_processor_chat_template, native_reasoning_boundary
 from rocm_tools.jev_server import create_app
 
 
@@ -11,6 +11,14 @@ class Template:
     def apply_chat_template(self,messages,add_generation_prompt=False,**kwargs):
         result=self.bos+''.join('<'+m['role']+'>'+m['content']+self.closing for m in messages)
         return result+('<assistant>' if add_generation_prompt else '')
+
+
+def test_reasoning_boundaries_follow_the_models_native_thought_delimiter():
+    qwen=SimpleNamespace(get_added_vocab=lambda:{'</think>':88})
+    gemma=SimpleNamespace(get_added_vocab=lambda:{'<|channel>':98,'<channel|>':99})
+    assert native_reasoning_boundary(qwen)==(88,'\n</think>\n\n','qwen_think')
+    assert native_reasoning_boundary(gemma)==(99,'<channel|>\n','gemma_thought_channel')
+    assert native_reasoning_boundary(SimpleNamespace(get_added_vocab=lambda:{}))==(None,None,None)
 
 
 def test_processor_template_removes_the_tokenizers_untrained_default_system_message(tmp_path):

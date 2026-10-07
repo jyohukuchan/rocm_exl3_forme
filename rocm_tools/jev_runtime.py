@@ -47,6 +47,15 @@ def apply_processor_chat_template(tokenizer, directory):
     return 'processor:chat_template.json'
 
 
+def native_reasoning_boundary(tokenizer):
+    vocabulary=tokenizer.get_added_vocab()
+    if '</think>' in vocabulary:
+        return vocabulary['</think>'],'\n</think>\n\n','qwen_think'
+    if '<channel|>' in vocabulary and '<|channel>' in vocabulary:
+        return vocabulary['<channel|>'],'<channel|>\n','gemma_thought_channel'
+    return None,None,None
+
+
 class JEVRuntime:
     def __init__(self, directory, *, context=16384, chunk_size=1024, vision=True, gpu_split=None,
                  load_no_forward=False, cache_quant=None, decision=True, vision_max_pixels=262144):
@@ -76,9 +85,9 @@ class JEVRuntime:
         generation = json.loads(generation_path.read_text()) if generation_path.exists() else {}
         eos = generation.get('eos_token_id',self.hf_tokenizer.eos_token_id or self.tokenizer.eos_token_id)
         self.eos_ids = eos if isinstance(eos,list) else [eos]
-        self.reasoning_end_id=self.hf_tokenizer.get_added_vocab().get('</think>')
-        self.reasoning_close_ids=(self.tokenizer.encode('\n</think>\n\n',encode_special_tokens=True)
-                                  if self.reasoning_end_id is not None else None)
+        self.reasoning_end_id,reasoning_close,self.reasoning_boundary=native_reasoning_boundary(self.hf_tokenizer)
+        self.reasoning_close_ids=(self.tokenizer.encode(reasoning_close,encode_special_tokens=True)
+                                  if reasoning_close is not None else None)
         if decision:
             self.profile = DecisionProfile.from_directory(directory,
                 lambda s: self.tokenizer.encode(s).flatten().tolist())

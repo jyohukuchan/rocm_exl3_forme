@@ -260,6 +260,13 @@ probe with budget8 returned a complete JSON answer and consistent cached IDs.
 
 Responses include `session`, cumulative prompt length,
 `usage.prompt_tokens_details.cached_tokens`, and `usage.prefilled_tokens`.
+
+The bounded-thinking session path supports Qwen's `</think>` and Gemma's native
+`<channel|>` thought-channel closure. `/v1/decide/info.reasoning_boundary`
+identifies the selected format. The same per-token cache advancement is used:
+after the requested reasoning budget, commit only the model-native formatting
+boundary, then let the model generate the final answer. No action is supplied
+by the boundary insertion; `reasoning_budget_reached` reports the intervention.
 Turns must be consecutive; repeated/out-of-order turns return 409 without
 advancing the state. A truncated answer or partial inference failure invalidates
 the session rather than trying to rewind destructive GDN updates.
