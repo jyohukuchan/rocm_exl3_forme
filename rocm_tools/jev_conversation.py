@@ -38,7 +38,7 @@ class JEVConversation:
             self.embeddings.clear()
             self.closed=True
 
-    def append(self, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None, enable_thinking=None):
+    def append(self, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None, enable_thinking=None,response_format=None):
         r=self.runtime;t=r.torch
         if self.closed or type(turn) is not int or turn!=self.turn+1:
             raise ConversationConflict('Session turn is closed, repeated or out of order')
@@ -54,6 +54,10 @@ class JEVConversation:
             if (not thinking or reasoning_close is None or type(reasoning_budget) is not int
                     or not 0<=reasoning_budget<max_tokens-32):
                 raise ValueError('Reasoning budget requires a supported thinking template and room for a final answer')
+        constraint=None
+        if response_format is not None:
+            from rocm_tools.jev_structured import build_session_constraint
+            constraint=build_session_constraint(r,response_format,thinking)
         before=self.state.position
         try:
             text,new_embeddings=r.state_parts(content)
@@ -100,15 +104,21 @@ class JEVConversation:
                     in_thought=False;budget_reached=True
                 logits=logits[:r.tokenizer.actual_vocab_size]
                 if not bool(t.isfinite(logits).all()):raise RuntimeError('Non-finite session logits')
+                was_thought=in_thought
+                if constraint is not None and not in_thought:logits=constraint.mask(logits)
                 token=(int(logits.argmax()) if temperature==0 else int(t.multinomial(t.softmax(logits/temperature,dim=-1),1)))
                 if token in r.eos_ids:
                     reason='stop';break
                 tokens.append(token)
+                finished_constraint=constraint.accept(token) if constraint is not None and not was_thought else False
                 if token==getattr(r,'reasoning_end_id',None):in_thought=False
                 ids=t.tensor([[token]],dtype=t.long)
                 logits=r.model.forward(ids,params())[0,-1].float()
+                if finished_constraint:
+                    reason='stop';break
             if reason=='length':
                 raise ValueError('Truncated session answer; conversation invalidated')
+            structured_output=constraint.finish() if constraint is not None else None
             # Commit the canonical assistant closing delimiter, including newline,
             # so the next user fragment appends at an exact turn boundary.
             r.model.prefill(closing,params())
@@ -121,6 +131,7 @@ class JEVConversation:
             return {'text':answer,'finish_reason':reason,'session':self.info(),
                     'enable_thinking_used':thinking,
                     'reasoning_budget':reasoning_budget,'reasoning_budget_reached':budget_reached,
+                    'structured_output':structured_output,
                     'usage':{'prompt_tokens':input_end,'completion_tokens':len(tokens),
                              'total_tokens':input_end+len(tokens),
                              'prompt_tokens_details':{'cached_tokens':before},

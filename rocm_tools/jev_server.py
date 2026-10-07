@@ -104,6 +104,7 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
                 'model_max_context':getattr(getattr(runtime,'config',None),'max_position_embeddings',None),
                 'chat_template_source':getattr(runtime,'chat_template_source','tokenizer'),
                 'reasoning_boundary':getattr(runtime,'reasoning_boundary',None),
+                'session_response_formats':['json_object','json_schema'] if hasattr(runtime,'append_conversation') else [],
                 'cache':runtime.cache_info() if hasattr(runtime,'cache_info') else None,
                 'vision':runtime.vision_info() if hasattr(runtime,'vision_info') else None,
                 'chat_sessions':{'supported':hasattr(runtime,'open_conversation'),'exclusive':True,
@@ -168,12 +169,13 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
     async def append_session(session_id:str,request:Request):
         body=await body_of(request)
         out=await run(runtime.append_conversation,session_id,body.get('content'),body.get('turn'),
-                      max_tokens=body.get('max_tokens',384),temperature=body.get('temperature',0),reasoning_budget=body.get('reasoning_budget'),enable_thinking=body.get('enable_thinking'))
+                      max_tokens=body.get('max_tokens',384),temperature=body.get('temperature',0),reasoning_budget=body.get('reasoning_budget'),enable_thinking=body.get('enable_thinking'),response_format=body.get('response_format'))
         return {'model':model_name,'choices':[{'index':0,'message':{'role':'assistant','content':out['text']},
                 'finish_reason':out['finish_reason']}],'usage':out['usage'],'session':out['session'],
                 'input_images_added':out['input_images_added'],
                 'enable_thinking_used':out.get('enable_thinking_used'),
                 'reasoning_budget':out.get('reasoning_budget'),'reasoning_budget_reached':out.get('reasoning_budget_reached'),
+                'structured_output':out.get('structured_output'),
                 'image_preprocessing':out.get('image_preprocessing')}
     @app.delete('/v1/chat/sessions/{session_id}')
     async def close_session(session_id:str,request:Request):

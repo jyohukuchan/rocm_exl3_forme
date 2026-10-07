@@ -267,6 +267,25 @@ identifies the selected format. The same per-token cache advancement is used:
 after the requested reasoning budget, commit only the model-native formatting
 boundary, then let the model generate the final answer. No action is supplied
 by the boundary insertion; `reasoning_budget_reached` reports the intervention.
+
+Append-only requests now accept `response_format` with `json_object` or
+`json_schema`. This reuses the existing EXL3 LLGuidanceFilter and its native
+packed token mask; it adds no second model copy or new parser dependency.
+Only the final response is constrained. Natural/forced thought boundaries
+advance the same KV/recurrent state and are not fed as JSON characters.
+Sampled final tokens are committed normally, and the resulting payload is
+post-validated before returning `structured_output.validated: true`.
+`constrained_tokens` and `backend: native_llguidance` report actual enforcement.
+Malformed or truncated output invalidates the session and is never repaired.
+The stateless chat endpoint still rejects response_format; this extension is
+limited to the continuing-session API used by game input control.
+
+The real R9700 HTTP probe produced a schema-valid tap_key/e response and then
+a schema-valid approved/reason object with thinking on in the same session,
+reusing75 cached tokens. CPU/native-tokenizer tests also force high EOS logits
+before required enum fields and verify that the grammar masks them. These
+checks prove formatting/state continuity, not that the chosen game action or
+visual judgment is correct.
 Turns must be consecutive; repeated/out-of-order turns return 409 without
 advancing the state. A truncated answer or partial inference failure invalidates
 the session rather than trying to rewind destructive GDN updates.
