@@ -133,6 +133,43 @@ non-streaming responses. Tools, response-format constraints and top-p/top-k
 controls are explicitly rejected; use the existing general EXL3 server when
 those features are required for ordinary generation.
 
+### Generation-only checkpoints
+
+`--generation-only` skips the JEV adapter, calibration and decision rows so the
+same serialized chat/session server can screen ordinary EXL3 VLM checkpoints:
+
+```sh
+python -m rocm_tools.jev_server -m /models/qwen3.5-2b-exl3 \
+  --generation-only --model-name qwen35-2b --context 32768 --cache-quant 5,4
+```
+
+The info protocol is `exl3-vl-chat-v1`; `/v1/decide` and `/v1/systemone` return
+400 because an ordinary checkpoint has no trained decision head. Chat responses
+report `input_images` and `image_embedding_tokens` to check that images reached
+the vision encoder. This is generation support, not an emulation of JEV System 1.
+
+Session delimiters and later user fragments come from the checkpoint's own chat
+template. Cached assistant token IDs remain unchanged when a template strips
+historical thinking prefixes. Non-MRoPE models do not call the Qwen MRoPE helper;
+bidirectional image spans are kept atomic across prefill chunks. Checkpoints
+without `generation_config.json` use the tokenizer's EOS ID.
+
+On 2026-10-08, R9700 tests exercised Qwen3.5-2B EXL3 with quantized 5/4 KV:
+six Minecraft PNGs, actual image embeddings, and a two-turn continuing image
+conversation that recalled the initial instruction. Gemma4-26B-A4B-it EXL3
+4.10bpw also completed those probes with FP16 KV on the diagnostic reference
+paths below. Its default fused projection/expert paths abort with an HSA
+exception on this host; ordinary Gemma4 ROCm inference is **not yet validated**.
+The reference-path timing must not be presented as optimized MoE performance.
+
+For fault isolation only, `EXL3_VLM_UNFUSED_PROJECTIONS=1` disables Q/K/V and
+gate/up projection bundles after loading. Pair it with `EXL3_BC_ATTN=0` and
+`EXL3_QKV_SLICE=0` before importing EXL3 to disable graph-captured attention.
+`EXL3_VLM_REFERENCE_MOE=1` runs routed experts through individual quantized
+Linear projections. Neither switch changes the weights or substitutes a model
+answer. `EXL3_VLM_TRACE=1` logs image/prefill stages and synchronizes traced
+modules in the first language block; diagnostic synchronization perturbs timing.
+
 ### Append-only chat sessions
 
 For a continuing System 2 conversation, `POST /v1/chat/sessions` accepts a

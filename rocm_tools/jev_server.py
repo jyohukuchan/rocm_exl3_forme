@@ -97,16 +97,20 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
     async def models():return {'object':'list','data':[{'id':model_name,'object':'model','owned_by':'local'}]}
     @app.get('/v1/decide/info')
     async def info():
-        return {'model':model_name,'protocol':'jev27-bare-v1','max_options':len(runtime.profile.labels),
-                'temperatures':runtime.profile.temperatures,'context':runtime.context,
+        decision=getattr(runtime,'decision_enabled',True)
+        return {'model':model_name,'protocol':'jev27-bare-v1' if decision else 'exl3-vl-chat-v1',
+                'decision_enabled':decision,'max_options':len(runtime.profile.labels) if decision else 0,
+                'temperatures':runtime.profile.temperatures if decision else None,'context':runtime.context,
                 'model_max_context':getattr(getattr(runtime,'config',None),'max_position_embeddings',None),
                 'cache':runtime.cache_info() if hasattr(runtime,'cache_info') else None,
                 'chat_sessions':{'supported':hasattr(runtime,'open_conversation'),'exclusive':True,
                                  'active':getattr(getattr(runtime,'conversation',None),'id',None)},
-                'thinking':['off','auto','on'],'strategies':['single','permute','tournament']}
+                'thinking':['off','auto','on'] if decision else ['off','on'],
+                'strategies':['single','permute','tournament'] if decision else []}
     @app.post('/v1/decide')
     async def decide(request:Request):
         body=await body_of(request)
+        if not getattr(runtime,'decision_enabled',True):raise HTTPException(400,'Checkpoint has no trained decision head')
         unknown=set(body)-{'model','kind','state','question','options','strategy','thinking','threshold',
                           'think_budget','return_reasoning','debug','reasoning_effort'}
         if unknown:raise HTTPException(400,'Unsupported decide fields: '+', '.join(sorted(unknown)))
@@ -121,6 +125,7 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
     @app.post('/v1/systemone')
     async def systemone(request:Request):
         body=await body_of(request)
+        if not getattr(runtime,'decision_enabled',True):raise HTTPException(400,'Checkpoint has no trained decision head')
         try:questions=systemone_questions(body)
         except ValueError as exc:raise HTTPException(400,str(exc)) from exc
         def batch():
@@ -149,7 +154,8 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
                       reasoning_effort=template.get('reasoning_effort'))
         return {'id':'chatcmpl-'+uuid.uuid4().hex,'object':'chat.completion','created':int(time.time()),
                 'model':model_name,'choices':[{'index':0,'message':{'role':'assistant','content':out['text']},
-                                             'finish_reason':out['finish_reason']}],'usage':out['usage']}
+                                             'finish_reason':out['finish_reason']}],'usage':out['usage'],
+                'input_images':out.get('input_images'),'image_embedding_tokens':out.get('image_embedding_tokens')}
     @app.post('/v1/chat/sessions')
     async def open_session(request:Request):
         body=await body_of(request)
@@ -181,6 +187,7 @@ def main():
     ap.add_argument('--model-name',default='jev27-local')
     ap.add_argument('--api-key')
     ap.add_argument('--no-vision',action='store_true')
+    ap.add_argument('--generation-only',action='store_true',help='Serve ordinary VLM checkpoints without a JEV head')
     ap.add_argument('--gpu-split',help='Per-GPU weight budgets in GiB, e.g. 28,28 for layer split')
     args=ap.parse_args()
     soft,hard=resource.getrlimit(resource.RLIMIT_NOFILE)
@@ -192,7 +199,8 @@ def main():
     import uvicorn
     split=[float(v) for v in args.gpu_split.split(',')] if args.gpu_split else None
     runtime=JEVRuntime(args.model,context=args.context,chunk_size=args.chunk_size,
-                       vision=not args.no_vision,gpu_split=split,cache_quant=args.cache_quant)
+                       vision=not args.no_vision,gpu_split=split,cache_quant=args.cache_quant,
+                       decision=not args.generation_only)
     uvicorn.run(create_app(runtime,model_name=args.model_name,api_key=args.api_key),host=args.host,port=args.port)
 
 

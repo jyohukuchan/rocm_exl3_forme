@@ -1,4 +1,4 @@
-"""Exclusive append-only System 2 chat using live KV and GDN recurrent state."""
+"""Exclusive append-only VL chat using live KV and model recurrent state."""
 
 import time
 import uuid
@@ -25,7 +25,7 @@ class JEVConversation:
     def info(self):
         return {'session_id':self.id,'turn':self.turn,'cached_tokens':self.state.position,
                 'images_retained':len(self.embeddings),'closed':self.closed,
-                'state_reuse':'KV and GDN recurrent state; System 2 only',
+                'state_reuse':'KV and model recurrent state; generation only',
                 'exclusive':True}
 
     def close(self):
@@ -48,27 +48,31 @@ class JEVConversation:
             text,new_embeddings=r.state_parts(content)
             messages=([{'role':'system','content':self.system}] if self.turn==0 else [])
             messages.append({'role':'user','content':text})
-            fragment=r.hf_tokenizer.apply_chat_template(messages,tokenize=False,
-                add_generation_prompt=True,enable_thinking=False)
+            fragment=(r.render_user_delta(text) if self.turn>0 and hasattr(r,'render_user_delta') else
+                r.hf_tokenizer.apply_chat_template(messages,tokenize=False,
+                    add_generation_prompt=True,enable_thinking=False))
             # Preserve the exact previously generated token IDs. Re-tokenizing a
             # decoded assistant answer could change BPE boundaries and invalidate KV.
             new_ids=r.tokenizer.encode(fragment,encode_special_tokens=True,embeddings=new_embeddings)
-            closing=r.tokenizer.encode('<|im_end|>\n',encode_special_tokens=True)
+            closing=r.tokenizer.encode(getattr(r,'conversation_closing','<|im_end|>\n'),encode_special_tokens=True)
             input_end=before+new_ids.shape[-1]
             if input_end+max_tokens+closing.numel()>r.context:
                 raise ValueError('Conversation exceeds configured context; start a new session')
             self.embeddings.extend(new_embeddings)
             self.ids=t.cat((self.ids,new_ids),dim=1)
-            freqs=(r.model.g_rope.get_mrope_freqs(self.ids,self.embeddings,
-                    input_end+max_tokens+closing.numel())[0] if self.embeddings else None)
+            length=input_end+max_tokens+closing.numel()
+            freqs=(r.rope_frequencies(self.ids,self.embeddings,length) if hasattr(r,'rope_frequencies')
+                   else r.model.g_rope.get_mrope_freqs(self.ids,self.embeddings,length)[0] if self.embeddings else None)
             def params():
                 return {'attn_mode':'flash_attn','cache':r.cache,'past_len':self.state.position,
                         'batch_shape':(1,r.context),'recurrent_states':[self.state],
                         'loras':(),'last_tokens_only':1,'indexed_embeddings':self.embeddings,
                         'inv_freq':freqs}
             logits=None
-            for start in range(0,new_ids.shape[-1],r.chunk_size):
-                end=min(new_ids.shape[-1],start+r.chunk_size)
+            chunks=(r.prefill_chunks(new_ids,new_embeddings) if hasattr(r,'prefill_chunks')
+                    else ((start,min(new_ids.shape[-1],start+r.chunk_size))
+                          for start in range(0,new_ids.shape[-1],r.chunk_size)))
+            for start,end in chunks:
                 if end<new_ids.shape[-1]:r.model.prefill(new_ids[:,start:end],params())
                 else:logits=r.model.forward(new_ids[:,start:end],params())[0,-1].float()
             tokens=[];reason='length'

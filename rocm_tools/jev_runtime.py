@@ -1,4 +1,4 @@
-"""Serialized native EXL3 runtime for JEV System 1 and System 2.
+"""Serialized native EXL3 runtime for VL chat and optional JEV decisions.
 
 Single GPU (or single-process layer split) only: per-request adapter selection,
 separate fresh recurrent state, exact decision head, bounded cached prefill.
@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 import time
 import resource
+import os
 
 
 def parse_cache_quant(value):
@@ -28,9 +29,11 @@ def parse_cache_quant(value):
 
 class JEVRuntime:
     def __init__(self, directory, *, context=16384, chunk_size=1024, vision=True, gpu_split=None,
-                 load_no_forward=False, cache_quant=None):
+                 load_no_forward=False, cache_quant=None, decision=True):
         self.cache_quant = parse_cache_quant(cache_quant)
         self.conversation = None
+        self.decision_enabled = decision
+        self.profile = self.lora = self.head_weights = None
         if resource.getrlimit(resource.RLIMIT_NOFILE)[0] < 4096:
             raise ValueError('JEV requires at least 4096 open files; launch with ulimit -n 65536')
         import torch
@@ -47,11 +50,13 @@ class JEVRuntime:
             raise ValueError('Context must be a multiple of 256 within the model limit')
         self.tokenizer = Tokenizer.from_config(self.config)
         self.hf_tokenizer = AutoTokenizer.from_pretrained(directory)
-        generation = json.loads((self.directory/'generation_config.json').read_text())
-        eos = generation.get('eos_token_id',self.tokenizer.eos_token_id)
+        generation_path=self.directory/'generation_config.json'
+        generation = json.loads(generation_path.read_text()) if generation_path.exists() else {}
+        eos = generation.get('eos_token_id',self.hf_tokenizer.eos_token_id or self.tokenizer.eos_token_id)
         self.eos_ids = eos if isinstance(eos,list) else [eos]
-        self.profile = DecisionProfile.from_directory(directory,
-            lambda s: self.tokenizer.encode(s).flatten().tolist())
+        if decision:
+            self.profile = DecisionProfile.from_directory(directory,
+                lambda s: self.tokenizer.encode(s).flatten().tolist())
         self.model = Model.from_config(self.config)
         cache_kwargs = {}
         if self.cache_quant is not None:
@@ -60,30 +65,109 @@ class JEVRuntime:
                             'k_bits': self.cache_quant[0], 'v_bits': self.cache_quant[1]}
         self.cache = Cache(self.model, max_num_tokens=context, max_batch_size=1, **cache_kwargs)
         load_args = {'use_per_device':gpu_split} if gpu_split else {'device':'cuda:0'}
-        self.model.load(**load_args, max_chunk_size=chunk_size, max_output_size=1,
+        span_reserve=512 if self.model.caps.get('atomic_mm_prefill',False) else 0
+        self.model.load(**load_args, max_chunk_size=chunk_size+span_reserve, max_output_size=1,
                         autosplit_no_forward=load_no_forward)
         devices = {torch.device(m.device) for m in self.model if m.device is not None}
         self.device_indices = sorted({d.index if d.index is not None else torch.cuda.current_device()
                                      for d in devices if d.type=='cuda'})
-        self.lora = LoRA.from_directory(self.model, str(self.directory/'adapter_vllm'), strict=True,
-                                       dtype=torch.float32)
-        self.lora.enabled = False
-        sidecar = load_file(str(self.directory/'decision_rows.safetensors'))
-        if sidecar['token_ids'].tolist() != self.profile.all_ids:
-            raise ValueError('Decision rows and tokenizer differ')
-        head = self.model.modules[-1]
-        a, b = head.lora_a_tensors[self.lora], head.lora_b_tensors[self.lora]
-        row_ids = sidecar['token_ids'].to(head.device)
-        self.head_weights = (sidecar['base_rows'].float().T.to(head.device)
-                             + a.float() @ b.float()[:,row_ids]).contiguous()
-        if not bool(torch.isfinite(self.head_weights).all()):
-            raise ValueError('Non-finite decision head')
-        self.head_lookup = {v:i for i,v in enumerate(self.profile.all_ids)}
+        if decision:
+            self.lora = LoRA.from_directory(self.model, str(self.directory/'adapter_vllm'), strict=True,
+                                           dtype=torch.float32)
+            self.lora.enabled = False
+            sidecar = load_file(str(self.directory/'decision_rows.safetensors'))
+            if sidecar['token_ids'].tolist() != self.profile.all_ids:
+                raise ValueError('Decision rows and tokenizer differ')
+            head = self.model.modules[-1]
+            a, b = head.lora_a_tensors[self.lora], head.lora_b_tensors[self.lora]
+            row_ids = sidecar['token_ids'].to(head.device)
+            self.head_weights = (sidecar['base_rows'].float().T.to(head.device)
+                                 + a.float() @ b.float()[:,row_ids]).contiguous()
+            if not bool(torch.isfinite(self.head_weights).all()):
+                raise ValueError('Non-finite decision head')
+            self.head_lookup = {v:i for i,v in enumerate(self.profile.all_ids)}
         self.vision_model = None
         if vision:
             self.vision_model = Model.from_config(self.config, component='vision')
             self.vision_model.load(device='cuda:0', max_chunk_size=1024)
-            self.config.vision_pp.max_pixels = min(self.config.vision_pp.max_pixels,262144)
+            if hasattr(self.config.vision_pp,'max_pixels'):
+                self.config.vision_pp.max_pixels = min(self.config.vision_pp.max_pixels,262144)
+        self.conversation_closing = self.assistant_closing()
+        if os.getenv('EXL3_VLM_UNFUSED_PROJECTIONS')=='1':
+            # Diagnostic/reference path: the same individual Linear projections
+            # without pointer-batched or graph-captured projection bundles.
+            for module in self.model:
+                for attribute in ['multi_qkv','multi_kv','multi_qg']:
+                    if hasattr(module,attribute):setattr(module,attribute,None)
+                if hasattr(module,'multi_gu'):
+                    module.multi_gu=[None]*len(module.multi_gu)
+                    module.bc=None
+        if os.getenv('EXL3_VLM_REFERENCE_MOE')=='1':
+            # Isolate expert batching from the same quantized Linear weights.
+            for module in self.model:
+                if type(module).__name__=='BlockSparseMLP':
+                    module.bc=None
+                    module.support_quant_paths=False
+                    module.fused_mode_buffers=None
+        if os.getenv('EXL3_VLM_TRACE')=='1':
+            trace_modules=[]
+            for top in self.model.modules[:2]:trace_modules.extend(list(top))
+            for index,module in enumerate(trace_modules):
+                original=module.forward
+                label=f'{index}:{type(module).__name__}:{getattr(module,"key","")}'
+                def traced(*args,_original=original,_label=label,**kwargs):
+                    print('VLM module start',_label,flush=True)
+                    result=_original(*args,**kwargs)
+                    torch.cuda.synchronize()
+                    print('VLM module done',_label,flush=True)
+                    return result
+                module.forward=traced
+
+    def assistant_closing(self):
+        marker='EXL3_ASSISTANT_BOUNDARY_749c81'
+        rendered=self.hf_tokenizer.apply_chat_template([
+            {'role':'user','content':'boundary probe'}, {'role':'assistant','content':marker}],
+            tokenize=False,add_generation_prompt=False,enable_thinking=False)
+        if rendered.count(marker)!=1:raise ValueError('Cannot derive assistant boundary from chat template')
+        closing=rendered.split(marker,1)[1]
+        if not closing:raise ValueError('Chat template has no assistant closing delimiter')
+        return closing
+
+    def render_user_delta(self, content):
+        """Serialize a later user turn without repeating BOS or setup tokens."""
+        marker='EXL3_PREVIOUS_ASSISTANT_51e2d7'
+        prior=[{'role':'user','content':'EXL3_DELTA_PROBE'},{'role':'assistant','content':marker}]
+        kwargs={'tokenize':False,'enable_thinking':False}
+        after=self.hf_tokenizer.apply_chat_template(prior+[{'role':'user','content':content}],
+            add_generation_prompt=True,**kwargs)
+        if after.count(marker)!=1:raise ValueError('Cannot identify previous assistant boundary')
+        tail=after.split(marker,1)[1]
+        closing=getattr(self,'conversation_closing',None) or self.assistant_closing()
+        if not tail.startswith(closing):raise ValueError('Historical assistant closing differs from cached boundary')
+        # Some Qwen templates strip prior empty thinking tags when re-rendered.
+        # Keep the real cached assistant tokens and only take the next user tail.
+        return tail[len(closing):]
+
+    def rope_frequencies(self, ids, embeddings, length):
+        rope=getattr(self.model,'g_rope',None)
+        if not embeddings or rope is None or getattr(rope,'mrope_section',None) is None:return None
+        return rope.get_mrope_freqs(ids,list(embeddings),length)[0]
+
+    def prefill_chunks(self, ids, embeddings):
+        """Keep bidirectional vision spans atomic, including at chunk boundaries."""
+        n=ids.shape[-1];start=0
+        atomic=bool(embeddings) and self.model.caps.get('atomic_mm_prefill',False)
+        spans=[(e.first_index,e.last_index) for e in embeddings] if atomic else []
+        values=ids[0].tolist() if atomic else None
+        while start<n:
+            end=min(start+self.chunk_size,n)
+            if atomic:
+                for first,last in spans:
+                    if end<n and first<=values[end-1]<last and first<=values[end]<last:
+                        while end<n and first<=values[end]<last:end+=1
+                        break
+            yield start,end
+            start=end
 
     def cache_info(self):
         """Report actual resident KV tensors, not just the requested cache flags."""
@@ -106,7 +190,7 @@ class JEVRuntime:
                 'observed_bits': [list(bits) for bits in sorted(widths, key=str)],
                 'kv_tensor_bytes': byte_count, 'sample': sample,
                 'recurrent_layers': len(self.cache.recurrent_layers),
-                'recurrent_quantization': 'unchanged; KV widths do not quantize GDN state'}
+                'recurrent_quantization': 'unchanged; KV widths do not quantize model recurrent state'}
 
     def state_parts(self, value):
         """Preserve image/text order using the same MM embeddings as ordinary VL."""
@@ -124,7 +208,9 @@ class JEVRuntime:
                 data,_ = image_bytes(image_part,20*1024**2,False)
                 image = decode_image(data,16777216)
                 try:
+                    if os.getenv('EXL3_VLM_TRACE')=='1':print('VLM trace: vision forward start',flush=True)
                     emb = self.vision_model.get_image_embeddings(self.tokenizer,image)
+                    if os.getenv('EXL3_VLM_TRACE')=='1':print('VLM trace: vision forward done',tuple(emb.embeddings.shape),flush=True)
                 finally: image.close()
                 if not bool(self.torch.isfinite(emb.embeddings).all()):
                     raise RuntimeError('Non-finite image embeddings')
@@ -178,10 +264,12 @@ class JEVRuntime:
 
     @contextmanager
     def _session(self,prompt,embeddings=(),*,adapter=False,decision=False,reserve=0):
+        if (adapter or decision) and not self.decision_enabled:
+            raise ValueError('This checkpoint has no trained decision head; use chat generation')
         ids = self.tokenizer.encode(prompt,encode_special_tokens=True,embeddings=list(embeddings))
         n = ids.shape[-1]
         if n<1 or n+reserve>self.context: raise ValueError('Request exceeds the configured context')
-        freqs = self.model.g_rope.get_mrope_freqs(ids,list(embeddings),n+reserve)[0] if embeddings else None
+        freqs = self.rope_frequencies(ids,embeddings,n+reserve)
         state = self.cache.get_new_state()
         def params(s):
             return {'attn_mode':'flash_attn','cache':self.cache,'past_len':s,
@@ -191,8 +279,8 @@ class JEVRuntime:
                     'indexed_embeddings':list(embeddings),'inv_freq':freqs}
         try:
             logits = None
-            for s in range(0,n,self.chunk_size):
-                e = min(n,s+self.chunk_size)
+            for s,e in self.prefill_chunks(ids,embeddings):
+                if os.getenv('EXL3_VLM_TRACE')=='1':print('VLM trace: text prefill',s,e,flush=True)
                 if e<n: self.model.prefill(ids[:,s:e],params(s))
                 else: logits = self.model.forward(ids[:,s:e],params(s))[0,-1].float()
             if not bool(self.torch.isfinite(logits).all()): raise RuntimeError('Non-finite logits')
@@ -202,6 +290,7 @@ class JEVRuntime:
             state.free()
 
     def decide(self,kind,state,question,options=None,*,strategy='single'):
+        if not self.decision_enabled:raise ValueError('This checkpoint has no trained decision head; use chat generation')
         start = time.monotonic()
         text,embeddings = self.state_parts(state)
         prepared = self.profile.question(kind,question,options)
@@ -264,7 +353,10 @@ class JEVRuntime:
         kwargs={'enable_thinking':enable_thinking}
         if reasoning_effort is not None:kwargs['reasoning_effort']=reasoning_effort
         prompt=self.hf_tokenizer.apply_chat_template(plain,tokenize=False,add_generation_prompt=True,**kwargs)
-        return self.generate_prompt(prompt,embeddings,max_tokens,temperature)
+        out=self.generate_prompt(prompt,embeddings,max_tokens,temperature)
+        out['input_images']=len(embeddings)
+        out['image_embedding_tokens']=[int(e.embeddings.shape[0]) for e in embeddings]
+        return out
 
     def generate_prompt(self,prompt,embeddings,max_tokens,temperature=0.0,stop_ids=()):
         tokens=[];reason='length'
@@ -346,6 +438,6 @@ class JEVRuntime:
 
     def close(self):
         if self.conversation is not None:self.close_conversation(self.conversation.id)
-        self.lora.unload()
+        if self.lora is not None:self.lora.unload()
         if self.vision_model is not None:self.vision_model.unload()
         self.model.unload()
