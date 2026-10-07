@@ -182,6 +182,10 @@ batch 2–4 long-context maximums are not established.
   has no gfx12 encoding. The R9700 numbers needed explicit comparison adapters
   ([doc/r9700_vs_v620.md](doc/r9700_vs_v620.md)); never claim general unmodified RDNA4
   support from them.
+  Multi-row attention/GDN/MLP projection bundles and MoE expert prefill now use
+  the guarded reconstruct path on gfx12, while single-row MGEMV decode is kept.
+  Qwen3.5-35B-A3B was exercised on R9700; see
+  [dispatch and numerical verification](doc/r9700_vlm_dispatch.md).
 - **MoE 32/64-row tiles fall back to the 16-row kernel** (same numerics; slower mul1 MoE
   prefill).
 - **The batched expert-reconstruct tier is off by default** (`EXL3_ROCM_BATCH_RECON=1`).

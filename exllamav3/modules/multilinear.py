@@ -2,6 +2,18 @@ from __future__ import annotations
 import torch
 from . import Linear
 
+
+def native_projection_rows_supported(linears, rows: int, *, sliced: bool = False):
+    """Single-row GEMV is available where cooperative WMMA GEMM is not.
+
+    Sliced bundles always use cooperative GEMM, including at one row.
+    Ordinary FP16 projections have no EXL3 cooperative restriction.
+    """
+    if rows == 1 and not sliced:
+        return True
+    return all(getattr(getattr(linear, "inner", None), "cooperative_gemm_supported", True)
+               for linear in linears if linear is not None)
+
 class MultiLinear:
     def __init__(
         self,

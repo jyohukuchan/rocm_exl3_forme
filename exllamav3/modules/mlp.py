@@ -9,7 +9,7 @@ from . import Module, Linear
 from ..ext import exllamav3_ext as ext
 from ..constants import MAX_MLP_INTERMEDIATE
 from ..model.model_tp_alloc import TPAllocation
-from .multilinear import MultiLinear
+from .multilinear import MultiLinear, native_projection_rows_supported
 from ..util.tensor import g_tensor_cache
 
 MAX_BSZN = 8  # must match MAX_BSZN in exllamav3_ext/libtorch/mlp.h and block_sparse_mlp.py
@@ -738,12 +738,13 @@ class GatedMLP(Module):
 
             for s in r:
 
-                if self.bc is not None and bsz * q_len <= MAX_BSZN and not self.has_lora():
+                native_rows=native_projection_rows_supported([self.gates[s],self.ups[s],self.downs[s]],bsz*q_len)
+                if self.bc is not None and bsz * q_len <= MAX_BSZN and not self.has_lora() and native_rows:
                     d = torch.empty_like(x, dtype = out_dtype or self.out_dtype)
                     xv = x.view(1, bsz * q_len, dim)     # local view: x itself feeds every slice
                     self.bc.run_bszN(xv, d.view(xv.shape))
 
-                elif self.multi_gu[s] is None or bsz * q_len > 32 or self.has_lora():
+                elif self.multi_gu[s] is None or bsz * q_len > 32 or self.has_lora() or not native_rows:
                     g = self.gates[s].forward(x, params)
                     u = self.ups[s].forward(x, params)
                     a = torch.empty_like(u, dtype = torch.half) if self.interm_dtype != torch.half else u

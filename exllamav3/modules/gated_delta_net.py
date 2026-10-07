@@ -10,7 +10,7 @@ from ..model.model_tp_alloc import TPAllocation
 from .gated_rmsnorm import GatedRMSNorm
 from ..cache import Cache
 from ..util.tensor import g_tensor_cache
-from .multilinear import SlicedMultiLinear
+from .multilinear import SlicedMultiLinear, native_projection_rows_supported
 import os
 
 # Sliced qkv+z projection bundle at decode for the split-projection GDN (Qwen3.5 / Qwen3.8 style):
@@ -1023,7 +1023,9 @@ class GatedDeltaNet(Module):
         if (
             self.bc_split and save_state and not self.has_lora() and
             recurrent_slots is not None and
-            1 <= bsz <= _BC_MAX_BSZ and 1 <= seqlen <= _BC_MAX_QLEN
+            1 <= bsz <= _BC_MAX_BSZ and 1 <= seqlen <= _BC_MAX_QLEN and
+            native_projection_rows_supported([getattr(self,'qkv_proj',None),getattr(self,'z_proj',None),self.o_proj],bsz*seqlen) and
+            (getattr(self,'multi_qkvz',None) is None or native_projection_rows_supported(self.multi_qkvz.linears,bsz*seqlen,sliced=True))
         ):
             if self.bc.needs_configure(bsz, seqlen, save_history):
                 if self.kda:
@@ -1083,7 +1085,7 @@ class GatedDeltaNet(Module):
             else:
                 g = -decay * torch.where(gf > 20.0, gf, torch.log1p(torch.exp(gf)))
         else:
-            if getattr(self, "multi_qkvz", None) is not None and bsz * seqlen <= 32 and not self.has_lora():
+            if getattr(self, "multi_qkvz", None) is not None and bsz * seqlen <= 32 and not self.has_lora() and native_projection_rows_supported(self.multi_qkvz.linears,bsz*seqlen,sliced=True):
                 qkv, z = self.project_qkvz_sliced(x, bsz, seqlen)
             else:
                 qkv = self.qkv_proj.forward(x, params)

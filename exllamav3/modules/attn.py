@@ -6,7 +6,7 @@ from ..util.rope import RopeSettings, RoPE
 from ..util.tensor import get_for_device, to2
 from . import Module, Linear, RMSNorm, LayerNorm
 from ..constants import PAGE_SIZE
-from .multilinear import MultiLinear, SlicedMultiLinear
+from .multilinear import MultiLinear, SlicedMultiLinear, native_projection_rows_supported
 from ..ext import exllamav3_ext as ext
 from ..model.model_tp_alloc import TPAllocation
 from ..util import profile_opt
@@ -621,11 +621,11 @@ class Attention(Module):
     def project_qkv(self, x: torch.Tensor, params: dict) -> tuple:
         bsz, q_len, dim = x.shape
 
-        if self.multi_qkv is not None and bsz * q_len <= 32 and not self.has_lora():
+        if self.multi_qkv is not None and bsz * q_len <= 32 and not self.has_lora() and native_projection_rows_supported(self.multi_qkv.linears, bsz*q_len, sliced=True):
             q, k, v, g = self.project_qkv_sliced(x, bsz, q_len)
             return self.finish_qkv(q, k, v, g, bsz, q_len, params)
 
-        if self.multi_qg is None or bsz * q_len > 32 or self.has_lora():
+        if self.multi_qg is None or bsz * q_len > 32 or self.has_lora() or not native_projection_rows_supported([self.q_proj,self.g_proj],bsz*q_len):
             q = self.q_proj.forward(x, params)
             if self.interleaved_gate:
                 if self.head_dim % 8 == 0 and q.dtype == torch.half:
@@ -673,7 +673,7 @@ class Attention(Module):
             q = qg[0].view(bsz, q_len, self.num_q_heads * self.head_dim)
             g = qg[1].view(bsz, q_len, self.num_q_heads * self.head_dim)
 
-        if self.multi_kv is None or bsz * q_len > 32 or self.has_lora():
+        if self.multi_kv is None or bsz * q_len > 32 or self.has_lora() or not native_projection_rows_supported([self.k_proj,self.v_proj],bsz*q_len):
             k = self.k_proj.forward(x, params)
             v = self.v_proj.forward(x, params) if not self.use_k_as_v else k
 
@@ -1068,7 +1068,9 @@ class Attention(Module):
         # into the slot kernels, so non-causal callers like the DFlash draft graph too)
         if (
             _bc_attn_enable and non_causal_spans is None and
-            bsz <= _bc_max_bsz and seqlen <= _bc_max_qlen
+            bsz <= _bc_max_bsz and seqlen <= _bc_max_qlen and
+            native_projection_rows_supported([self.q_proj,self.k_proj,self.v_proj,self.g_proj,self.o_proj],bsz*seqlen) and
+            (self.multi_qkv is None or native_projection_rows_supported(self.multi_qkv.linears,bsz*seqlen,sliced=True))
         ):
             o = self.bc_attn_step(x, cache, params, block_table, cache_seqlens,
                                   host_seqlens = qsa_seqlens_cpu)

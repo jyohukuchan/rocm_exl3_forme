@@ -1248,18 +1248,17 @@ def apply() -> list[str]:
     # gfx12 encoding; rdna_wmma.hip.h compiles a __builtin_trap() there so the
     # comp units build, and this steer keeps the trap unreachable: clearing
     # fused_mode_buffers after load_local sets min_rows = 0 in the fused
-    # branch, so every expert falls through to the per-expert exl3 Linear
-    # path -- the same GEMM/GEMV kernels dense models run (all of which
-    # compile and select for gfx120x; verified by GPU_ARCH=gfx1201
-    # hipcc_probe --all, 2026-08-28). Correct, slower on MoE models, dense
-    # models unaffected. UNVALIDATED ON REAL RDNA4 HARDWARE -- compile-level
-    # fix only; numerics need a gfx120x tester.
+    # branch. Multi-row BC expert projections also reach that WMMA wrapper,
+    # so clear support_quant_paths for prefill and use the guarded Linear
+    # reconstruct path. Keep bc: its ROCm per-token MGEMV proxy is valid
+    # without cooperative WMMA and retains the fast decode route. Apply
+    # this only to modules resident on the unsupported device.
     # EXL3_ROCM_RDNA4_FUSED_MOE=1 skips this steer (future gfx12 WMMA port).
     if not _env_on("EXL3_ROCM_RDNA4_FUSED_MOE", False):
         try:
             import torch as _t
             _is_gfx12 = _t.cuda.is_available() and any(
-                "gfx120" in _t.cuda.get_device_properties(i).gcnArchName
+                _t.cuda.get_device_properties(i).gcnArchName.startswith("gfx12")
                 for i in range(_t.cuda.device_count()))
             if _is_gfx12:
                 from ..modules import block_sparse_mlp as _bs4
@@ -1268,7 +1267,10 @@ def apply() -> list[str]:
 
                 def _load_no_fused_gfx12(self, *args, **kwargs):
                     r = _orig_bs4_load(self, *args, **kwargs)
-                    self.fused_mode_buffers = None
+                    sample = next(iter(self.ups), None)
+                    if sample is not None and not getattr(sample.inner, "cooperative_gemm_supported", True):
+                        self.fused_mode_buffers = None
+                        self.support_quant_paths = False
                     return r
 
                 _bs4_cls.load_local = _load_no_fused_gfx12
