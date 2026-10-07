@@ -30,6 +30,7 @@ class JEVRuntime:
     def __init__(self, directory, *, context=16384, chunk_size=1024, vision=True, gpu_split=None,
                  load_no_forward=False, cache_quant=None):
         self.cache_quant = parse_cache_quant(cache_quant)
+        self.conversation = None
         if resource.getrlimit(resource.RLIMIT_NOFILE)[0] < 4096:
             raise ValueError('JEV requires at least 4096 open files; launch with ulimit -n 65536')
         import torch
@@ -135,11 +136,45 @@ class JEVRuntime:
 
     @contextmanager
     def session(self,prompt,embeddings=(),*,adapter=False,decision=False,reserve=0):
+        self.expire_conversation()
+        if getattr(self,'conversation',None) is not None:
+            from rocm_tools.jev_conversation import ConversationConflict
+            raise ConversationConflict('An exclusive chat session is active; close it before stateless/System 1 requests')
         # Cache tensors are allocated by Model.load in inference mode. State
         # clearing and the entire request must use the same thread-local mode.
         with self.torch.inference_mode():
             with self._session(prompt,embeddings,adapter=adapter,decision=decision,reserve=reserve) as session:
                 yield session
+
+    def expire_conversation(self):
+        conversation=getattr(self,'conversation',None)
+        if conversation is not None and (conversation.closed or time.monotonic()-conversation.last_activity>180):
+            with self.torch.inference_mode():conversation.close()
+            self.conversation=None
+
+    def open_conversation(self, system):
+        from rocm_tools.jev_conversation import JEVConversation,ConversationConflict
+        self.expire_conversation()
+        if self.conversation is not None:raise ConversationConflict('A chat session is already active')
+        with self.torch.inference_mode():
+            self.conversation=JEVConversation(self,system)
+        return self.conversation.info()
+
+    def append_conversation(self, session_id, content, turn, max_tokens=384, temperature=0.0):
+        from rocm_tools.jev_conversation import ConversationConflict
+        self.expire_conversation()
+        if self.conversation is None or self.conversation.id!=session_id:
+            raise ConversationConflict('Unknown or expired chat session')
+        with self.torch.inference_mode():
+            return self.conversation.append(content,turn,max_tokens,temperature)
+
+    def close_conversation(self, session_id):
+        from rocm_tools.jev_conversation import ConversationConflict
+        if self.conversation is None:return {'closed':True}
+        if self.conversation.id!=session_id:raise ConversationConflict('Session id does not match')
+        with self.torch.inference_mode():self.conversation.close()
+        self.conversation=None
+        return {'closed':True}
 
     @contextmanager
     def _session(self,prompt,embeddings=(),*,adapter=False,decision=False,reserve=0):
@@ -310,6 +345,7 @@ class JEVRuntime:
         return result
 
     def close(self):
+        if self.conversation is not None:self.close_conversation(self.conversation.id)
         self.lora.unload()
         if self.vision_model is not None:self.vision_model.unload()
         self.model.unload()

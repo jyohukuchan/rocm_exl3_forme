@@ -133,6 +133,37 @@ non-streaming responses. Tools, response-format constraints and top-p/top-k
 controls are explicitly rejected; use the existing general EXL3 server when
 those features are required for ordinary generation.
 
+### Append-only chat sessions
+
+For a continuing System 2 conversation, `POST /v1/chat/sessions` accepts a
+non-empty `system` string and returns `session_id`. Send only each new user
+content (text/image parts) to `POST /v1/chat/sessions/{session_id}` with
+`turn` starting at 1, `max_tokens`, and `temperature`. Delete that URL to close.
+The initial instruction is transmitted once. The server retains live quantized
+KV, GDN recurrent state, exact generated token IDs and image embeddings. It
+prefills only the appended user fragment and commits each assistant turn's
+closing delimiter before accepting the next turn.
+
+Responses include `session`, cumulative prompt length,
+`usage.prompt_tokens_details.cached_tokens`, and `usage.prefilled_tokens`.
+Turns must be consecutive; repeated/out-of-order turns return 409 without
+advancing the state. A truncated answer or partial inference failure invalidates
+the session rather than trying to rewind destructive GDN updates.
+
+One session exclusively owns the current single-batch cache. Stateless chat,
+System 1 and additional session creation return 409 while it is active, avoiding
+KV/adapter contamination without allocating a second copy. Info/health queries
+remain available. Idle sessions expire after 180 seconds on the next request.
+Context overflow requires a new session; automatic history compaction is not
+implemented. Session generation currently keeps thinking disabled.
+
+Two real image-bearing turns recalled a word supplied only in turn 1: turn 2
+reused 288 tokens and prefilled 262 new tokens, with both image embeddings
+retained. Three continuing Minecraft trials also kept one session each, but
+did not collect a log or craft a table: the model repeatedly maintained attack
+despite reporting no visible cracking. Cache continuity is therefore verified;
+these trials do not demonstrate successful low-level gameplay.
+
 ### Quantized KV cache and context capacity
 
 `--cache-quant k_bits,v_bits` selects independent 2..8-bit key/value caches.

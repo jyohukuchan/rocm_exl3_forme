@@ -1,7 +1,7 @@
 """Native JEV EXL3 HTTP server: calibrated decisions, TypeSafe batches and VL chat.
 
-GPU work is serialized; fresh KV/recurrent state and explicit LoRA selection
-prevent System 1 prefixes or adapters from contaminating System 2 requests.
+GPU work is serialized. Stateless calls use fresh state; exclusive System 2
+sessions retain KV/GDN state and reject competing System 1/stateless requests.
 """
 from __future__ import annotations
 import argparse
@@ -14,6 +14,7 @@ import os
 import resource
 import time
 import uuid
+from rocm_tools.jev_conversation import ConversationConflict
 
 
 def systemone_questions(body):
@@ -81,6 +82,7 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
             except asyncio.CancelledError:
                 await task
                 raise
+            except ConversationConflict as exc:raise HTTPException(409,str(exc)) from exc
             except ValueError as exc:raise HTTPException(400,str(exc)) from exc
     async def body_of(request):
         if api_key and not hmac.compare_digest(request.headers.get('authorization',''),'Bearer '+api_key):
@@ -99,6 +101,8 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
                 'temperatures':runtime.profile.temperatures,'context':runtime.context,
                 'model_max_context':getattr(getattr(runtime,'config',None),'max_position_embeddings',None),
                 'cache':runtime.cache_info() if hasattr(runtime,'cache_info') else None,
+                'chat_sessions':{'supported':hasattr(runtime,'open_conversation'),'exclusive':True,
+                                 'active':getattr(getattr(runtime,'conversation',None),'id',None)},
                 'thinking':['off','auto','on'],'strategies':['single','permute','tournament']}
     @app.post('/v1/decide')
     async def decide(request:Request):
@@ -146,6 +150,23 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
         return {'id':'chatcmpl-'+uuid.uuid4().hex,'object':'chat.completion','created':int(time.time()),
                 'model':model_name,'choices':[{'index':0,'message':{'role':'assistant','content':out['text']},
                                              'finish_reason':out['finish_reason']}],'usage':out['usage']}
+    @app.post('/v1/chat/sessions')
+    async def open_session(request:Request):
+        body=await body_of(request)
+        return await run(runtime.open_conversation,body.get('system'))
+    @app.post('/v1/chat/sessions/{session_id}')
+    async def append_session(session_id:str,request:Request):
+        body=await body_of(request)
+        out=await run(runtime.append_conversation,session_id,body.get('content'),body.get('turn'),
+                      max_tokens=body.get('max_tokens',384),temperature=body.get('temperature',0))
+        return {'model':model_name,'choices':[{'index':0,'message':{'role':'assistant','content':out['text']},
+                'finish_reason':out['finish_reason']}],'usage':out['usage'],'session':out['session'],
+                'input_images_added':out['input_images_added']}
+    @app.delete('/v1/chat/sessions/{session_id}')
+    async def close_session(session_id:str,request:Request):
+        if api_key and not hmac.compare_digest(request.headers.get('authorization',''),'Bearer '+api_key):
+            raise HTTPException(401,'Invalid API key')
+        return await run(runtime.close_conversation,session_id)
     return app
 
 
