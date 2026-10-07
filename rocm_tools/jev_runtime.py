@@ -29,7 +29,7 @@ def parse_cache_quant(value):
 
 class JEVRuntime:
     def __init__(self, directory, *, context=16384, chunk_size=1024, vision=True, gpu_split=None,
-                 load_no_forward=False, cache_quant=None, decision=True):
+                 load_no_forward=False, cache_quant=None, decision=True, vision_max_pixels=262144):
         self.cache_quant = parse_cache_quant(cache_quant)
         self.conversation = None
         self.decision_enabled = decision
@@ -46,6 +46,7 @@ class JEVRuntime:
         self.directory = Path(directory)
         self.context, self.chunk_size = context, chunk_size
         self.config = Config.from_directory(directory)
+        self.configure_vision_budget(vision_max_pixels)
         if not 256 <= context <= self.config.max_position_embeddings or context % 256:
             raise ValueError('Context must be a multiple of 256 within the model limit')
         self.tokenizer = Tokenizer.from_config(self.config)
@@ -89,9 +90,11 @@ class JEVRuntime:
         self.vision_model = None
         if vision:
             self.vision_model = Model.from_config(self.config, component='vision')
-            self.vision_model.load(device='cuda:0', max_chunk_size=1024)
-            if hasattr(self.config.vision_pp,'max_pixels'):
-                self.config.vision_pp.max_pixels = min(self.config.vision_pp.max_pixels,262144)
+            pp=self.config.vision_pp
+            patch_size=getattr(pp,'patch_size',None)
+            patch_budget=(pp.max_pixels+patch_size**2-1)//patch_size**2 if patch_size and hasattr(pp,'max_pixels') else 0
+            vision_chunk=max(1024,((patch_budget+255)//256)*256) if patch_budget else 1024
+            self.vision_model.load(device='cuda:0', max_chunk_size=vision_chunk)
         self.conversation_closing = self.assistant_closing()
         if os.getenv('EXL3_VLM_UNFUSED_PROJECTIONS')=='1':
             # Diagnostic/reference path: the same individual Linear projections
@@ -122,6 +125,37 @@ class JEVRuntime:
                     print('VLM module done',_label,flush=True)
                     return result
                 module.forward=traced
+
+    def configure_vision_budget(self, max_pixels):
+        if type(max_pixels) is not int or max_pixels<=0:
+            raise ValueError('vision_max_pixels must be a positive integer')
+        self.vision_max_pixels=max_pixels
+        pp=getattr(self.config,'vision_pp',None)
+        if pp is None or not hasattr(pp,'max_pixels'):
+            if max_pixels!=262144:
+                raise ValueError('This architecture does not expose a pixel-based vision budget')
+            return
+        if max_pixels<pp.min_pixels:
+            raise ValueError('Vision pixel budget must not be below the preprocessor minimum')
+        pp.max_pixels=min(pp.max_pixels,max_pixels)
+        if hasattr(pp,'size'):pp.size=dict(pp.size,longest_edge=pp.max_pixels)
+
+    def vision_info(self):
+        pp=getattr(self.config,'vision_pp',None)
+        return {'enabled':self.vision_model is not None,'requested_max_pixels':self.vision_max_pixels,
+                'configured_max_pixels':getattr(pp,'max_pixels',None),
+                'min_pixels':getattr(pp,'min_pixels',None),
+                'max_soft_tokens':getattr(pp,'max_soft_tokens',None)}
+
+    def image_info(self, embeddings):
+        result=[]
+        for embedding in embeddings:
+            record={'embedding_tokens':int(embedding.embeddings.shape[0])}
+            metadata=getattr(embedding,'metadata',{})
+            for key in ['original_size','preprocessed_size']:
+                if key in metadata:record[key]=[int(v) for v in metadata[key]]
+            result.append(record)
+        return result
 
     def assistant_closing(self):
         marker='EXL3_ASSISTANT_BOUNDARY_749c81'
@@ -356,6 +390,7 @@ class JEVRuntime:
         out=self.generate_prompt(prompt,embeddings,max_tokens,temperature)
         out['input_images']=len(embeddings)
         out['image_embedding_tokens']=[int(e.embeddings.shape[0]) for e in embeddings]
+        out['image_preprocessing']=self.image_info(embeddings)
         return out
 
     def generate_prompt(self,prompt,embeddings,max_tokens,temperature=0.0,stop_ids=()):

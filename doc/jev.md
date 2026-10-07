@@ -162,6 +162,22 @@ paths below. Its default fused projection/expert paths abort with an HSA
 exception on this host; ordinary Gemma4 ROCm inference is **not yet validated**.
 The reference-path timing must not be presented as optimized MoE performance.
 
+`--vision-max-pixels N` controls image detail for preprocessors exposing a pixel
+budget (including Qwen3.5). The default remains 262144; 524288 keeps an 800x600
+Minecraft screenshot close to its original size. It cannot enlarge the
+checkpoint's configured limit or go below its minimum. Architectures with a
+soft-token budget instead reject non-default pixel overrides rather than
+silently ignore them. Vision loading reserves scratch for the configured patch
+budget. `/v1/decide/info` reports the configured budget, and stateless/session
+chat responses report `image_preprocessing` with original/processed dimensions
+and actual embedding-token counts where the architecture exposes them.
+
+On R9700, Qwen3.5-2B processed the same 800x600 PNG at 576x416 (234 embedding
+tokens) with the default, and at 800x608 (475 tokens) with 524288. All six fixed
+PNG requests and a 16-turn live Minecraft session completed in both settings.
+Qwen3.5-4B BF16 also completed the six higher-detail image requests. This checks
+image transport/detail and execution; it does not establish gameplay quality.
+
 For fault isolation only, `EXL3_VLM_UNFUSED_PROJECTIONS=1` disables Q/K/V and
 gate/up projection bundles after loading. Pair it with `EXL3_BC_ATTN=0` and
 `EXL3_QKV_SLICE=0` before importing EXL3 to disable graph-captured attention.

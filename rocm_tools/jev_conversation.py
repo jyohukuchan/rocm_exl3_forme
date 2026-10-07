@@ -101,7 +101,8 @@ class JEVConversation:
                              'total_tokens':input_end+len(tokens),
                              'prompt_tokens_details':{'cached_tokens':before},
                              'prefilled_tokens':new_ids.shape[-1]},
-                    'input_images_added':len(new_embeddings)}
+                    'input_images_added':len(new_embeddings),
+                    'image_preprocessing':r.image_info(new_embeddings) if hasattr(r,'image_info') else None}
         except BaseException:
             self.close()
             raise

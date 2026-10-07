@@ -103,6 +103,7 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
                 'temperatures':runtime.profile.temperatures if decision else None,'context':runtime.context,
                 'model_max_context':getattr(getattr(runtime,'config',None),'max_position_embeddings',None),
                 'cache':runtime.cache_info() if hasattr(runtime,'cache_info') else None,
+                'vision':runtime.vision_info() if hasattr(runtime,'vision_info') else None,
                 'chat_sessions':{'supported':hasattr(runtime,'open_conversation'),'exclusive':True,
                                  'active':getattr(getattr(runtime,'conversation',None),'id',None)},
                 'thinking':['off','auto','on'] if decision else ['off','on'],
@@ -155,7 +156,8 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
         return {'id':'chatcmpl-'+uuid.uuid4().hex,'object':'chat.completion','created':int(time.time()),
                 'model':model_name,'choices':[{'index':0,'message':{'role':'assistant','content':out['text']},
                                              'finish_reason':out['finish_reason']}],'usage':out['usage'],
-                'input_images':out.get('input_images'),'image_embedding_tokens':out.get('image_embedding_tokens')}
+                'input_images':out.get('input_images'),'image_embedding_tokens':out.get('image_embedding_tokens'),
+                'image_preprocessing':out.get('image_preprocessing')}
     @app.post('/v1/chat/sessions')
     async def open_session(request:Request):
         body=await body_of(request)
@@ -167,7 +169,8 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
                       max_tokens=body.get('max_tokens',384),temperature=body.get('temperature',0))
         return {'model':model_name,'choices':[{'index':0,'message':{'role':'assistant','content':out['text']},
                 'finish_reason':out['finish_reason']}],'usage':out['usage'],'session':out['session'],
-                'input_images_added':out['input_images_added']}
+                'input_images_added':out['input_images_added'],
+                'image_preprocessing':out.get('image_preprocessing')}
     @app.delete('/v1/chat/sessions/{session_id}')
     async def close_session(session_id:str,request:Request):
         if api_key and not hmac.compare_digest(request.headers.get('authorization',''),'Bearer '+api_key):
@@ -187,6 +190,7 @@ def main():
     ap.add_argument('--model-name',default='jev27-local')
     ap.add_argument('--api-key')
     ap.add_argument('--no-vision',action='store_true')
+    ap.add_argument('--vision-max-pixels',type=int,default=262144,help='Image pixel budget for preprocessors exposing max_pixels')
     ap.add_argument('--generation-only',action='store_true',help='Serve ordinary VLM checkpoints without a JEV head')
     ap.add_argument('--gpu-split',help='Per-GPU weight budgets in GiB, e.g. 28,28 for layer split')
     args=ap.parse_args()
@@ -200,7 +204,7 @@ def main():
     split=[float(v) for v in args.gpu_split.split(',')] if args.gpu_split else None
     runtime=JEVRuntime(args.model,context=args.context,chunk_size=args.chunk_size,
                        vision=not args.no_vision,gpu_split=split,cache_quant=args.cache_quant,
-                       decision=not args.generation_only)
+                       decision=not args.generation_only,vision_max_pixels=args.vision_max_pixels)
     uvicorn.run(create_app(runtime,model_name=args.model_name,api_key=args.api_key),host=args.host,port=args.port)
 
 

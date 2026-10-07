@@ -54,3 +54,17 @@ def test_historical_think_prefix_changes_do_not_rewrite_cached_tokens():
     r=JEVRuntime.__new__(JEVRuntime);r.hf_tokenizer=StripsHistoricalThinking('','<|im_end|>\n')
     r.conversation_closing=r.assistant_closing()
     assert r.render_user_delta('second')=='<user>second<|im_end|>\n<assistant>'
+
+
+def test_vision_budget_preserves_model_bounds_and_rejects_unsupported_override():
+    r=JEVRuntime.__new__(JEVRuntime)
+    r.config=SimpleNamespace(vision_pp=SimpleNamespace(min_pixels=4096,max_pixels=1048576,size={'shortest_edge':4096,'longest_edge':1048576}))
+    r.configure_vision_budget(524288)
+    assert r.config.vision_pp.max_pixels==524288
+    assert r.config.vision_pp.size=={'shortest_edge':4096,'longest_edge':524288}
+    with pytest.raises(ValueError,match='minimum'):r.configure_vision_budget(1024)
+    r.configure_vision_budget(2097152)
+    assert r.config.vision_pp.max_pixels==524288  # Never expand a model's configured limit.
+    r.config=SimpleNamespace(vision_pp=SimpleNamespace(max_soft_tokens=280))
+    r.configure_vision_budget(262144)
+    with pytest.raises(ValueError,match='pixel-based'):r.configure_vision_budget(524288)
