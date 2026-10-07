@@ -197,9 +197,10 @@ KV, GDN recurrent state, exact generated token IDs and image embeddings. It
 prefills only the appended user fragment and commits each assistant turn's
 closing delimiter before accepting the next turn.
 
-Session setup also accepts `enable_thinking: true` (default false). This mode
-stays fixed for the session and is applied to the initial template and every
-later user fragment, while preserving the actual cached assistant token IDs.
+Session setup also accepts `enable_thinking: true` (default false). This default
+is applied to the initial template and later user fragments. An append request
+may override `enable_thinking` for that turn, while preserving the actual
+cached assistant token IDs. `enable_thinking_used` reports the selected mode.
 The completion budget includes both generated reasoning and the final answer;
 truncation still invalidates the session. The raw text retains the checkpoint's
 native reasoning delimiters so a controller can record reasoning separately
@@ -207,6 +208,15 @@ and execute only the final JSON. A real two-image Qwen3.5-35B-A3B session on the
 R9700 diagnostic reference paths recalled its initial marker/key on turn two
 and reported 844 cached tokens. This validates continuing thinking generation,
 not optimized MoE kernel performance or game-playing ability.
+
+This permits an input planner to reason over a new screenshot and a following
+GUI-location query to use an empty-thinking prefix in the same session. The
+location request need not resend the screenshot, initial bindings or old text.
+A live Qwen3.5-35B-A3B Minecraft trial completed16 control steps with15 location
+queries; every location turn reported thinking false, zero new images, and a
+nonzero cached prefix. The controller still verified the session/turn and input
+revision before applying any input. No crafting table was acquired in that
+trial; the integration check is not a claim of better game understanding.
 
 Qwen templates with the native `</think>` token additionally accept
 `reasoning_budget` on an append request. The overall `max_tokens` limit still

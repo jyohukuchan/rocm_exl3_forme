@@ -79,3 +79,16 @@ def test_forced_reasoning_boundary_is_committed_to_the_same_cached_ids(monkeypat
     assert out['reasoning_budget_reached'] is True
     assert s.ids.tolist()==[[1,2,3,88,10,7,99,10]] and state.position==8
     assert calls==[(3,0),(1,3),(1,4),(1,5),(2,6)]
+
+
+def test_grounding_turn_can_disable_thinking_without_resetting_cached_history(monkeypatch):
+    r,state,calls=make_runtime(monkeypatch);flags=[]
+    r.hf_tokenizer.apply_chat_template=lambda *a,**kw:(flags.append(kw['enable_thinking']) or 'fragment')
+    s=JEVConversation(r,'controls',enable_thinking=True)
+    first=s.append('plan',1)
+    second=s.append('locate chosen target',2,enable_thinking=False)
+    assert flags==[True,False] and second['usage']['prompt_tokens_details']['cached_tokens']==6
+    assert first['enable_thinking_used'] is True and second['enable_thinking_used'] is False
+    assert s.info()['enable_thinking'] is True and state.position==12
+    with pytest.raises(ValueError,match='boolean'):s.append('bad override',3,enable_thinking='off')
+    assert state.position==12

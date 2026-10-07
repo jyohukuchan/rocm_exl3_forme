@@ -283,13 +283,13 @@ class JEVRuntime:
             self.conversation=JEVConversation(self,system,enable_thinking=enable_thinking)
         return self.conversation.info()
 
-    def append_conversation(self, session_id, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None):
+    def append_conversation(self, session_id, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None, enable_thinking=None):
         from rocm_tools.jev_conversation import ConversationConflict
         self.expire_conversation()
         if self.conversation is None or self.conversation.id!=session_id:
             raise ConversationConflict('Unknown or expired chat session')
         with self.torch.inference_mode():
-            return self.conversation.append(content,turn,max_tokens,temperature,reasoning_budget=reasoning_budget)
+            return self.conversation.append(content,turn,max_tokens,temperature,reasoning_budget=reasoning_budget,enable_thinking=enable_thinking)
 
     def close_conversation(self, session_id):
         from rocm_tools.jev_conversation import ConversationConflict

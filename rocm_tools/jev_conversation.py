@@ -38,7 +38,7 @@ class JEVConversation:
             self.embeddings.clear()
             self.closed=True
 
-    def append(self, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None):
+    def append(self, content, turn, max_tokens=384, temperature=0.0, reasoning_budget=None, enable_thinking=None):
         r=self.runtime;t=r.torch
         if self.closed or type(turn) is not int or turn!=self.turn+1:
             raise ConversationConflict('Session turn is closed, repeated or out of order')
@@ -46,9 +46,12 @@ class JEVConversation:
             raise ValueError('Invalid completion budget')
         if not isinstance(temperature,(int,float)) or not 0<=temperature<=2:
             raise ValueError('Invalid temperature')
+        if enable_thinking is not None and type(enable_thinking) is not bool:
+            raise ValueError('enable_thinking override must be boolean')
+        thinking=self.enable_thinking if enable_thinking is None else enable_thinking
         reasoning_close=getattr(r,'reasoning_close_ids',None)
         if reasoning_budget is not None:
-            if (not self.enable_thinking or reasoning_close is None or type(reasoning_budget) is not int
+            if (not thinking or reasoning_close is None or type(reasoning_budget) is not int
                     or not 0<=reasoning_budget<max_tokens-32):
                 raise ValueError('Reasoning budget requires a supported thinking template and room for a final answer')
         before=self.state.position
@@ -56,9 +59,9 @@ class JEVConversation:
             text,new_embeddings=r.state_parts(content)
             messages=([{'role':'system','content':self.system}] if self.turn==0 else [])
             messages.append({'role':'user','content':text})
-            fragment=(r.render_user_delta(text,enable_thinking=self.enable_thinking) if self.turn>0 and hasattr(r,'render_user_delta') else
+            fragment=(r.render_user_delta(text,enable_thinking=thinking) if self.turn>0 and hasattr(r,'render_user_delta') else
                 r.hf_tokenizer.apply_chat_template(messages,tokenize=False,
-                    add_generation_prompt=True,enable_thinking=self.enable_thinking))
+                    add_generation_prompt=True,enable_thinking=thinking))
             # Preserve the exact previously generated token IDs. Re-tokenizing a
             # decoded assistant answer could change BPE boundaries and invalidate KV.
             new_ids=r.tokenizer.encode(fragment,encode_special_tokens=True,embeddings=new_embeddings)
@@ -83,7 +86,7 @@ class JEVConversation:
             for start,end in chunks:
                 if end<new_ids.shape[-1]:r.model.prefill(new_ids[:,start:end],params())
                 else:logits=r.model.forward(new_ids[:,start:end],params())[0,-1].float()
-            tokens=[];reason='length';in_thought=self.enable_thinking;budget_reached=False
+            tokens=[];reason='length';in_thought=thinking;budget_reached=False
             while len(tokens)<max_tokens:
                 if reasoning_budget is not None and in_thought and len(tokens)>=reasoning_budget:
                     forced=reasoning_close.flatten().tolist()
@@ -116,6 +119,7 @@ class JEVConversation:
             self.turn=turn;self.last_activity=time.monotonic()
             answer=r.tokenizer.decode(generated[0],decode_special_tokens=True) if tokens else ''
             return {'text':answer,'finish_reason':reason,'session':self.info(),
+                    'enable_thinking_used':thinking,
                     'reasoning_budget':reasoning_budget,'reasoning_budget_reached':budget_reached,
                     'usage':{'prompt_tokens':input_end,'completion_tokens':len(tokens),
                              'total_tokens':input_end+len(tokens),
