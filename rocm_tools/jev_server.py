@@ -161,7 +161,7 @@ def create_app(runtime,*,model_name='jev27-local',api_key=None):
     @app.post('/v1/chat/sessions')
     async def open_session(request:Request):
         body=await body_of(request)
-        return await run(runtime.open_conversation,body.get('system'))
+        return await run(runtime.open_conversation,body.get('system'),enable_thinking=body.get('enable_thinking',False))
     @app.post('/v1/chat/sessions/{session_id}')
     async def append_session(session_id:str,request:Request):
         body=await body_of(request)

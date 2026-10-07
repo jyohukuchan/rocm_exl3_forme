@@ -197,6 +197,17 @@ KV, GDN recurrent state, exact generated token IDs and image embeddings. It
 prefills only the appended user fragment and commits each assistant turn's
 closing delimiter before accepting the next turn.
 
+Session setup also accepts `enable_thinking: true` (default false). This mode
+stays fixed for the session and is applied to the initial template and every
+later user fragment, while preserving the actual cached assistant token IDs.
+The completion budget includes both generated reasoning and the final answer;
+truncation still invalidates the session. The raw text retains the checkpoint's
+native reasoning delimiters so a controller can record reasoning separately
+and execute only the final JSON. A real two-image Qwen3.5-35B-A3B session on the
+R9700 diagnostic reference paths recalled its initial marker/key on turn two
+and reported 844 cached tokens. This validates continuing thinking generation,
+not optimized MoE kernel performance or game-playing ability.
+
 Responses include `session`, cumulative prompt length,
 `usage.prompt_tokens_details.cached_tokens`, and `usage.prefilled_tokens`.
 Turns must be consecutive; repeated/out-of-order turns return 409 without

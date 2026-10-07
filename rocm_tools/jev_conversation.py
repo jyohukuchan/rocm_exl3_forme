@@ -9,9 +9,11 @@ class ConversationConflict(ValueError):
 
 
 class JEVConversation:
-    def __init__(self, runtime, system):
+    def __init__(self, runtime, system, enable_thinking=False):
         if not isinstance(system, str) or not system.strip():
             raise ValueError('A non-empty initial system instruction is required')
+        if type(enable_thinking) is not bool:raise ValueError('enable_thinking must be boolean')
+        self.enable_thinking=enable_thinking
         self.runtime=runtime
         self.id=uuid.uuid4().hex
         self.system=system
@@ -25,6 +27,7 @@ class JEVConversation:
     def info(self):
         return {'session_id':self.id,'turn':self.turn,'cached_tokens':self.state.position,
                 'images_retained':len(self.embeddings),'closed':self.closed,
+                'enable_thinking':self.enable_thinking,
                 'state_reuse':'KV and model recurrent state; generation only',
                 'exclusive':True}
 
@@ -48,9 +51,9 @@ class JEVConversation:
             text,new_embeddings=r.state_parts(content)
             messages=([{'role':'system','content':self.system}] if self.turn==0 else [])
             messages.append({'role':'user','content':text})
-            fragment=(r.render_user_delta(text) if self.turn>0 and hasattr(r,'render_user_delta') else
+            fragment=(r.render_user_delta(text,enable_thinking=self.enable_thinking) if self.turn>0 and hasattr(r,'render_user_delta') else
                 r.hf_tokenizer.apply_chat_template(messages,tokenize=False,
-                    add_generation_prompt=True,enable_thinking=False))
+                    add_generation_prompt=True,enable_thinking=self.enable_thinking))
             # Preserve the exact previously generated token IDs. Re-tokenizing a
             # decoded assistant answer could change BPE boundaries and invalidate KV.
             new_ids=r.tokenizer.encode(fragment,encode_special_tokens=True,embeddings=new_embeddings)

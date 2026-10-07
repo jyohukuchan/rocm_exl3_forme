@@ -167,11 +167,11 @@ class JEVRuntime:
         if not closing:raise ValueError('Chat template has no assistant closing delimiter')
         return closing
 
-    def render_user_delta(self, content):
+    def render_user_delta(self, content, enable_thinking=False):
         """Serialize a later user turn without repeating BOS or setup tokens."""
         marker='EXL3_PREVIOUS_ASSISTANT_51e2d7'
         prior=[{'role':'user','content':'EXL3_DELTA_PROBE'},{'role':'assistant','content':marker}]
-        kwargs={'tokenize':False,'enable_thinking':False}
+        kwargs={'tokenize':False,'enable_thinking':enable_thinking}
         after=self.hf_tokenizer.apply_chat_template(prior+[{'role':'user','content':content}],
             add_generation_prompt=True,**kwargs)
         if after.count(marker)!=1:raise ValueError('Cannot identify previous assistant boundary')
@@ -272,12 +272,12 @@ class JEVRuntime:
             with self.torch.inference_mode():conversation.close()
             self.conversation=None
 
-    def open_conversation(self, system):
+    def open_conversation(self, system, enable_thinking=False):
         from rocm_tools.jev_conversation import JEVConversation,ConversationConflict
         self.expire_conversation()
         if self.conversation is not None:raise ConversationConflict('A chat session is already active')
         with self.torch.inference_mode():
-            self.conversation=JEVConversation(self,system)
+            self.conversation=JEVConversation(self,system,enable_thinking=enable_thinking)
         return self.conversation.info()
 
     def append_conversation(self, session_id, content, turn, max_tokens=384, temperature=0.0):

@@ -59,3 +59,13 @@ def test_partial_generation_failure_invalidates_the_session(monkeypatch):
     r.model.forward=lambda *a,**kw:(_ for _ in ()).throw(RuntimeError('GPU error'))
     with pytest.raises(RuntimeError):s.append('frame',1)
     assert s.closed and state.freed
+
+
+def test_thinking_mode_is_fixed_at_setup_and_used_for_later_turns(monkeypatch):
+    r,state,calls=make_runtime(monkeypatch);flags=[]
+    r.hf_tokenizer.apply_chat_template=lambda *a,**kw:(flags.append(kw['enable_thinking']) or 'fragment')
+    s=JEVConversation(r,'controls',enable_thinking=True)
+    s.append('frame 1',1);s.append('frame 2',2)
+    assert flags==[True,True] and s.info()['enable_thinking'] is True
+    assert state.position==12
+    with pytest.raises(ValueError,match='boolean'):JEVConversation(r,'controls',enable_thinking='on')
