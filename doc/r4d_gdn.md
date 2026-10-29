@@ -44,6 +44,8 @@ Read per call, so one process can A/B FLA vs r4d chunk-for-chunk.
 
 ## Accuracy gate (R9700, 27B shapes: 16 k / 48 v / dim 128)
 
+Kernel-level vs FLA (output AND final state):
+
 | T | gate | out rel | state rel |
 |---|---|---|---|
 | 2048 | realistic | 7.8e-3 | 9.8e-3 |
@@ -51,10 +53,26 @@ Read per call, so one process can A/B FLA vs r4d chunk-for-chunk.
 | 32768 | realistic | 1.0e-2 | 8.5e-3 |
 | 2048 | adversarial span ~200 (issue #4) | ~1.0 (attenuated, finite) | ~1.0 (finite) |
 
-Realistic gates pass at rel ~1e-2 (WMMA-resident vs HBM-roundtripped
-arithmetic). The adversarial case confirms the documented behaviour: the
-midpoint-split decay (`e^80` clamps) attenuates instead of NaN -- no poison
-reaches the next chunk's state. Real-model spans (~tens) stay exact.
+The ~1e-2 floor is inherent accumulation difference (WMMA-resident fp32 vs
+HBM-roundtripped bf16 intermediates across kkt+solve+scan), not the norm: an
+external-norm ablation gives byte-identical rel (7.84e-3 both ways), i.e. the
+adapter's fp32 l2norm matches FLA's in-kernel norm. The adversarial case
+confirms the documented behaviour: the midpoint-split decay (`e^80` clamps)
+attenuates instead of NaN -- no poison reaches the next chunk's state.
+
+27B real-model gate (full-model KLD vs FLA path, paged chunked prefill;
+noise floor bit-identical 0.0):
+
+| cases | mean KLD | top-1 |
+|---|---|---|
+| cases-v1 (65-1025 tok) | 0.06-0.32 | 0.77-0.94 |
+| 32K teacher-forced (all positions) | 0.18 | 0.974 |
+
+The model-level drift far exceeds the kernel-level 1e-2: ~1% per-layer
+perturbations compound across the GDN stack (and concentrate at retrieval
+positions at 32K, same pattern as attention). Kernel-exact-ish, model drift
+needs investigation (per-layer sensitivity? state-carry amplification?) --
+not recommended for serving; stays opt-in.
 
 ## Speed (R9700, layer ms; Hessian co-resident, interleaved)
 

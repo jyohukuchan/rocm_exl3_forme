@@ -75,7 +75,7 @@ past>0 covered; noise floor bit-identical 0.0):
 | backend | mean KLD | max KLD | top-1 |
 |---|---|---|---|
 | Stage A bf16 | 0.031 | 17.1 | 0.988 |
-| (mode 2 not yet run at 32K -- pending) | | | |
+| Stage B fp8 mode 2 | 0.131 | 22.1 | 0.972 |
 
 32K chat-templated passkey needle (same 32K/21K prompts for all backends):
 
@@ -113,10 +113,13 @@ mode 1 ~1.9-2.0x, mode 2 ~2.0-2.1x, mode 3 ~2.6-2.8x over retuned fp16.
 
 At 8K attention is ~9% of prefill (linears 51%, GDN 39%), so +2% is the
 expected order -- kernel wins only move E2E where attention dominates.
-128K full prefill OOMs on 34 GB (27B + 128K KV); 32K+ chunked-path TTFTs were
-prompt-dedup-affected (pagetable reuses identical pages) and are not quoted
-as E2E numbers. Updated projections from measured kernel speedups x the
-8K/128K/1M shares (attn 9%/69%/95%):
+Full-forward E2E past 8K is impossible in this harness on 34 GB: the
+32Kx248K fp16 logits alone are a 16 GB single tensor (OOM, fundamental --
+not fragmentation). Chunked-path 32K TTFTs were measured but are not quoted:
+repetitive prompts let the pagetable dedupe pages (less real work for the
+baseline) and same-process repeats hit prefill-skip artefacts, so neither
+side is a clean A/B. 128K has the same logits wall. Updated projections from
+measured kernel speedups x the 8K/128K/1M shares (attn 9%/69%/95%):
 
 | config | 8K | 128K | 1M |
 |---|---|---|---|
