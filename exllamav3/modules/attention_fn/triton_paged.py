@@ -1684,6 +1684,55 @@ def _pick_qc_prefill_num_stages(key, launch):
     return best[1]
 
 
+_gfx_arch_cache: dict[int, str] = {}
+
+
+def _gfx_arch(device: torch.device) -> str:
+    """Per-device gfx arch string (e.g. 'gfx1201'), colon suffix stripped, cached."""
+    try:
+        idx = device.index if device.index is not None else torch.cuda.current_device()
+    except Exception:
+        return ""
+    arch = _gfx_arch_cache.get(idx)
+    if arch is not None:
+        return arch
+    try:
+        arch = str(torch.cuda.get_device_properties(idx).gcnArchName or "")
+    except Exception:
+        arch = ""
+    arch = arch.split(":", 1)[0].strip().lower()
+    _gfx_arch_cache[idx] = arch
+    return arch
+
+
+def _prefill_tile_override() -> tuple | None:
+    """EXL3_PREFILL_TILE='BM,BN,STAGES[,WARPS]' pins the fp16 prefill tile (A/B).
+
+    Read dynamically so one process can interleave baseline/retuned runs. Returns
+    (block_m, block_n, num_warps, num_stages) or None when unset. Malformed values
+    raise ValueError (fail fast rather than silently benchmarking the wrong tile).
+    """
+    raw = os.environ.get("EXL3_PREFILL_TILE", "")
+    if not raw or not raw.strip() or raw.strip().lower() in ("auto", "default"):
+        return None
+    parts = [p.strip() for p in raw.split(",") if p.strip()]
+    if len(parts) not in (3, 4):
+        raise ValueError("EXL3_PREFILL_TILE must be 'BM,BN,STAGES[,WARPS]' (e.g. '128,64,1')")
+    try:
+        vals = [int(p) for p in parts]
+    except ValueError:
+        raise ValueError("EXL3_PREFILL_TILE must be integers: 'BM,BN,STAGES[,WARPS]'")
+    if len(vals) == 3:
+        bm, bn, ns = vals
+        nw = 8
+    else:
+        bm, bn, ns, nw = vals
+    for name, v in (("BM", bm), ("BN", bn), ("STAGES", ns), ("WARPS", nw)):
+        if v <= 0 or (name in ("BM", "BN", "WARPS") and (v & (v - 1)) != 0):
+            raise ValueError(f"EXL3_PREFILL_TILE {name} must be a positive power of two, got {v}")
+    return (bm, bn, nw, ns)
+
+
 def paged_attn_triton_prefill(
     q: torch.Tensor,
     k: torch.Tensor | None,
@@ -1842,11 +1891,26 @@ def paged_attn_triton_prefill(
     #
     # If retuning these for RDNA, hold block_m / num_warps == 16 (one WMMA 16x16 fragment row
     # per warp). Off-ratio configs measured up to 4x slower.
+    #
+    # Retuned fp16 prefill tile (Round-4 / r4d-explore): on gfx1201 (RDNA4, R9700) with
+    # head_dim 256 the default is BM128/BN64/1 wave-8 stage-1, ~1.5x over BM64/BN32/S2
+    # (e.g. 32K/2K 38.4 -> 24.5 ms, 128K/8K 626 -> 404 ms). BN64 requires num_stages=1:
+    # BN64/S2 exceeds LDS and fails to launch, BM256 OOMs/spills. Other arches keep the
+    # narrow tile (V620/gfx1030 measured slower or LDS-tight there). Pinned per call via
+    # EXL3_PREFILL_TILE="BM,BN,STAGES[,WARPS]" (e.g. "128,64,1", "64,32,2,8"); explicit
+    # block_m/block_n/num_warps/num_stages arguments still win over both.
     narrow_kv = _is_rocm or torch.cuda.get_device_capability(q.device)[0] >= 10
-    if hd_pad <= 128:
+    _tile_env = _prefill_tile_override()
+    if _tile_env is not None:
+        cfg = _tile_env
+    elif hd_pad <= 128:
         cfg = (128, 32, 8, 2) if narrow_kv else (128, 64, 8, 2)
     elif hd_pad <= 256:
-        cfg = (64, 32, 8, 2)
+        _arch = _gfx_arch(q.device)
+        if _arch.startswith("gfx12"):
+            cfg = (128, 64, 8, 1)
+        else:
+            cfg = (64, 32, 8, 2)
     else:
         cfg = (32, 16, 4, 2)
     num_stages_forced = num_stages is not None

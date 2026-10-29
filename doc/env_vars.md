@@ -128,6 +128,17 @@ Comma-separated ablations for the `EXL3_ATTN_INT8FP8` mode: `nosmooth`
 whole window instead of per-block scales), `fp16pv` (keep P@V in fp16).
 Testing/diagnosis only.
 
+### `EXL3_PREFILL_TILE` (default: empty = per-arch default)
+
+Pins the fp16 paged-prefill Triton tile for A/B: `BM,BN,STAGES[,WARPS]`
+(e.g. `128,64,1` or `64,32,2,8`; warps default to 8). Read on every prefill
+dispatch, so one process can interleave baseline/retuned runs. `auto`/empty
+selects the per-arch default: gfx1201 (R9700) with head_dim 256 uses
+BM128/BN64/stage-1 (~1.5x over BM64/BN32/S2 at 27B shapes); other arches
+(incl. gfx1030/V620, where the wide tile is 2-3x slower) keep BM64/BN32/S2.
+BN64 requires stage-1 (BN64/S2 exceeds LDS); BM256 OOMs/spills. Explicit
+`block_m/block_n/num_warps/num_stages` arguments still win over both.
+
 ## Linear attention (GDN / KDA)
 
 ### `EXL3_RDNA2_GDN_CHUNK` (default: `0`)
