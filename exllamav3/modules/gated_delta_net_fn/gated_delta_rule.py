@@ -222,6 +222,26 @@ def gated_delta_rule_fn(
         core_attn_out = []
         for i, s in enumerate(recurrent_slots_cpu.tolist()):
             state = recurrent_state[s, 0].unsqueeze(0) if recurrent_state is not None else None
+            # Opt-in r4d GDN chunk (kkt_solve + chunk_scan), same inputs/outputs/state
+            # semantics as the FLA call below; declines (None) when disabled or
+            # unsupported so the default path is bit-for-bit unchanged.
+            r4d_out = None
+            try:
+                from .r4d_gdn import fn_r4d_gdn_chunk
+                r4d_out = fn_r4d_gdn_chunk(
+                    q[i:i + 1], k[i:i + 1], v[i:i + 1],
+                    g = g[i:i + 1],
+                    beta = beta[i:i + 1],
+                    h0_kv = state,
+                )
+            except Exception:
+                r4d_out = None
+            if r4d_out is not None:
+                core_attn, new_state = r4d_out
+                if save_state and state is not None:
+                    state.copy_(new_state)
+                core_attn_out.append(core_attn)
+                continue
             core_attn, new_state = chunk_gated_delta_rule(
                 q[i:i + 1], k[i:i + 1], v[i:i + 1],
                 g = g[i:i + 1],

@@ -181,6 +181,17 @@ flips NVIDIA or RDNA3+ away from the chunk kernels, and the KDA branch is not ga
 variable is read at every long-prefill dispatch point, before any device query, so it also
 short-circuits the probe.
 
+### `EXL3_R4D_GDN` (default: `0`)
+
+Set to `1` to run long-prefill GDN chunks through libr4d's `kkt_solve` +
+`chunk_scan` kernels instead of the vendored FLA chunk kernel (27B GDN
+shapes: 16 k-heads / 48 v-heads / dim 128, gfx1201 only). Uses the same
+`EXL3_R4D_LIB` (`R4D_SO` fallback) library as the attention backend; when
+disabled, inapplicable, or the library is missing, the call declines and the
+FLA path runs unchanged. Conv/gating prep, the gated norm,
+decode/recurrent, KDA and LAZY paths are untouched. Details and the
+exactness gate in `doc/r4d_gdn.md`.
+
 ## EXL3 GEMM / GEMV
 
 ### `EXL3_GEMV` (default: `1`)
