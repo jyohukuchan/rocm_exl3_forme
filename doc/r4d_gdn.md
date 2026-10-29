@@ -65,14 +65,25 @@ noise floor bit-identical 0.0):
 
 | cases | mean KLD | top-1 |
 |---|---|---|
-| cases-v1 (65-1025 tok) | 0.06-0.32 | 0.77-0.94 |
-| 32K teacher-forced (all positions) | 0.18 | 0.974 |
+| cases-v1 (65-1025 tok), pre-fix | 0.06-0.32 | 0.77-0.94 |
+| cases-v1, span-gated | 1.1e-4 | 1.000 |
+| 32K teacher-forced, pre-fix | 0.18 | 0.974 |
+| 32K teacher-forced, span-gated | 0.019 | 0.991 |
 
-The model-level drift far exceeds the kernel-level 1e-2: ~1% per-layer
-perturbations compound across the GDN stack (and concentrate at retrieval
-positions at 32K, same pattern as attention). Kernel-exact-ish, model drift
-needs investigation (per-layer sensitivity? state-carry amplification?) --
-not recommended for serving; stays opt-in.
+Pre-fix the model-level drift far exceeded the kernel-level 1e-2. Root
+cause (review follow-up, per-layer probe on real 27B vs FLA incl. final
+state): NOT state carry, transpose, cumsum reset, or dtypes -- ht matches
+while o diverges only on layers whose in-chunk gate-cumsum span exceeds
+~100 (raw-g span knee 9.6 -> rel 0.27; cumsum-span knee 97 -> 6e-3,
+129 -> 1.3e-2, 193 -> 0.27). The scan carries decay on a per-chunk midpoint
+reference and the fp32 triangular solve loses small entries past span ~100
+(cond ~ e^span); real 27B median cumsum span is 148.6, so 36/48 calls
+diverged pre-fix. Fix: `_GDN_SPAN_LIMIT=100` -- calls with any chunk above
+it decline to FLA (exactness over speed). Residual post-fix 32K KLD 0.019
+is engaged-call ~1e-2 noise compounding (plus needle-region sensitivity,
+same pattern as attention). 32K passkey needle (50% depth): PASS with the
+gate (was never passing-relevant pre-fix). Per-call stats via
+`EXL3_R4D_STATS=1` (`r4d_gdn_stats()`).
 
 ## Speed (R9700, layer ms; Hessian co-resident, interleaved)
 
@@ -82,8 +93,27 @@ not recommended for serving; stays opt-in.
 | 8192 | 5.40-5.44 | 3.23-3.27 | ~1.7x |
 | 32768 | 29.5-30.6 | 12.7-12.8 | ~2.3-2.4x |
 
-Matches the exploration estimate (2-2.5x from ~1/3 bytes). 27B end-to-end
-pending VRAM (Hessian until ~05:00 JST).
+Matches the exploration estimate (2-2.5x from ~1/3 bytes).
+
+27B end-to-end (chunked Generator path, max_chunk_size 2048, NEEDLE_STEPS=1
+=> full 32K prefill + 1 token; GSQ quant job co-resident, A/B interleaved):
+
+| backend | full 32K prefill + 1 tok (n=2) |
+|---|---|
+| FLA baseline | 24.14s / 25.11s (avg 24.6) |
+| r4d GDN span-gated | 24.27s / 24.51s (avg 24.4, ~-1%, noise) |
+
+No E2E win: the kernel-level 2x (0.77 vs 1.05 ms/call at T=2048) is eaten
+by one host `.item()` sync per call (768 calls at 32K = 48 GDN layers x 16
+chunks, 356 engaged / 412 declined; adapter ~19.9s host-side). Each sync
+drains the queued layer work and serializes host/GPU launch, starving the
+GPU between calls. The gate reorder (sync before l2norm/transpose/allocs)
+halved prep waste but the sync itself is the floor. Batching the 48
+per-chunk span checks into one sync per chunk (16 syncs instead of 768)
+would cut most of it, but engaged savings are only ~0.28 ms/call on ~46%
+of calls -- the net would stay ~neutral. Verdict: stays opt-in as a
+measurement backend; not recommended for serving (no accuracy margin left
+to trade and no speed gain at 32K).
 
 ## Open
 

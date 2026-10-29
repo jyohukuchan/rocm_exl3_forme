@@ -93,6 +93,29 @@ layers. Both stages stay opt-in (default off); Stage B is not blessed for
 serving. The user decides on modes 1/3 (KLD above) and on any long-context
 use of Stage A (needs a wider long-context eval first).
 
+### Review follow-up: adapter-bug hunt (2026-10-30) -- no adapter bug found
+
+Parent review suspected the paged past>0 path (page-to-16-block mapping,
+block-table order, seqused_k / q-offset for causal masking with Tq < Tk,
+dedup'd pagetable pages), the Q fp16->bf16 scale, or the softmax scale.
+Per-layer probe vs fp32 SDPA reference on real 27B Q/K/V at every 32K chunk
+(all past lengths 0..30720, 256 layer-calls) plus a synthetic past=30720 /
+Tq=2048 / Tk=32768 case:
+
+| comparison | rel err |
+|---|---|
+| r4d vs Triton, real 27B, all past>0 | 3e-3 .. 2.5e-2, uniform (no past>0 blowup) |
+| r4d vs Triton, synthetic past>0 | 4.5e-3 |
+| r4d vs fp32 SDPA, synthetic past>0 | 4.6e-3 |
+| Triton vs fp32 SDPA, synthetic past>0 | 3.9e-4 |
+
+The adapter math is right (Triton matches fp32 SDPA to 4e-4 through the same
+layout/block-table/seqused path); the r4d kernel is 10-50x noisier
+everywhere, a precision floor of its bf16 accumulation, not a scale or
+indexing bug. A scale bug would show as a large systematic error, not
+uniform 1e-2-level noise. Conclusion stands: inherent kernel precision,
+Stage A stays opt-in and not recommended for long-context serving.
+
 ## Speed
 
 Layer ms on R9700 (Hessian co-resident early, GSQ quant job later; A/B
@@ -115,11 +138,30 @@ At 8K attention is ~9% of prefill (linears 51%, GDN 39%), so +2% is the
 expected order -- kernel wins only move E2E where attention dominates.
 Full-forward E2E past 8K is impossible in this harness on 34 GB: the
 32Kx248K fp16 logits alone are a 16 GB single tensor (OOM, fundamental --
-not fragmentation). Chunked-path 32K TTFTs were measured but are not quoted:
-repetitive prompts let the pagetable dedupe pages (less real work for the
-baseline) and same-process repeats hit prefill-skip artefacts, so neither
-side is a clean A/B. 128K has the same logits wall. Updated projections from
-measured kernel speedups x the 8K/128K/1M shares (attn 9%/69%/95%):
+not fragmentation). Clean 32K E2E comes from the chunked Generator path
+(max_chunk_size 2048, chat-templated passkey prompt, NEEDLE_STEPS=1 so
+total = full 32K prefill + 1 decode token; pass=False expected -- one token
+cannot contain the key; accuracy comes from the KLD/needle gates above):
+
+| backend | full 32K prefill + 1 tok (n=2) |
+|---|---|
+| fp16 baseline | 24.14s / 25.11s (avg 24.6) |
+| Stage A bf16 | 23.22s / 23.26s (avg 23.2, -5.5%) |
+| Stage B fp8 mode 2 | 22.98s / 23.05s (avg 23.0, -6.4%) |
+
+So the kernel wins (1.5-2.1x on attention) shrink to ~6% E2E at 32K: the
+stateless adapter repacks the whole attended window per layer-chunk
+(gather through the block table + fp16->bf16 + interleave into r4d layout,
+O(window) per call = O(T^2) per prefill) plus one host `.item()` sync per
+call. Measured adapter time at 32K: ~18.5s host-side over 288 calls (all
+256 prefill layer-chunks = 16 full-attention layers x 16 chunks engaged;
+avg ~64 ms/call, growing with window). A persistent
+r4d-layout cache layer (pack once, append per chunk) would remove the
+repack, but that redesign is only worth building if the kernel precision
+gate ever passes -- it currently fails (needle 0/5), so speed is moot for
+serving. Updated projections from measured kernel speedups x the
+8K/128K/1M shares (attn 9%/69%/95%) -- upper bounds, adapter overhead not
+included:
 
 | config | 8K | 128K | 1M |
 |---|---|---|---|

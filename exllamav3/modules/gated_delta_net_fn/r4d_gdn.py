@@ -23,6 +23,7 @@ case. A mismatch there means this backend stays measurement-only.
 
 import ctypes
 import os
+import time
 
 import torch
 
@@ -30,6 +31,13 @@ _CHUNK = 64
 _KD = 128
 _VD = 128
 _KKT_RATIOS = (1, 2, 3, 4, 6, 8)
+# In-chunk cumsum gate-span limit. The scan carries decay on a per-chunk
+# midpoint reference (halves clamped at e^80); past a cumsum span of ~100 the
+# fp32 triangular solve loses the small entries and the result diverges from
+# the FLA chunk kernel (measured knee between span ~97/rel 6e-3 and ~129/1e-2
+# on a real 27B layer; synthetic spans <= 3 match at rel ~5e-3). Calls with any
+# chunk above the limit decline to FLA.
+_GDN_SPAN_LIMIT = 100.0
 
 
 def r4d_gdn_enabled() -> bool:
@@ -38,6 +46,14 @@ def r4d_gdn_enabled() -> bool:
 
 _lib = None
 _lib_failed = False
+
+# Cumulative per-process stats when EXL3_R4D_STATS=1 (calls, engaged, declined,
+# adapter seconds incl. any host sync). Read via r4d_gdn_stats().
+_stats = {"calls": 0, "engaged": 0, "declined": 0, "adapter_s": 0.0}
+
+
+def r4d_gdn_stats() -> dict:
+    return dict(_stats)
 
 
 def _load():
@@ -91,7 +107,30 @@ def _l2norm_bf16(x: torch.Tensor) -> torch.Tensor:
     return (xf * torch.rsqrt((xf * xf).sum(dim=-1, keepdim=True) + 1e-6)).to(torch.bfloat16)
 
 
+def _record(engaged: bool, _t0: float | None, out):
+    if _t0 is not None:
+        _stats["calls"] += 1
+        _stats["engaged" if engaged else "declined"] += 1
+        _stats["adapter_s"] += time.perf_counter() - _t0
+    return out
+
+
 def fn_r4d_gdn_chunk(
+    q: torch.Tensor,
+    k: torch.Tensor,
+    v: torch.Tensor,
+    g: torch.Tensor,
+    beta: torch.Tensor,
+    h0_kv: torch.Tensor | None,
+) -> tuple[torch.Tensor, torch.Tensor] | None:
+    """Timed wrapper: records engage/decline counts + adapter seconds in
+    ``_stats`` when ``EXL3_R4D_STATS=1`` (zero overhead otherwise)."""
+    _t0 = time.perf_counter() if os.environ.get("EXL3_R4D_STATS") == "1" else None
+    out = _fn_r4d_gdn_chunk_inner(q, k, v, g, beta, h0_kv)
+    return _record(out is not None, _t0, out)
+
+
+def _fn_r4d_gdn_chunk_inner(
     q: torch.Tensor,
     k: torch.Tensor,
     v: torch.Tensor,
@@ -134,16 +173,16 @@ def fn_r4d_gdn_chunk(
         if lib is None:
             return None
 
-        qn = _l2norm_bf16(q.reshape(t, hg, _KD)).contiguous()
-        kn = _l2norm_bf16(k.reshape(t, hg, _KD)).contiguous()
-        vv = v.reshape(t, h, _VD).contiguous()
-        if vv.dtype != torch.bfloat16:
-            vv = vv.to(torch.bfloat16)
-        gf = g.reshape(t, h).float().contiguous()
-        bf = beta.reshape(t, h).float().contiguous()
+        gf = g.reshape(t, h).float()
+        if not gf.is_contiguous():
+            gf = gf.contiguous()
         # r4d consumes g summed along the chunk (per-chunk cumsum), while FLA
         # takes per-token log-decay: reshape into 64-wide chunks (plus a tail)
         # and cumsum within each. Full-sequence cumsum would overflow fp32.
+        # The cumsum is needed by the kernel anyway, so the span gate below
+        # reuses it; the gate runs BEFORE the expensive prep (l2norm,
+        # transposes, output allocs) so declined calls pay only one cumsum,
+        # one fused span reduction and a single host sync.
         n_full = (t // _CHUNK) * _CHUNK
         gc = torch.empty_like(gf)
         if n_full > 0:
@@ -153,6 +192,25 @@ def fn_r4d_gdn_chunk(
         if n_full < t:
             # The tail is its own (partial) chunk: the cumsum restarts there.
             gc[n_full:] = gf[n_full:].cumsum(dim=0)
+        # Span gate: decline calls with any chunk above the kernel's exactness
+        # range instead of returning a degraded result (see _GDN_SPAN_LIMIT).
+        span_t = torch.zeros((), dtype=torch.float32, device=dev)
+        if n_full > 0:
+            gb = gc[:n_full].view(-1, _CHUNK, h)
+            span_t = torch.maximum(span_t, (gb.amax(dim=1) - gb.amin(dim=1)).amax())
+        if n_full < t:
+            tail = gc[n_full:]
+            span_t = torch.maximum(
+                span_t, (tail.amax(dim=0) - tail.amin(dim=0)).amax()
+            )
+        if span_t.item() > _GDN_SPAN_LIMIT:
+            return None
+        bf = beta.reshape(t, h).float().contiguous()
+        qn = _l2norm_bf16(q.reshape(t, hg, _KD)).contiguous()
+        kn = _l2norm_bf16(k.reshape(t, hg, _KD)).contiguous()
+        vv = v.reshape(t, h, _VD).contiguous()
+        if vv.dtype != torch.bfloat16:
+            vv = vv.to(torch.bfloat16)
         if h0_kv is None:
             h0 = torch.zeros((1, h, _VD, _KD), dtype=torch.float32, device=dev)
         else:

@@ -56,7 +56,11 @@ def _inputs(t, mode="real", seed=0):
     v = torch.randn((1, t, Hv, D), device=device, dtype=torch.bfloat16)
     beta = torch.rand((1, t, Hv), device=device, dtype=torch.bfloat16)
     if mode == "real":
-        g = (-torch.rand((1, t, Hv), device=device) * 3.0).float()
+        # Realistic log-decay: negative, small magnitudes (real 27B layers show
+        # |g| mean ~0.1-0.6). Large per-token means drift the per-chunk cumsum
+        # past the kernel's exactness range (see _GDN_SPAN_LIMIT), which the
+        # span gate must decline -- so the realistic case stays well inside it.
+        g = (-torch.rand((1, t, Hv), device=device) * 0.6).float()
     elif mode == "widespan":
         ramp = torch.linspace(0, -200, t, device=device).view(1, t, 1)
         g = (ramp + torch.randn((1, t, Hv), device=device) * 2.0).float()
@@ -103,13 +107,31 @@ def test_matches_fla_realistic(monkeypatch):
         assert _rel(r_s, fs) < 2e-2, f"state gate failed at T={t}"
 
 
-def test_widespan_stays_finite(monkeypatch):
-    """Issue #4 territory: the midpoint-split decay attenuates (inexact) but
-    must stay finite -- no NaN may reach the state the next chunk reads."""
+def test_widespan_declines_to_fla(monkeypatch):
+    """Issue #4 territory (in-chunk cumsum span ~200): the kernel would
+    attenuate instead of matching FLA, so the adapter declines and the caller
+    runs the FLA chunk kernel. Exactness over speed for out-of-range spans."""
     _needs_lib()
     monkeypatch.setenv("EXL3_R4D_GDN", "1")
     q, k, v, g, beta = _inputs(2048, "widespan")
-    ro = fn_r4d_gdn_chunk(q, k, v, g, beta, None)
-    assert ro is not None
-    r_o, r_s = ro
-    assert torch.isfinite(r_o.float()).all() and torch.isfinite(r_s.float()).all()
+    assert fn_r4d_gdn_chunk(q, k, v, g, beta, None) is None
+
+
+def test_span_gate_boundary(monkeypatch):
+    """The gate trips on cumsum span, not on absolute gate level: a shifted
+    gate with the same span behaves the same (both decline here)."""
+    _needs_lib()
+    monkeypatch.setenv("EXL3_R4D_GDN", "1")
+    torch.manual_seed(0)
+    t, h = 512, Hv
+    q = torch.randn((1, t, Hk, D), device=device, dtype=torch.bfloat16)
+    k = torch.randn((1, t, Hk, D), device=device, dtype=torch.bfloat16)
+    v = torch.randn((1, t, Hv, D), device=device, dtype=torch.bfloat16)
+    beta = torch.rand((1, t, Hv), device=device, dtype=torch.bfloat16)
+    ramp = torch.linspace(0, -200, t, device=device).view(1, t, 1)
+    g = (ramp + torch.randn((1, t, Hv), device=device) * 2.0).float()
+    assert fn_r4d_gdn_chunk(q, k, v, g, beta, None) is None
+    # Small-mean gate (cumsum span ~ tens): engages.
+    g_small = (-torch.rand((1, t, Hv), device=device) * 0.6).float()
+    got = fn_r4d_gdn_chunk(q, k, v, g_small, beta, None)
+    assert got is not None

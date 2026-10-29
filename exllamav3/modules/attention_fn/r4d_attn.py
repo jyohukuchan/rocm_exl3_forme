@@ -140,6 +140,15 @@ def _arch_is_gfx1201(device: torch.device) -> bool:
         return arch.split(":", 1)[0].strip().lower().startswith("gfx12")
 
 
+# Cumulative per-process stats when EXL3_R4D_STATS=1 (calls, engaged,
+# declined, adapter seconds incl. any host sync). Read via r4d_attn_stats().
+_attn_stats = {"calls": 0, "engaged": 0, "declined": 0, "adapter_s": 0.0}
+
+
+def r4d_attn_stats() -> dict:
+    return dict(_attn_stats)
+
+
 def fn_r4d_attn_prefill(args: AttnArgs) -> torch.Tensor | None:
     """Opt-in r4d prefill over the paged fp16 cache (or cache-less K/V).
 
@@ -147,6 +156,19 @@ def fn_r4d_attn_prefill(args: AttnArgs) -> torch.Tensor | None:
     None when disabled or inapplicable so the default path is bit-for-bit
     unchanged.
     """
+    import time as _time
+
+    _t0 = _time.perf_counter() if os.environ.get("EXL3_R4D_STATS") == "1" else 0.0
+    out = _fn_r4d_attn_prefill_inner(args)
+    if _t0:
+        _attn_stats["calls"] += 1
+        _attn_stats["engaged" if out is not None else "declined"] += 1
+        _attn_stats["adapter_s"] += _time.perf_counter() - _t0
+    return out
+
+
+def _fn_r4d_attn_prefill_inner(args: AttnArgs) -> torch.Tensor | None:
+    """Implementation of :func:`fn_r4d_attn_prefill` (timed wrapper above)."""
     if r4d_mode() == "off":
         return None
     if (

@@ -194,6 +194,15 @@ FLA path runs unchanged. Conv/gating prep, the gated norm,
 decode/recurrent, KDA and LAZY paths are untouched. Details and the
 exactness gate in `doc/r4d_gdn.md`.
 
+### `EXL3_R4D_STATS` (default: `0`)
+
+Set to `1` to accumulate per-process r4d adapter statistics (calls,
+engaged, declined, host-side adapter seconds including any host sync).
+Read via `exllamav3.modules.attention_fn.r4d_attn.r4d_attn_stats()` /
+`exllamav3.modules.gated_delta_net_fn.r4d_gdn.r4d_gdn_stats()`. Zero
+overhead when unset (one `perf_counter` pair per call when set, no device
+sync added). Measurement only.
+
 ## EXL3 GEMM / GEMV
 
 ### `EXL3_GEMV` (default: `1`)
