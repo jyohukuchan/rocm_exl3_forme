@@ -109,6 +109,48 @@ def test_bf16_matches_triton(monkeypatch):
     assert _rel(got, ref) < 8e-3, "Stage A bf16 KV should match fp16 Triton"
 
 
+def test_nocache_matches_triton(monkeypatch):
+    """Cache-less full-sequence calls (KLD dumps, bench_prefill) also engage."""
+    _needs_lib()
+    monkeypatch.setenv("EXL3_R4D_ATTN", "bf16")
+    torch.manual_seed(9)
+    bsz, tq, hq, hkv, dim = 1, 256, 12, 2, 256
+    q = torch.randn((bsz, tq, hq, dim), dtype=torch.float16, device=device)
+    k = torch.randn((bsz, tq, hkv, dim), dtype=torch.float16, device=device)
+    v = torch.randn_like(k)
+    args = AttnArgs(
+        bsz, tq, hq, dim, tq, hkv, q, k, v, None, None, True, dim**-0.5,
+        None, None, None, 0.0, None, None,
+    )
+    got = fn_r4d_attn_prefill(args)
+    assert got is not None, "r4d bf16 declined on a supported cache-less shape"
+    ref = paged_attn_triton_prefill(
+        q, None, None, None, None, None, None, causal=True,
+        softmax_scale=dim**-0.5, k_new=k, v_new=v, out=torch.empty_like(q))
+    assert _rel(got, ref) < 8e-3, "cache-less Stage A should match fp16 Triton"
+
+
+def test_unaligned_length_matches_triton(monkeypatch):
+    """Non-multiple-of-16 lengths pad the packed buffer (kernel masks tails)."""
+    _needs_lib()
+    monkeypatch.setenv("EXL3_R4D_ATTN", "bf16")
+    torch.manual_seed(11)
+    bsz, tq, hq, hkv, dim = 1, 80, 12, 2, 256
+    q = torch.randn((bsz, tq, hq, dim), dtype=torch.float16, device=device)
+    k = torch.randn((bsz, tq, hkv, dim), dtype=torch.float16, device=device)
+    v = torch.randn_like(k)
+    args = AttnArgs(
+        bsz, tq, hq, dim, tq, hkv, q, k, v, None, None, True, dim**-0.5,
+        None, None, None, 0.0, None, None,
+    )
+    got = fn_r4d_attn_prefill(args)
+    assert got is not None, "r4d bf16 declined on an unaligned shape"
+    ref = paged_attn_triton_prefill(
+        q, None, None, None, None, None, None, causal=True,
+        softmax_scale=dim**-0.5, k_new=k, v_new=v, out=torch.empty_like(q))
+    assert _rel(got, ref) < 8e-3, "unaligned Stage A should match fp16 Triton"
+
+
 def test_fp8_legs_gate(monkeypatch):
     _needs_lib()
     monkeypatch.setenv("EXL3_R4D_ATTN", "fp8")

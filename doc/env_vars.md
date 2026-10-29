@@ -145,8 +145,10 @@ Opt-in libr4d prefill attention: `1`/`bf16` = bf16 KV + f16 legs (Stage A),
 Prefill only at the 27B geometry (head_dim 256, GQA 6, causal, gfx1201);
 decode, quantized caches, varlen, windowed/softcapped/sinked calls and other
 geometries decline to the existing kernels. Read on every dispatch, so one
-process can interleave baseline/new-mode runs for A/B. Stage B serving use
-waits for the 27B KLD + long-context gate (see `doc/r4d_attention.md`).
+process can interleave baseline/new-mode runs for A/B. Both stages stay
+opt-in: the 27B gates (cases-v1 KLD + 32K needle, see `doc/r4d_attention.md`)
+show short-context KLD ~1e-4 (A) / 0.003 (B mode 2) but systematic 32K
+retrieval drift for both, so neither is blessed for long-context serving.
 
 ### `EXL3_R4D_ALLOW_QK8` (default: `0`)
 
