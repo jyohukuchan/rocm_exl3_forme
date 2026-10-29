@@ -189,6 +189,17 @@ def attn_dispatch(
         elif dispatch_cache is not None:
             dispatch_cache[hint_key] = fn_triton_paged_attn_prefill_i8f8_cached
 
+    # Opt-in libr4d prefill (EXL3_R4D_ATTN=bf16/fp8 with EXL3_R4D_LIB pointing at
+    # a locally built r4d.so): bf16/fp8 KV + f16/PV8 legs over the paged fp16
+    # cache at the 27B geometry. Off by default; when disabled or inapplicable
+    # the call below returns None immediately and the dispatch below is
+    # bit-for-bit the old path. Runs ahead of the INT8FP8 path (it is faster).
+    if o is None and q_cache is None and i8f8_cache is None:
+        from .r4d_attn import fn_r4d_attn_prefill
+        o = fn_r4d_attn_prefill(args)
+        if o is not None and dispatch_cache is not None:
+            dispatch_cache[hint_key] = fn_r4d_attn_prefill
+
     # Opt-in Sage-style prefill (EXL3_ATTN_INT8FP8=1): INT8 QK^T + FP8 PV over
     # the unchanged fp16 cache. Off by default; when disabled the call below
     # returns None immediately and the dispatch below is bit-for-bit the old

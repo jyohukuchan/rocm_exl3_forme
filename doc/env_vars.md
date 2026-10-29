@@ -128,6 +128,33 @@ Comma-separated ablations for the `EXL3_ATTN_INT8FP8` mode: `nosmooth`
 whole window instead of per-block scales), `fp16pv` (keep P@V in fp16).
 Testing/diagnosis only.
 
+### `EXL3_R4D_LIB` (default: empty = backend not installed)
+
+Path to a locally built `r4d.so` for the opt-in libr4d prefill attention
+backend (`R4D_SO` is accepted as a fallback for bench compat). Build it on
+the user's machine with `rocm_tools/build_r4d.sh`; never vendor the library,
+its sources, patches, or binaries into this repo (both upstreams are
+unlicensed). When unset or unloadable, every r4d call declines and the
+default Triton path is bit-for-bit unchanged. Details in
+`doc/r4d_attention.md`.
+
+### `EXL3_R4D_ATTN` (default: `0`)
+
+Opt-in libr4d prefill attention: `1`/`bf16` = bf16 KV + f16 legs (Stage A),
+`fp8` = fp8 KV (Stage B, leg mode from `R4D_ATTN_FP8`). Anything else = off.
+Prefill only at the 27B geometry (head_dim 256, GQA 6, causal, gfx1201);
+decode, quantized caches, varlen, windowed/softcapped/sinked calls and other
+geometries decline to the existing kernels. Read on every dispatch, so one
+process can interleave baseline/new-mode runs for A/B. Stage B serving use
+waits for the 27B KLD + long-context gate (see `doc/r4d_attention.md`).
+
+### `EXL3_R4D_ALLOW_QK8` (default: `0`)
+
+Set to `1` to permit `R4D_ATTN_FP8` legs modes 1/3 (O_QK8) for KLD
+measurement. Without it, fp8 calls with those modes decline to Triton;
+serving keeps them off. The fp8 leg mode itself (`R4D_ATTN_FP8=0/1/2/3`) is
+owned by the r4d library (read once per process; set before start).
+
 ### `EXL3_PREFILL_TILE` (default: empty = per-arch default)
 
 Pins the fp16 paged-prefill Triton tile for A/B: `BM,BN,STAGES[,WARPS]`
