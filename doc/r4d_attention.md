@@ -174,6 +174,58 @@ included:
 Rough (kernel speedups x 8K/128K/1M attn shares 9%/69%/95%; GDN share past
 8K unmeasured, so no GDN projection past 8K).
 
+## bf16 pipeline: intrinsic, not libr4d-specific (2026-10-30)
+
+Parent review noted vllm-mxfp4's numbers (R4D 1.69e-3 vs AITER 2.28e-3
+against an fp32 oracle, both bf16 pipelines) and asked whether the 32K
+needle failure is a bf16 effect rather than an r4d bug. `EXL3_TRITON_BF16_IO=1`
+rounds Q/K/V to bf16 values through our fp16 Triton kernel (fp32
+accumulation) and rounds the output the same way -- a bf16-I/O pipeline with
+no libr4d code anywhere. Per-layer probe on real 27B at 32K (256 calls, vs
+fp32 SDPA on bf16-valued inputs; rel_F = ||out-ref||_F / ||ref||_F):
+
+| backend | max-rel (mean) | rel_F (mean) |
+|---|---|---|
+| fp16 Triton (own oracle) | 3.9e-4 | 2.1e-4 |
+| bf16-I/O Triton | 3.1e-3 | 1.68e-3 |
+| r4d bf16 | 3.2e-3 | 1.68e-3 |
+| r4d fp8 mode 2 | 9.8e-2 | 4.95e-2 |
+| vllm-mxfp4 claim (their harness) | -- | 1.69e-3 |
+
+bf16-I/O Triton and r4d bf16 are identical (1.681e-3 vs 1.676e-3, both ~ the
+published 1.69e-3): the whole bf16 error budget is I/O quantization, the
+kernel accumulation difference is invisible. Model level follows suit:
+
+| gate | bf16-Triton | r4d bf16 |
+|---|---|---|
+| 32K teacher-forced KLD (mean / top1) | 0.0318 / 0.987 | 0.031 / 0.988 |
+| 32K needle 5 configs (50/25/75% @32K, 25/50% @21K) | 0/5 (refusals) | 0/5 (refusals) |
+| fp16 baseline needle | -- | 5/5 pass |
+
+Same KLD, same refusal mode, without any libr4d code in the loop.
+Conclusion: the needle failure is bf16-intrinsic (bf16 I/O alone breaks
+long-context retrieval vs our fp16 path at rel 4e-4). Stage A/B stay opt-in;
+no adapter bug to fix.
+
+## Error vs context length (2026-10-30)
+
+Synthetic 27B geometry, Tq=2048 last chunk, K-blocked fp32 SDPA reference;
+rel_F vs the matching-dtype oracle:
+
+| Tk | fp16 | bf16-I/O | r4d bf16 | r4d fp8m2 |
+|---|---|---|---|---|
+| 32K | 2.9e-4 | 1.71e-3 | 1.76e-3 | 4.65e-2 |
+| 64K | 3.1e-4 | 1.71e-3 | 1.76e-3 | 4.64e-2 |
+| 128K | 3.5e-4 | 1.72e-3 | 1.76e-3 | 4.61e-2 |
+| 256K | 5.1e-4 | 1.74e-3 | 1.77e-3 | 4.63e-2 |
+
+Real 27B at 64K (captured last-chunk Q + full window): fp16 2.2e-4,
+bf16 1.69e-3, r4d bf16 1.66e-3, r4d fp8m2 6.6e-2 -- consistent with 32K and
+synthetic. Answer: the error does NOT grow with context length (flat to
+256K; fp16 max-rel creeps 4.3e-4 to 6.8e-4, rel_F flat). 128K capture was
+infeasible in this harness (the 128K paged pool + trellis staging OOMs 32 GB;
+documented limit, same wall as the 128K full-forward logits).
+
 ## License handling
 
 libr4d and vllm-mxfp4 have no license (all rights reserved). This repo
@@ -185,4 +237,7 @@ to the patch the exploration build used) at build time on the user's machine.
 Never commit their sources, patches, or binaries here. Read their code for
 API/layout details; never modify those clones in place (copy to scratch to
 patch/build). `r4d.so` path via env; never overwrite a loaded `.so` (temp +
-rename in the script).
+rename in the script). A second script, `rocm_tools/build_r4d_gdn2.sh`, does
+the same for the exact-scan module (same libr4d pin, the
+`moe-gdn2/radiance_gdn2_vs_v050.patch` from the same vllm-mxfp4 ref, with
+md5 checks before and after).

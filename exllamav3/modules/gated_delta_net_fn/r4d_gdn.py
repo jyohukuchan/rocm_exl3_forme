@@ -16,9 +16,16 @@ declines and the FLA path runs unchanged.
 
 Accuracy gate: r4d's scan carries decay on a per-chunk midpoint reference
 (see the kernel header), and libr4d issue #4 reports inexactness for in-chunk
-decay span > 160 on the base pin. The committed test compares output AND
-final state against the FLA chunk kernel, including a wide-span synthetic
-case. A mismatch there means this backend stays measurement-only.
+decay span > 160 on the base pin. Calls above ``_GDN_SPAN_LIMIT`` decline
+to FLA. The committed test compares output AND final state against the FLA
+chunk kernel, including a wide-span synthetic case. A mismatch there means
+this backend stays measurement-only.
+
+Exact scan: ``EXL3_R4D_GDN_EXACT=1`` (implies the hook, no need for
+``EXL3_R4D_GDN``) swaps the stock scan for the exact one built by
+``rocm_tools/build_r4d_gdn2.sh`` (``EXL3_R4D_GDN2_LIB``), which is
+span-independent, so the gate -- and its per-call host sync -- is skipped.
+Asked-for-but-missing is fatal, never a silent fallback.
 """
 
 import ctypes
@@ -42,6 +49,47 @@ _GDN_SPAN_LIMIT = 100.0
 
 def r4d_gdn_enabled() -> bool:
     return os.environ.get("EXL3_R4D_GDN", "0") not in ("0", "", "off", "false")
+
+
+def r4d_gdn_exact_enabled() -> bool:
+    """Exact-scan mode: implies the GDN hook is active (no need to also set
+    ``EXL3_R4D_GDN``). See ``doc/r4d_gdn.md``."""
+    return os.environ.get("EXL3_R4D_GDN_EXACT", "0") not in ("0", "", "off", "false")
+
+
+_exact_mod = None
+
+
+def _load_exact():
+    """Load the exact-scan pybind module built by rocm_tools/build_r4d_gdn2.sh.
+
+    Asked for and missing/unusable is fatal (RuntimeError), never a silent
+    fallback to the stock scan: a measurement backend must not silently
+    change numerics under an A/B.
+    """
+    global _exact_mod
+    if _exact_mod is not None:
+        return _exact_mod
+    path = (os.environ.get("EXL3_R4D_GDN2_LIB", "").strip()
+            or os.environ.get("R4D_GDN2_SO", "").strip())
+    if not path:
+        raise RuntimeError(
+            "EXL3_R4D_GDN_EXACT=1 needs EXL3_R4D_GDN2_LIB "
+            "(r4d_gdn2.so from rocm_tools/build_r4d_gdn2.sh)")
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("radiance_gdn2", path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+    except Exception as e:
+        raise RuntimeError(f"cannot load exact-scan module {path}: {e}") from e
+    if (int(mod.GDN_HEAD_K), int(mod.GDN_HEAD_V), int(mod.GDN_CHUNK)) != (128, 128, 64):
+        raise RuntimeError(
+            f"exact-scan geometry mismatch: {(mod.GDN_HEAD_K, mod.GDN_HEAD_V, mod.GDN_CHUNK)}")
+    if not callable(getattr(mod, "gdn_chunk_scan_k128_v128_c64_bf16", None)):
+        raise RuntimeError("exact-scan entry gdn_chunk_scan_k128_v128_c64_bf16 missing")
+    _exact_mod = mod
+    return mod
 
 
 _lib = None
@@ -146,8 +194,13 @@ def _fn_r4d_gdn_chunk_inner(
     the shape is unsupported, the library is missing, or a kernel reports an
     error (caller falls back to the FLA chunk kernel).
     """
-    if not r4d_gdn_enabled():
+    exact = r4d_gdn_exact_enabled()
+    if not (r4d_gdn_enabled() or exact):
         return None
+    if exact:
+        # Loud, once per process (cached): never silently measure the stock
+        # scan while EXACT=1 is set.
+        _load_exact()
     try:
         if (
             q.ndim != 4 or k.ndim != 4 or v.ndim != 4
@@ -192,19 +245,23 @@ def _fn_r4d_gdn_chunk_inner(
         if n_full < t:
             # The tail is its own (partial) chunk: the cumsum restarts there.
             gc[n_full:] = gf[n_full:].cumsum(dim=0)
-        # Span gate: decline calls with any chunk above the kernel's exactness
-        # range instead of returning a degraded result (see _GDN_SPAN_LIMIT).
-        span_t = torch.zeros((), dtype=torch.float32, device=dev)
-        if n_full > 0:
-            gb = gc[:n_full].view(-1, _CHUNK, h)
-            span_t = torch.maximum(span_t, (gb.amax(dim=1) - gb.amin(dim=1)).amax())
-        if n_full < t:
-            tail = gc[n_full:]
-            span_t = torch.maximum(
-                span_t, (tail.amax(dim=0) - tail.amin(dim=0)).amax()
-            )
-        if span_t.item() > _GDN_SPAN_LIMIT:
-            return None
+        # Span gate (stock scan only): decline calls with any chunk above the
+        # kernel's exactness range instead of returning a degraded result
+        # (see _GDN_SPAN_LIMIT). The exact scan is span-independent, so
+        # EXACT=1 skips the gate -- and with it the per-call host sync that
+        # cancelled the kernel speedup end to end.
+        if not exact:
+            span_t = torch.zeros((), dtype=torch.float32, device=dev)
+            if n_full > 0:
+                gb = gc[:n_full].view(-1, _CHUNK, h)
+                span_t = torch.maximum(span_t, (gb.amax(dim=1) - gb.amin(dim=1)).amax())
+            if n_full < t:
+                tail = gc[n_full:]
+                span_t = torch.maximum(
+                    span_t, (tail.amax(dim=0) - tail.amin(dim=0)).amax()
+                )
+            if span_t.item() > _GDN_SPAN_LIMIT:
+                return None
         bf = beta.reshape(t, h).float().contiguous()
         qn = _l2norm_bf16(q.reshape(t, hg, _KD)).contiguous()
         kn = _l2norm_bf16(k.reshape(t, hg, _KD)).contiguous()
@@ -229,15 +286,29 @@ def _fn_r4d_gdn_chunk_inner(
             cu.data_ptr(), 1, t, h, hg, _KD, _CHUNK, stream,
         )
         if rc != 0:
+            if exact:
+                raise RuntimeError(f"kkt_solve failed (rc={rc})")
             return None
-        rc = lib.r4d_gdn_chunk_scan_k128_v128_c64_bf16(
-            qn.data_ptr(), kn.data_ptr(), vv.data_ptr(), a.data_ptr(),
-            gc.data_ptr(), bf.data_ptr(), h0.data_ptr(), o.data_ptr(),
-            ht.data_ptr(), cu.data_ptr(),
-            1, h, hg, _KD, _VD, _CHUNK, float(_KD**-0.5), stream,
-        )
-        if rc != 0:
-            return None
+        if exact:
+            # Same 18 arguments as the stock entry; throws on error (loud).
+            _exact_mod.gdn_chunk_scan_k128_v128_c64_bf16(
+                qn.data_ptr(), kn.data_ptr(), vv.data_ptr(), a.data_ptr(),
+                gc.data_ptr(), bf.data_ptr(), h0.data_ptr(), o.data_ptr(),
+                ht.data_ptr(), cu.data_ptr(),
+                1, h, hg, _KD, _VD, _CHUNK, float(_KD**-0.5),
+                torch.cuda.current_stream(dev).cuda_stream,
+            )
+        else:
+            rc = lib.r4d_gdn_chunk_scan_k128_v128_c64_bf16(
+                qn.data_ptr(), kn.data_ptr(), vv.data_ptr(), a.data_ptr(),
+                gc.data_ptr(), bf.data_ptr(), h0.data_ptr(), o.data_ptr(),
+                ht.data_ptr(), cu.data_ptr(),
+                1, h, hg, _KD, _VD, _CHUNK, float(_KD**-0.5), stream,
+            )
+            if rc != 0:
+                return None
         return o.view(1, t, h, _VD), ht.transpose(-2, -1).contiguous()
     except Exception:
+        if exact:
+            raise
         return None

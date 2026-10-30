@@ -194,6 +194,29 @@ FLA path runs unchanged. Conv/gating prep, the gated norm,
 decode/recurrent, KDA and LAZY paths are untouched. Details and the
 exactness gate in `doc/r4d_gdn.md`.
 
+### `EXL3_R4D_GDN_EXACT` (default: `0`)
+
+Set to `1` to swap the stock scan for the exact scan (libr4d issue #4 fix)
+built by `rocm_tools/build_r4d_gdn2.sh`. Implies the GDN hook (no need for
+`EXL3_R4D_GDN`). The exact scan is span-independent, so the span gate and
+its per-call host sync are skipped. Asked-for-but-missing module (see
+`EXL3_R4D_GDN2_LIB`) is fatal at first use, never a silent fallback.
+Measurement only; details in `doc/r4d_gdn.md`.
+
+### `EXL3_R4D_GDN2_LIB` (default: empty)
+
+Path to `r4d_gdn2.so` (fallback `R4D_GDN2_SO`), the exact-scan module from
+`rocm_tools/build_r4d_gdn2.sh`, used when `EXL3_R4D_GDN_EXACT=1`. The stock
+`kkt_solve` still comes from `EXL3_R4D_LIB`.
+
+### `EXL3_TRITON_BF16_IO` (default: `0`)
+
+Set to `1` to run the fp16 Triton prefill kernel over bf16-rounded Q/K/V
+values (paged cache cloned before rounding, never modified in place) and
+round the output the same way. Isolates bf16 I/O quantization from kernel
+accumulation precision (which stays fp32 here). Skipped for quantized
+caches and non-fp16 inputs. Measurement only; see `doc/r4d_attention.md`.
+
 ### `EXL3_R4D_STATS` (default: `0`)
 
 Set to `1` to accumulate per-process r4d adapter statistics (calls,

@@ -49,6 +49,16 @@ def _needs_lib():
         pytest.skip(f"r4d GDN needs gfx1201, this is {_arch()}")
 
 
+def _needs_exact():
+    from exllamav3.modules.gated_delta_net_fn import r4d_gdn as gdn
+
+    if not (os.environ.get("EXL3_R4D_GDN2_LIB") or os.environ.get("R4D_GDN2_SO")):
+        pytest.skip("EXL3_R4D_GDN2_LIB missing: build r4d_gdn2.so with rocm_tools/build_r4d_gdn2.sh")
+    if not _arch().split(":", 1)[0].lower().startswith("gfx12"):
+        pytest.skip(f"r4d GDN needs gfx1201, this is {_arch()}")
+    return gdn
+
+
 def _inputs(t, mode="real", seed=0):
     torch.manual_seed(seed)
     q = torch.randn((1, t, Hk, D), device=device, dtype=torch.bfloat16)
@@ -62,8 +72,13 @@ def _inputs(t, mode="real", seed=0):
         # span gate must decline -- so the realistic case stays well inside it.
         g = (-torch.rand((1, t, Hv), device=device) * 0.6).float()
     elif mode == "widespan":
-        ramp = torch.linspace(0, -200, t, device=device).view(1, t, 1)
-        g = (ramp + torch.randn((1, t, Hv), device=device) * 2.0).float()
+        # Issue #4 territory: per-token |g| ~3 with consistent sign gives an
+        # in-chunk cumsum span ~200, past the stock kernel's exactness range
+        # (gate declines at >100) but inside the exact scan's validated range
+        # (upstream: per-token up to 92). Per-token magnitudes far beyond that
+        # (e.g. a 0..-200 ramp) break the stock kkt_solve first and are out
+        # of scope for both paths.
+        g = (-3.0 + torch.randn((1, t, Hv), device=device) * 0.5).float()
     else:
         raise ValueError(mode)
     return q, k, v, g, beta
@@ -115,6 +130,43 @@ def test_widespan_declines_to_fla(monkeypatch):
     monkeypatch.setenv("EXL3_R4D_GDN", "1")
     q, k, v, g, beta = _inputs(2048, "widespan")
     assert fn_r4d_gdn_chunk(q, k, v, g, beta, None) is None
+
+
+def test_exact_matches_fla_widespan(monkeypatch):
+    """EXL3_R4D_GDN_EXACT=1 (libr4d issue #4 fix): a wide-span case that the
+    stock scan cannot serve engages and matches the FLA chunk kernel in both
+    output and final state. No span gate, no host sync on this path."""
+    gdn = _needs_exact()
+    _needs_lib()
+    monkeypatch.setenv("EXL3_R4D_GDN", "1")
+    monkeypatch.setenv("EXL3_R4D_GDN_EXACT", "1")
+    from exllamav3.vendor.fla import chunk_gated_delta_rule
+
+    q, k, v, g, beta = _inputs(2048, "widespan", seed=3)
+    h0 = (torch.randn((1, Hv, D, D), device=device) * 0.1).float()
+    fo, fs = chunk_gated_delta_rule(
+        q, k, v, g=g, beta=beta, initial_state=h0,
+        output_final_state=True, use_qk_l2norm_in_kernel=True)
+    ro = fn_r4d_gdn_chunk(q, k, v, g, beta, h0)
+    assert ro is not None, "exact scan declined a supported shape"
+    r_o, r_s = ro
+    assert _rel(r_o, fo) < 1e-2, "exact-scan output gate failed"
+    assert _rel(r_s, fs) < 1e-2, "exact-scan state gate failed"
+
+
+def test_exact_missing_lib_raises(monkeypatch):
+    """Asked-for-but-missing exact module is fatal, never a silent switch
+    back to the stock scan."""
+    from exllamav3.modules.gated_delta_net_fn import r4d_gdn as gdn
+
+    monkeypatch.setenv("EXL3_R4D_GDN_EXACT", "1")
+    monkeypatch.delenv("EXL3_R4D_GDN2_LIB", raising=False)
+    monkeypatch.delenv("R4D_GDN2_SO", raising=False)
+    gdn._exact_mod = None
+    q, k, v, g, beta = _inputs(128)
+    with pytest.raises(RuntimeError):
+        fn_r4d_gdn_chunk(q, k, v, g, beta, None)
+    gdn._exact_mod = None
 
 
 def test_span_gate_boundary(monkeypatch):

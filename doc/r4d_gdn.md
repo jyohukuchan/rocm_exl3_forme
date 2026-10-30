@@ -122,3 +122,56 @@ to trade and no speed gain at 32K).
 - `gated_rmsnorm` wiring (plain tensors, trivial) and a decision on conv
   fusion (own glue; vLLM's is heavy and model-specific).
 - 27B end-to-end prefill share after VRAM frees.
+
+## Exact scan (libr4d #4 fix, 2026-10-30)
+
+vllm-mxfp4 ships an exact scan (`moe-gdn2/radiance_gdn2_vs_v050.patch`,
+enabled by `RADIANCE_GDN_SCAN_FIX=1`): same kernel without the midpoint
+decay split, max error 98.6% -> 0.34% at the same speed, a diff against
+libr4d v0.5.0's scan file. Our pin b9e42ab carries the byte-identical scan
+file (only r4d.h differs: 0.4.0 vs 0.5.0), so the patch applies directly;
+`rocm_tools/build_r4d_gdn2.sh` clones libr4d at the pin, fetches the patch
+at build time, checks both md5s (scan + wmma header before, patched result
+after -- fatal on mismatch, mirroring the author's policy), and compiles
+the TU to `r4d_gdn2.so` with the same flags (`-O3 -ffp-contract=off
+-mcumode`, gfx1201). Nothing vendored. `EXL3_R4D_GDN_EXACT=1` (implies the
+hook; `EXL3_R4D_GDN2_LIB` points at the module) swaps the stock scan for
+the exact one via its pybind surface (same 18 arguments; geometry asserted
+128/128/64 at load). Asked-for-but-missing is fatal, never a silent
+fallback. The exact scan is span-independent, so the span gate -- and with
+it the per-call host sync -- is skipped.
+
+Measured (R9700, GSQ quant job co-resident for E2E):
+
+| gate | stock + span gate | exact scan |
+|---|---|---|
+| synthetic vs torch recurrent, mild | 1.1e-2 (engage) | 2.4e-2 (engage) |
+| synthetic vs torch recurrent, span ~200 | decline | 8.5e-3 (engage) |
+| synthetic vs torch recurrent, span ~640 | decline | 1.1e-2 (engage) |
+| real 27B per-layer vs FLA @32K (768 calls) | 356 engage @~5e-3, 412 decline | 768 engage, mean 7.7e-3, max 1.9e-2 |
+| cases-v1 KLD / top1 | 1.1e-4 / 1.000 | 3.1e-4 / 0.985 |
+| 32K KLD / top1 | 0.019 / 0.991 | 0.035 / 0.987 |
+| 32K needle (50%) | pass | pass |
+| 8K full prefill + 1 tok | 7.2s (-21%) | 7.0s (-23%) |
+| 32K full prefill + 1 tok | 24.4s (~0%) | 25.1s (~0%) |
+
+Two honest caveats. First, at mild spans the exact kernel is ~2.5x noisier
+than stock in our build (exact-vs-FLA 2.5e-2 vs stock 1.0e-2; stock-vs-exact
+rel 2.3e-2 -- the author's "bit-identical" does not reproduce here, likely
+rounding-order/codegen differences; both are O(1e-2) bf16 staging). So the
+exact scan fixes the catastrophic tail but loses on average: gated KLD
+(1.1e-4/0.019) beats exact (3.1e-4/0.035). Second, the sync removal pays at
+8K (-23%, first-chunk still slower: init overhead) but 32K E2E stays neutral
+for both -- the kkt_solve (unchanged, stock) and Amdahl dominate there.
+
+Verdict: exact scan stays opt-in as the span-independent measurement
+backend (no gate to tune, no syncs); the span-gated stock path keeps the
+better KLD. Neither is recommended for serving.
+
+## Error vs context length (2026-10-30)
+
+Real 27B at 64K (captured inputs, offline): stock declines even at chunk 0
+of layer 0 (real spans exceed 100 everywhere); exact engages at both ends
+(~1e-2 vs FLA and vs the torch reference). GDN per-chunk error is
+length-independent by construction (per-chunk cumsum restarts); the 64K
+numbers match 32K. 128K capture infeasible (pool + trellis OOM, as above).

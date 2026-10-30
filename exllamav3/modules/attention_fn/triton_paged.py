@@ -1831,6 +1831,32 @@ def paged_attn_triton_prefill(
     if softmax_scale is None:
         softmax_scale = 1.0 / math.sqrt(head_dim)
     window_left, window_right = _normalize_window(window_size)
+    # Measurement-only bf16 pipeline emulation (EXL3_TRITON_BF16_IO=1,
+    # doc/r4d_attention.md): round Q/K/V to bf16-representable values and
+    # run the fp16 kernel over them, rounding the output the same way. This
+    # isolates bf16 I/O quantization from kernel accumulation precision
+    # (which stays fp32 here, unlike bf16-accumulating kernels). The paged
+    # cache is cloned before rounding -- never modified in place. Skipped
+    # for quantized caches (qc) and non-fp16 inputs.
+    _bf16_io = (
+        os.environ.get("EXL3_TRITON_BF16_IO") == "1"
+        and qc is None
+        and q.dtype == torch.float16
+    )
+    if _bf16_io:
+        q = q.bfloat16().half()
+        if k is not None:
+            k = k.bfloat16().half()
+        if v is not None:
+            v = v.bfloat16().half()
+        if k_new is not None:
+            k_new = k_new.bfloat16().half()
+        if v_new is not None:
+            v_new = v_new.bfloat16().half()
+        if k_cache is not None:
+            k_cache = k_cache.bfloat16().half()
+        if v_cache is not None:
+            v_cache = v_cache.bfloat16().half()
     sinks, has_sinks = _prep_sinks(sinks, n_q_heads, q)
 
     if qc is not None:
@@ -2016,6 +2042,8 @@ def paged_attn_triton_prefill(
                 num_splits, qcv, has_sinks, q_len, n_q_heads, head_dim, hd_pad, wide_index, block_m,
                 num_warps=8, num_stages=1,
             )
+    if _bf16_io:
+        out = out.bfloat16().half()
     return out
 
 
