@@ -226,6 +226,72 @@ synthetic. Answer: the error does NOT grow with context length (flat to
 infeasible in this harness (the 128K paged pool + trellis staging OOMs 32 GB;
 documented limit, same wall as the 128K full-forward logits).
 
+## Native r4d KV cache (Stage A, 2026-10-30)
+
+The repack adapter's per-call O(T^2) gather (~18.5 s host-side at 32K) is
+gone: `CacheLayer_r4d` (`exllamav3/cache/r4d.py`) stores K/V directly in
+r4d's block-16 HND bf16 layout at write time. EXL3 page p (256 tokens) is 16
+consecutive r4d blocks `[p*16, p*16+15]`; `write_kv` scatters new rows
+device-side (positions/block/sub indices + bf16 cast, zero host syncs), and
+the r4d prefill kernel (q_len > 10) or split-KV decode kernel (q_len <= 10,
+scratch via `r4d_attn_decode_h256_gqa6_scratch_bytes`, grow-only cached)
+reads the packed cache as a pure reader. Enabled per model build by passing
+`layer_type=CacheLayer_r4d` (`model_init.py` maps `EXL3_R4D_ATTN=bf16` to it;
+the `EXL3_R4D_DEFAULT=1` bundle also selects it on gfx1201 with r4d.so
+present, degrading to fp16 otherwise). Only the 27B full-attention geometry
+is served; anything else raises loudly (no fp16 fallback exists for these
+layers). `copy_page` moves whole 16-blocks; `get_kv` raises (fail fast);
+QSA-indexed layers keep the fp16-planes QSA cache; decode reuses the same
+packed cache (no second fp16 copy anywhere). Stage B (fp8) stays on the
+repack adapter (per-block scales would need calibration; out of scope).
+
+Unit tests (`tests/test_r4d_native.py`): prefill + chunked prefill + two
+decode steps vs fp32 SDPA on a scrambled page order (rel ~5e-3, bf16
+pipeline noise), partial `copy_page`, `get_kv` raising, and the
+OFF/DEFAULT/bundle switch semantics.
+
+Accuracy (27B, vs fp16 baseline): cases-v1 KLD 1.0e-4, 32K teacher-forced
+KLD 0.030 / top1 0.988 -- same bf16-intrinsic level as the repack adapter
+(0.031), acceptable per the vLLM-level decision.
+
+## 27B end-to-end (quiet R9700, random tokens, fresh cache/process)
+
+Chunked Generator path, max_chunk_size 2048, NEEDLE_STEPS=1 (full prefill +
+1 token). Configs: base (fp16) / attn (native bf16) / gdn (exact scan) /
+both. GDN choice: exact scan (no host syncs; the bundle uses exact
+throughout -- the span-gated stock path has slightly better KLD but its
+syncs cancel the speed gain).
+
+| ctx | base | attn | gdn | both |
+|---|---|---|---|---|
+| 8K | 6.9 | 6.8 | 6.8 | 7.1 |
+| 32K | 25.65 (25.9/25.4) | 24.2 (23.4/25.0) | 24.8 (24.1/25.5) | 23.7 (22.9/24.5) |
+| 64K | 55.8 (55.9/54.8/56.8) | 50.3 (n=1) | 54.25 (54.3/54.2) | 49.6 (49.8/49.5/49.5) |
+
+Kernel level (quiet, same shapes): Triton fp16 24.3 ms vs r4d native
+15.9 ms per 2048-chunk at 32K (1.53x, matches the original claim); repack
+adapter 18.2 ms. E2E translation is small because 32-64K prefill is
+linear-dominated (~95%): the measured both/base is 1.08x at 32K, 1.13x at
+64K -- below the 1.2x bar for a default flip. (64K runs are flaky in this
+harness: 3 of ~12 long runs died silently before first output and passed on
+rerun; all quoted cells are completed runs.) 128K (where attention
+dominates) does not fit this harness (pool + trellis OOM at 32 GB).
+
+Decode at 32K context (30 steps): base and both total 25.7 s both --
+no decode regression (approximate: prefill dominates; per-token delta below
+noise).
+
+## Default proposal (for user confirmation, NOT flipped)
+
+Bundle (`EXL3_R4D_DEFAULT=1` = native bf16 attention + exact GDN on gfx1201,
+`EXL3_R4D_OFF=1` to opt out) is implemented and tested, default unchanged.
+Measured: ~1.1x E2E at 32-64K, bf16-level KLD (0.03 at 32K, acceptable),
+no decode regression. Below the 1.2x bar -- the flip is not recommended
+yet; it would pay at 128K+ where attention dominates, or after linear
+speedups. Flip location if confirmed: `_r4d_native_cache_wanted` /
+`r4d_mode` / `r4d_gdn_exact_enabled` (one line each; arch/library guards
+stay).
+
 ## License handling
 
 libr4d and vllm-mxfp4 have no license (all rights reserved). This repo

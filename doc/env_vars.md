@@ -209,6 +209,25 @@ Path to `r4d_gdn2.so` (fallback `R4D_GDN2_SO`), the exact-scan module from
 `rocm_tools/build_r4d_gdn2.sh`, used when `EXL3_R4D_GDN_EXACT=1`. The stock
 `kkt_solve` still comes from `EXL3_R4D_LIB`.
 
+### `EXL3_R4D_OFF` (default: `0`)
+
+Set to `1` to disable every r4d backend (attention adapter + native cache,
+GDN stock + exact) and force the default fp16/FLA paths. Master kill
+switch; wins over every other r4d variable.
+
+### `EXL3_R4D_DEFAULT` (default: `0`)
+
+Set to `1` to opt into the proposed gfx1201 default bundle as one knob:
+native bf16 attention cache (`EXL3_R4D_ATTN=bf16` behavior) + exact GDN
+scan. Off by default (only item 1's tile change alters default behavior);
+the future default flip is a one-line change in `_r4d_native_cache_wanted`
+(model_init) / `r4d_mode` / `r4d_gdn_exact_enabled`. Never silent on other
+arches: the native path raises loudly off gfx1201, the adapter and GDN
+hooks decline cleanly. `EXL3_R4D_OFF=1` wins; explicit per-backend values
+win over the bundle; the bundle degrades to fp16/FLA when r4d.so is absent
+or the arch is not gfx1201. See `doc/r4d_attention.md` for the proposal and
+numbers.
+
 ### `EXL3_TRITON_BF16_IO` (default: `0`)
 
 Set to `1` to run the fp16 Triton prefill kernel over bf16-rounded Q/K/V

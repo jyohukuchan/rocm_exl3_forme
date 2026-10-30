@@ -3,6 +3,35 @@ from types import SimpleNamespace
 from . import Model, Config, Cache, Tokenizer
 from .loader import SafetensorsCollection, VariantSafetensorsCollection
 from .cache import CacheLayer_fp16, CacheLayer_quant, CacheLayer_i8f8
+from .cache.r4d import CacheLayer_r4d
+
+
+def _r4d_native_cache_wanted() -> bool:
+    """Native r4d cache layers wanted: explicit EXL3_R4D_ATTN=bf16, or the
+    EXL3_R4D_DEFAULT=1 bundle on gfx1201 with r4d.so present (graceful fp16
+    fallback otherwise; the future default flip changes only this helper)."""
+    from .modules.attention_fn.r4d_attn import (
+        r4d_bundle, r4d_lib_path, r4d_off)
+    if r4d_off():
+        return False
+    raw = _os.environ.get("EXL3_R4D_ATTN", "0").strip().lower()
+    explicit = raw in ("1", "on", "true", "bf16", "bf16kv")
+    if not explicit and not r4d_bundle():
+        return False
+    if r4d_lib_path() is None:
+        if explicit:
+            raise ValueError(
+                "EXL3_R4D_ATTN=bf16 needs EXL3_R4D_LIB pointing at r4d.so")
+        return False
+    if not explicit:
+        try:
+            import torch
+            arch = str(torch.cuda.get_device_properties(0).gcnArchName or "")
+            if not arch.split(":", 1)[0].strip().lower().startswith("gfx12"):
+                return False
+        except Exception:
+            return False
+    return True
 import os as _os
 from .generator.sampler import ComboSampler
 from argparse import ArgumentParser
@@ -318,6 +347,25 @@ def init(
                 layer_type = CacheLayer_quant,
                 k_bits = k_bits,
                 v_bits = v_bits
+            ) if draft_model_dir else None
+        elif _r4d_native_cache_wanted():
+            # Native r4d bf16 KV cache (Stage A): K/V live in r4d's block-16
+            # HND layout from the first write, prefill and decode run on it
+            # with no repack (doc/r4d_attention.md). Explicit EXL3_R4D_ATTN=bf16
+            # requires r4d.so (loud); the EXL3_R4D_DEFAULT=1 bundle degrades
+            # to fp16 when the library is absent or the arch is not gfx1201.
+            # No second fp16 copy is kept.
+            cache = Cache(
+                model,
+                max_num_tokens = args.cache_size,
+                layer_type = CacheLayer_r4d,
+                max_history = max_history,
+                max_batch_size = args.autosplit_max_batch_size,
+            )
+            draft_cache = Cache(
+                draft_model,
+                max_num_tokens = args.cache_size,
+                layer_type = CacheLayer_r4d
             ) if draft_model_dir else None
         else:
             cache = Cache(

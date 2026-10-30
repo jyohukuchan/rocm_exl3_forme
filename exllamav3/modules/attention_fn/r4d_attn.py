@@ -54,14 +54,41 @@ def r4d_lib_path() -> str | None:
     return None
 
 
+def r4d_off() -> bool:
+    """Master kill switch: EXL3_R4D_OFF=1 disables every r4d backend
+    (attention adapter + native cache, GDN stock + exact) and forces the
+    default fp16/FLA paths. Wins over every other r4d switch."""
+    return os.environ.get("EXL3_R4D_OFF", "0").strip().lower() not in (
+        "0", "", "off", "false")
+
+
+def r4d_bundle() -> bool:
+    """Proposed gfx1201 default bundle (native bf16 attention cache + exact
+    GDN) as one explicit knob. Off by default; the future default flip is a
+    one-line change at the use sites documented here (never silent on other
+    arches: every use site re-checks gfx1201 on the actual device)."""
+    return (os.environ.get("EXL3_R4D_DEFAULT", "0").strip().lower()
+            in ("1", "on", "true", "yes")) and not r4d_off()
+
+
 def r4d_mode() -> str:
-    """Requested backend mode: 'off', 'bf16' (Stage A) or 'fp8' (Stage B)."""
+    """Requested backend mode: 'off', 'bf16' (Stage A) or 'fp8' (Stage B).
+
+    An explicit EXL3_R4D_ATTN value always wins (unless EXL3_R4D_OFF=1);
+    when unset, the proposed-default bundle (EXL3_R4D_DEFAULT=1) selects
+    bf16.
+    """
+    if r4d_off():
+        return "off"
     raw = os.environ.get("EXL3_R4D_ATTN", "0").strip().lower()
     if raw in ("1", "on", "true", "bf16", "bf16kv"):
         return "bf16"
     if raw in ("2", "fp8", "fp8kv"):
         return "fp8"
-    return "off"
+    if raw in ("off", "false", "no", "disable", "disabled"):
+        return "off"
+    # Unset ("0"/"") or unrecognized: the bundle decides.
+    return "bf16" if r4d_bundle() else "off"
 
 
 def _legs_mode() -> int:
@@ -116,15 +143,34 @@ def _load():
         for name in (
             "r4d_attn_prefill_h256_gqa6_bf16kv",
             "r4d_attn_prefill_h256_gqa6_fp8kv",
+            "r4d_attn_decode_h256_gqa6_bf16kv",
         ):
             fn = getattr(lib, name)
             fn.argtypes = [ctypes.POINTER(_R4DArgs), ctypes.c_void_p]
             fn.restype = ctypes.c_int
+        sb = getattr(lib, "r4d_attn_decode_h256_gqa6_scratch_bytes")
+        sb.argtypes = [ctypes.POINTER(_R4DArgs)]
+        sb.restype = ctypes.c_long
         _lib = lib
         return _lib
     except Exception:
         _lib_failed = True
         return None
+
+
+_decode_scratch = None
+_decode_scratch_bytes = 0
+
+
+def _decode_scratch_buf(nbytes: int, dev: torch.device) -> ctypes.c_void_p | None:
+    """Grow-only split-KV partials buffer (no per-call alloc in steady state)."""
+    global _decode_scratch, _decode_scratch_bytes
+    if nbytes <= 0:
+        return None
+    if _decode_scratch is None or _decode_scratch_bytes < nbytes:
+        _decode_scratch = torch.empty((nbytes,), dtype=torch.uint8, device=dev)
+        _decode_scratch_bytes = nbytes
+    return ctypes.c_void_p(_decode_scratch.data_ptr())
 
 
 def _arch_is_gfx1201(device: torch.device) -> bool:
@@ -147,6 +193,115 @@ _attn_stats = {"calls": 0, "engaged": 0, "declined": 0, "adapter_s": 0.0}
 
 def r4d_attn_stats() -> dict:
     return dict(_attn_stats)
+
+
+# q_len at or below this goes to the split-KV decode kernel; longer runs go
+# to the prefill kernel (same rule as vllm-mxfp4: 64 rows / GQA 6 -> 10).
+_MAX_DECODE_QLEN = 10
+
+
+def fn_r4d_native_attn(args: AttnArgs, layer) -> torch.Tensor:
+    """Attention over a native ``CacheLayer_r4d`` (write-then-read).
+
+    Packs the new K/V rows into the layer's r4d-layout cache, then runs the
+    r4d prefill kernel (or the split-KV decode kernel for short queries) as
+    a pure reader. No gather, no repack, no host syncs on the hot path.
+    Raises on any inapplicable shape instead of declining: these layers
+    carry no fp16 cache to fall back to.
+    """
+    import time as _time
+
+    _t0 = _time.perf_counter() if os.environ.get("EXL3_R4D_STATS") == "1" else 0.0
+    out = _fn_r4d_native_attn_inner(args, layer)
+    if _t0:
+        _attn_stats["calls"] += 1
+        _attn_stats["engaged"] += 1
+        _attn_stats["adapter_s"] += _time.perf_counter() - _t0
+    return out
+
+
+def _fn_r4d_native_attn_inner(args: AttnArgs, layer) -> torch.Tensor:
+    if r4d_mode() != "bf16":
+        raise RuntimeError(
+            "CacheLayer_r4d needs EXL3_R4D_ATTN=bf16 (native bf16 cache)")
+    if (
+        args.is_varlen()
+        or args.q.dtype != torch.float16
+        or args.dim != 256
+        or args.num_q_heads % args.num_kv_heads != 0
+        or args.num_q_heads // args.num_kv_heads != 6
+        or not args.causal
+        or args.is_swa()
+        or (args.softcap or 0.0) != 0.0
+        or args.sinks is not None
+        or args.non_causal_spans
+        or args.q_cache is not None
+        or args.i8f8_cache is not None
+    ):
+        raise RuntimeError("CacheLayer_r4d: unsupported attention arguments")
+    if args.k is None or args.v is None:
+        raise RuntimeError("CacheLayer_r4d: missing new K/V rows")
+    if args.k.shape[1] != args.q_len or args.v.shape[1] != args.q_len:
+        raise RuntimeError("CacheLayer_r4d: K/V rows must match q_len")
+    if args.k.shape[0] != args.q.shape[0] or args.v.shape != args.k.shape:
+        raise RuntimeError("CacheLayer_r4d: batch mismatch")
+    if not (args.q.is_cuda and args.k.is_cuda):
+        raise RuntimeError("CacheLayer_r4d: tensors must be CUDA")
+    if not _arch_is_gfx1201(args.q.device):
+        raise RuntimeError("CacheLayer_r4d: needs gfx1201")
+    lib = _load()
+    if lib is None:
+        raise RuntimeError("CacheLayer_r4d: r4d.so missing or unloadable")
+
+    bsz, tq, hq, dim = args.q.shape
+    hkv = args.num_kv_heads
+    dev = args.q.device
+    bt = args.block_table
+    cs = args.cache_seqlens
+    if bt is None or cs is None:
+        raise RuntimeError("CacheLayer_r4d: paged call without block table")
+    if getattr(layer, "kv", None) is None:
+        raise RuntimeError("CacheLayer_r4d: cache not allocated (call alloc first)")
+
+    # Write-then-read on the same stream: new rows first, kernel second.
+    layer.write_kv(cs, bt, args.k, args.v, tq)
+
+    # EXL3 page -> 16 consecutive r4d blocks, device-side (no host sync).
+    pages = bt.shape[1]
+    bt16 = (bt.to(torch.int32).view(bsz, pages, 1) * _R4D_BLOCK
+            + torch.arange(_R4D_BLOCK, device=dev, dtype=torch.int32).view(1, 1, _R4D_BLOCK))
+    bt16 = bt16.reshape(bsz, pages * _R4D_BLOCK).contiguous()
+    nb = pages * _R4D_BLOCK
+    # Exact per-sequence lengths, device-side.
+    rseq = (cs.reshape(bsz) + tq).to(torch.int32)
+    max_ctx = int(nb * _R4D_BLOCK)
+
+    qb = args.q.reshape(bsz * tq, hq, dim).bfloat16().contiguous()
+    out_bf16 = torch.empty((bsz * tq, hq, dim), dtype=torch.bfloat16, device=dev)
+    kv = layer.kv
+    r4args = _R4DArgs(
+        qb.data_ptr(), kv.data_ptr(), bt16.data_ptr(), rseq.data_ptr(),
+        out_bf16.data_ptr(),
+        None, None, None, None,
+        bsz, tq, hq, hkv, dim, _R4D_BLOCK, nb,
+        kv.stride(0), kv.stride(1),
+        float(args.sm_scale), 0, max_ctx,
+    )
+    stream = ctypes.c_void_p(torch.cuda.current_stream(dev).cuda_stream)
+    if tq <= _MAX_DECODE_QLEN:
+        nbytes = int(lib.r4d_attn_decode_h256_gqa6_scratch_bytes(ctypes.byref(r4args)))
+        r4args.scratch = _decode_scratch_buf(nbytes, dev)
+        rc = lib.r4d_attn_decode_h256_gqa6_bf16kv(ctypes.byref(r4args), stream)
+        if rc != 0:
+            raise RuntimeError(f"r4d decode kernel failed (rc={rc})")
+    else:
+        rc = lib.r4d_attn_prefill_h256_gqa6_bf16kv(ctypes.byref(r4args), stream)
+        if rc != 0:
+            raise RuntimeError(f"r4d prefill kernel failed (rc={rc})")
+
+    out = torch.empty_like(args.q)
+    out.copy_(out_bf16.view_as(out).to(args.q.dtype))
+    return out
 
 
 def fn_r4d_attn_prefill(args: AttnArgs) -> torch.Tensor | None:

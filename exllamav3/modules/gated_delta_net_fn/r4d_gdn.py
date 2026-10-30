@@ -48,13 +48,29 @@ _GDN_SPAN_LIMIT = 100.0
 
 
 def r4d_gdn_enabled() -> bool:
-    return os.environ.get("EXL3_R4D_GDN", "0") not in ("0", "", "off", "false")
+    from ..attention_fn.r4d_attn import r4d_bundle, r4d_off
+
+    if r4d_off():
+        return False
+    if os.environ.get("EXL3_R4D_GDN", "0") not in ("0", "", "off", "false"):
+        return True
+    # Bundle default is the exact scan; plain stock scan stays explicit-only.
+    return False
 
 
 def r4d_gdn_exact_enabled() -> bool:
     """Exact-scan mode: implies the GDN hook is active (no need to also set
     ``EXL3_R4D_GDN``). See ``doc/r4d_gdn.md``."""
-    return os.environ.get("EXL3_R4D_GDN_EXACT", "0") not in ("0", "", "off", "false")
+    from ..attention_fn.r4d_attn import r4d_bundle, r4d_off
+
+    if r4d_off():
+        return False
+    raw = os.environ.get("EXL3_R4D_GDN_EXACT", "0").strip().lower()
+    if raw in ("off", "false", "no", "disable", "disabled"):
+        return False
+    if raw not in ("0", ""):
+        return True
+    return r4d_bundle()
 
 
 _exact_mod = None

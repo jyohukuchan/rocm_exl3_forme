@@ -1,5 +1,5 @@
 import torch
-from ...cache import CacheLayer, Cache, CacheLayer_quant, CacheLayer_i8f8
+from ...cache import CacheLayer, Cache, CacheLayer_quant, CacheLayer_i8f8, CacheLayer_r4d
 from .common import AttnArgs, AttnFn
 from .bighead_scalar import fn_bighead_scalar_attn
 from .torch import fn_torch_sdpa_fallback_cache, fn_torch_sdpa_fallback_nocache
@@ -113,11 +113,17 @@ def attn_dispatch(
     # materialized as full fp16 cache-sized temporaries
     q_cache = None
     i8f8_cache = None
+    r4d_layer = None
     if cache is not None:
         assert block_table is not None
         assert cache_seqlens is not None
         layer = cache if isinstance(cache, CacheLayer) else cache.layers[cache_idx, cache_instance or 0]
-        if (
+        if isinstance(layer, CacheLayer_r4d):
+            # Native r4d layout: the write happens inside fn_r4d_native_attn
+            # (write-then-read); no fp16 cache tensors exist for this layer.
+            r4d_layer = layer
+            k_cache, v_cache = None, None
+        elif (
             isinstance(layer, CacheLayer_i8f8) and
             q.dtype == torch.float16 and
             dim <= 512 and
@@ -189,12 +195,24 @@ def attn_dispatch(
         elif dispatch_cache is not None:
             dispatch_cache[hint_key] = fn_triton_paged_attn_prefill_i8f8_cached
 
+    # Native r4d cache layers (CacheLayer_r4d, EXL3_R4D_ATTN=bf16 at model
+    # build): write-then-read over the packed layout, prefill and decode.
+    # Raises on inapplicable shapes (no fp16 fallback exists for these
+    # layers); cache-less calls (cache=None) keep using the repack adapter
+    # below, which serves them.
+    if o is None and r4d_layer is not None:
+        # No dispatch-cache hint: the native entry takes (args, layer) while
+        # cached hints are called as fn(args); the branch above serves every
+        # call directly anyway.
+        from .r4d_attn import fn_r4d_native_attn
+        o = fn_r4d_native_attn(args, r4d_layer)
+
     # Opt-in libr4d prefill (EXL3_R4D_ATTN=bf16/fp8 with EXL3_R4D_LIB pointing at
     # a locally built r4d.so): bf16/fp8 KV + f16/PV8 legs over the paged fp16
     # cache at the 27B geometry. Off by default; when disabled or inapplicable
     # the call below returns None immediately and the dispatch below is
     # bit-for-bit the old path. Runs ahead of the INT8FP8 path (it is faster).
-    if o is None and q_cache is None and i8f8_cache is None:
+    if o is None and q_cache is None and i8f8_cache is None and r4d_layer is None:
         from .r4d_attn import fn_r4d_attn_prefill
         o = fn_r4d_attn_prefill(args)
         if o is not None and dispatch_cache is not None:

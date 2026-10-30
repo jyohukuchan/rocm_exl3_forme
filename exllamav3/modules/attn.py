@@ -973,6 +973,10 @@ class Attention(Module):
             # Round-2 packed cache is out of contract for QSA indexer planes;
             # those layers keep the fp16-planes QSA cache (unchanged behavior).
             return CacheLayer_qsa, kwargs
+        from ..cache.r4d import CacheLayer_r4d
+        if issubclass(default, CacheLayer_r4d):
+            # Native r4d layout carries no QSA side planes either.
+            return CacheLayer_qsa, kwargs
         if issubclass(default, CacheLayer_quant):
             return CacheLayer_qsa_quant, kwargs
         assert issubclass(default, CacheLayer_fp16), \
