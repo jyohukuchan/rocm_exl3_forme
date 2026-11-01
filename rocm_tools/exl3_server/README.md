@@ -50,6 +50,14 @@ python rocm_tools/exl3_server/server.py \
   -gs 24 -cs 8192 -ambs 1 -smn hy-memory
 ```
 
+The server, `Generator`, and model loading default to a 4096-token prefill chunk.
+This can increase temporary VRAM compared with 2048; for memory-constrained
+configurations set `-chunk_size 2048`, or pass `max_chunk_size=2048` to both
+`model.load()` and `Generator`. For model loading with no explicit chunk size,
+an attached cache smaller than 4096 bounds the load-time measurement; pass an
+explicit size when planning larger cacheless forwards. Existing explicit chunk
+settings are unchanged.
+
 For the V620 pair add `-tp -tpb nccl` and use `-gs 24,24`. ROCm uses RCCL
 through the `nccl` backend; the default CUDA `native` TP backend is not the
 ROCm TP implementation. Raise the launcher nofile limit before spawning workers:
