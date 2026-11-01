@@ -286,7 +286,7 @@ class Model(Model_TPMixin, Model_LSMixin):
         use_per_device: list[float] | float | None = None,
         tensor_p: bool = False,
         progressbar: bool = False,
-        max_chunk_size: int = 2048,
+        max_chunk_size: int | None = None,
         max_output_size: int = 32,
         max_output_factor: int = 1,
         callback: Callable[[int, int], None] | None = None,
@@ -341,7 +341,8 @@ class Model(Model_TPMixin, Model_LSMixin):
 
         :param max_chunk_size:
             The maximum number of tokens to expect in a single forward pass. Informs the layer split only, and
-            makes no difference when loading on a single device.
+            makes no difference when loading on a single device. Defaults to 4096, limited to the
+            capacity of any attached cache. Pass an explicit value when planning larger cacheless forwards.
 
         :param max_output_size:
             The maximum number of output tokens to expect in a single forward pass. Informs the estimate of the
@@ -396,6 +397,15 @@ class Model(Model_TPMixin, Model_LSMixin):
 
         assert not (bool(reserve_per_device) and bool(use_per_device)), \
             "Cannot specify both memory usage and memory reserve."
+
+        # The default measurement must fit an already attached cache. Explicit
+        # requests retain their original semantics, including capacity errors.
+        if max_chunk_size is None:
+            max_chunk_size = 4096
+            attached_caches = [ref() for ref in self.cache_weakrefs.values()]
+            cache_capacities = [cache.max_num_tokens for cache in attached_caches if cache is not None]
+            if cache_capacities:
+                max_chunk_size = min(max_chunk_size, min(cache_capacities))
 
         assert max_chunk_size >= 1, "max_chunk_size must be positive"
         assert max_output_size >= 1, "max_output_size must be positive"

@@ -31,7 +31,7 @@ class Generator:
         cache: Cache,
         tokenizer: Tokenizer,
         max_batch_size: int = 256,
-        max_chunk_size: int = 2048,
+        max_chunk_size: int = 4096,
         max_q_size: int = 8,
         draft_model: Model | None = None,
         draft_cache: Cache | None = None,
