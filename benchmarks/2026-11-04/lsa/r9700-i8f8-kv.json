@@ -1,0 +1,48 @@
+{
+  "model": "/work/models/qwen38-27b-exl3-305-int8grid",
+  "lsa": {
+    "projections": "/work/models/lsa/qwen38_27b.pt"
+  },
+  "cache_quant": null,
+  "gpus": [
+    "AMD Radeon AI PRO R9700"
+  ],
+  "input_tokens": 8192,
+  "batch": 1,
+  "runs": [
+    {
+      "repeat": 0,
+      "seconds": 7.45136195095256,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 0,
+          "time_prefill": 6.757418394088745,
+          "time_generate": 0.6925907135009766
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "seconds": 0.9850602559745312,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 7936,
+          "time_prefill": 0.36654114723205566,
+          "time_generate": 0.6010828018188477
+        }
+      ]
+    }
+  ],
+  "cache_layer_types": [
+    "CacheLayer_lsa_i8f8"
+  ],
+  "tree_groups": 0
+}

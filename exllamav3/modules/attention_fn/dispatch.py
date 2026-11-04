@@ -118,7 +118,7 @@ def attn_dispatch(
         assert block_table is not None
         assert cache_seqlens is not None
         layer = cache if isinstance(cache, CacheLayer) else cache.layers[cache_idx, cache_instance or 0]
-        if isinstance(layer, CacheLayer_r4d):
+        if isinstance(layer, CacheLayer_r4d) and not getattr(layer, "lsa_materialize", False):
             # Native r4d layout: the write happens inside fn_r4d_native_attn
             # (write-then-read); no fp16 cache tensors exist for this layer.
             r4d_layer = layer

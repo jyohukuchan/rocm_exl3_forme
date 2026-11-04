@@ -24,6 +24,13 @@ class LSASettings:
     bucket_size: int = 8
     bucket_cap: int = 16
     index_dim: int | None = None
+    top_level: int = 0
+    node_bucket_size: int | list[int] | None = None
+    node_cluster_block_size: int | list[int] | None = None
+    beam_width: int | list[int] | None = None
+    start_nodes: int | None = None
+    node_centroid_precision: str = "bf16"
+    query_heads: str = "all"
 
     def __post_init__(self):
         for name in ("window_size", "top_k", "top_p", "pool_size", "bucket_size", "bucket_cap"):
@@ -38,6 +45,31 @@ class LSASettings:
             raise ValueError("LSA pool_size must divide bucket_size, and bucket_size must divide window_size")
         if self.bucket_cap < 2 * self.bucket_size:
             raise ValueError("LSA bucket_cap must be at least twice bucket_size for Ward to reach its bucket count")
+        if not isinstance(self.top_level, int) or isinstance(self.top_level, bool) or self.top_level < 0:
+            raise ValueError("LSA top_level must be a nonnegative integer")
+        if self.query_heads not in ("all", "rank"):
+            raise ValueError("LSA query_heads must be all or rank")
+        if self.node_centroid_precision not in ("bf16", "fp8"):
+            raise ValueError("LSA node_centroid_precision must be bf16 or fp8")
+        if self.start_nodes is not None and self.start_nodes < 1:
+            raise ValueError("LSA start_nodes must be positive")
+        for level in range(1, self.top_level + 1):
+            size, block, beam = (self.at(name, level) for name in (
+                "node_bucket_size", "node_cluster_block_size", "beam_width"))
+            if size < 2 or size & (size - 1) or block % size or beam < 1:
+                raise ValueError("LSA tree requires a power-of-two node size, divisible cluster blocks and positive beams")
+
+    def at(self, name, level):
+        value = getattr(self, name)
+        if value is None:
+            value = {"node_bucket_size": 4, "node_cluster_block_size": 4096, "beam_width": 2048}[name]
+        if isinstance(value, (list, tuple)):
+            if len(value) != self.top_level:
+                raise ValueError(f"LSA {name} needs one value or {self.top_level} values")
+            value = value[level - 1]
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            raise ValueError(f"LSA {name} must be a positive integer")
+        return value
 
 
 def settings_from_config(config):
@@ -46,7 +78,7 @@ def settings_from_config(config):
         return None
     body = dict(body)
     # These describe the published Qwen maps; they are accepted for config portability.
-    for key, expected in (("input", "key_and_query"), ("query_heads", "all"), ("top_level", 0)):
+    for key, expected in (("input", "key_and_query"),):
         if key in body and body.pop(key) != expected:
             raise ValueError(f"EXL3 LSA currently implements {key}={expected!r}")
     path = Path(body["projections"]).expanduser()
@@ -130,7 +162,9 @@ class LSAIndexer:
             # Linear projection precedes reduction; normalization must follow it.
             joined = torch.stack((query, key)).contiguous()
             params["backend"].all_reduce(joined)
-            query, key = joined.unbind(0)
+            key = joined[1]
+            if self.settings.query_heads == "all":
+                query = joined[0]
         return F.normalize(query, dim=-1, eps=1e-12), F.normalize(key, dim=-1, eps=1e-12)
 
     def empty_project(self, x, params):
@@ -144,10 +178,17 @@ class LSAIndexer:
     def can_read_dense(self, end):
         """A dense read is exact while every closed bucket and historical key fits."""
         s = self.settings
+        if s.top_level:
+            import math
+            block = s.at("node_cluster_block_size", 1)
+            page = math.lcm(8192, s.window_size)
+            first = math.ceil(block * max(1, 4096 // block) * s.bucket_size / page) * page
+            if end > first:
+                return False  # A beam can prune even when the flat budget covers the context.
         buckets = max(0, (end - 1) // s.window_size) * (s.window_size // s.bucket_size)
         return end <= s.top_k + s.window_size + s.sink_size and buckets <= s.top_p
 
-    def cluster(self, keys):
+    def cluster(self, keys, return_sums=False):
         """Closed blocks [G, window, dim] -> normalized centroids and local member ids."""
         s = self.settings
         pool_size = s.pool_size or 1
@@ -170,17 +211,20 @@ class LSAIndexer:
         sums = (gathered * (pool_members >= 0)[..., None]).sum(2)
         centroids = F.normalize(sums, dim=-1, eps=1e-30)
         members = bucket_members_from_labels(labels.repeat_interleave(pool_size, 1), buckets, s.bucket_cap)
-        return centroids, members
+        return (centroids, members, sums) if return_sums else (centroids, members)
 
-    def select(self, queries, positions, centroids, members):
+    def select(self, queries, positions, centroids, members, tree=None):
         s = self.settings
-        scores = queries.float() @ centroids.float().T
-        bucket_ids = torch.arange(centroids.shape[0], device=queries.device)
-        visible = positions[:, None] // s.window_size * (s.window_size // s.bucket_size)
-        scores.masked_fill_(bucket_ids[None, :] >= visible, -torch.inf)
-        # Stable order is the reference design's tie break, including zero-vector buckets.
-        picks = scores.argsort(dim=1, descending=True, stable=True)[:, :s.top_p]
-        picks = torch.where(picks < visible, picks, -1).int().contiguous()
+        if tree is not None:
+            picks = tree.pick(queries, positions, centroids)
+        else:
+            scores = queries.float() @ centroids.float().T
+            bucket_ids = torch.arange(centroids.shape[0], device=queries.device)
+            visible = positions[:, None] // s.window_size * (s.window_size // s.bucket_size)
+            scores.masked_fill_(bucket_ids[None, :] >= visible, -torch.inf)
+            # Stable order is the reference design's tie break, including zero-vector buckets.
+            picks = scores.argsort(dim=1, descending=True, stable=True)[:, :s.top_p]
+            picks = torch.where(picks < visible, picks, -1).int().contiguous()
         if queries.is_cuda:
             from ..vendor.lsa.expansion import expand_in_order
             cap = members.shape[1]
@@ -208,13 +252,20 @@ class LSAIndexer:
             cache_layer.update_kv_direct(cache_seqlens, block_table, k, v, t)
         outputs = []
         for batch in range(b):
+            tree = None
             start = int(past[batch]) if past is not None else 0
             positions = torch.arange(start, start + t, dtype=torch.int32, device=q.device)
             closed = (start + t - 1) // self.settings.window_size
             if cache_layer is None:
                 keys = key[batch, :closed * self.settings.window_size].reshape(closed, self.settings.window_size, -1)
                 if closed:
-                    centroids, members = self.cluster(keys)
+                    clustered = self.cluster(keys, return_sums=bool(self.settings.top_level))
+                    centroids, members = clustered[:2]
+                    if self.settings.top_level:
+                        from .lsa_tree import TreeStore
+                        sums = clustered[2].flatten(0, 1)
+                        store = TreeStore(self.settings, len(sums), self.index_dim, q.device)
+                        tree = store.view(sums, list(range(len(sums))))
                     offsets = torch.arange(closed, device=q.device)[:, None, None] * self.settings.window_size
                     members = torch.where(members >= 0, members + offsets, -1)
                     centroids, members = centroids.flatten(0, 1), members.flatten(0, 1)
@@ -222,15 +273,18 @@ class LSAIndexer:
                     centroids = q.new_empty((0, self.index_dim), dtype=torch.float32)
                     members = torch.empty((0, self.settings.bucket_cap), dtype=torch.int32, device=q.device)
             else:
-                centroids, members = cache_layer.buckets(self, block_table[batch], closed)
-            indices = self.select(query[batch], positions, centroids, members)
+                bucketed = cache_layer.buckets(self, block_table[batch], closed, with_tree=bool(self.settings.top_level))
+                centroids, members = bucketed[:2]
+                tree = bucketed[2] if self.settings.top_level else None
+            indices = self.select(query[batch], positions, centroids, members, tree)
             qc = None
             bt = None
             if cache_layer is None:
                 keys, values = k[batch].contiguous(), v[batch].contiguous()
             else:
                 bt = block_table[batch:batch + 1].expand(t, -1).contiguous()
-                if hasattr(cache_layer, "get_qkv") and not cache_layer.compand_a:
+                from ..cache.quant import CacheLayer_quant
+                if isinstance(cache_layer, CacheLayer_quant) and not cache_layer.compand_a:
                     keys, sk, values, sv, kb, vb = cache_layer.get_qkv()
                     qc = (sk.flatten(0, 1), sv.flatten(0, 1), kb, vb)
                 else:

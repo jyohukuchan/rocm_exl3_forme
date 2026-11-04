@@ -977,10 +977,16 @@ class Attention(Module):
         """QSA modules need the indexer side planes on their cache layer: map the requested
         K/V layer type to its planes-carrying variant (fp16 or quantized)."""
         if self.lsa_indexer is not None:
-            from ..cache.lsa import CacheLayer_lsa, CacheLayer_lsa_quant
+            from ..cache.lsa import CacheLayer_lsa, CacheLayer_lsa_quant, CacheLayer_lsa_i8f8, CacheLayer_lsa_r4d
             from ..cache.quant import CacheLayer_quant
+            from ..cache.i8f8 import CacheLayer_i8f8
+            from ..cache.r4d import CacheLayer_r4d
             if issubclass(default, CacheLayer_quant):
                 return CacheLayer_lsa_quant, kwargs
+            if issubclass(default, CacheLayer_i8f8):
+                return CacheLayer_lsa_i8f8, kwargs
+            if issubclass(default, CacheLayer_r4d):
+                return CacheLayer_lsa_r4d, kwargs
             return CacheLayer_lsa, kwargs
         if self.qsa_indexer is None:
             return default, kwargs
@@ -1143,7 +1149,8 @@ class Attention(Module):
             from ..cache import CacheLayer
             lsa_layer = cache if isinstance(cache, CacheLayer) else cache.layers[self.layer_idx, params.get("layer_instance") or 0]
             past = get_for_device(params, "cache_seqlens", "cpu")
-            lsa_sparse = causal and non_causal_spans is None and not self.lsa_indexer.can_read_dense(int(past.max()) + seqlen)
+            lsa_sparse = causal and non_causal_spans is None and (
+                getattr(lsa_layer, "lsa_always_sparse", False) or not self.lsa_indexer.can_read_dense(int(past.max()) + seqlen))
             if not lsa_sparse:
                 # Retain index keys even for dense/vision-span forwards; a subsequent
                 # decode or verification can cross into the sparse regime.

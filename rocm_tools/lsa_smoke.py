@@ -63,6 +63,9 @@ def main():
         if not finite or len(completed) != args.batch:
             raise RuntimeError("Generator did not complete all jobs with finite logits")
     if args.json_out:
+        report["cache_layer_types"] = sorted({type(layer).__name__ for layer in cache.layers.values()})
+        report["tree_groups"] = sum(len(group.cached) for layer in cache.layers.values()
+                                   if getattr(layer, "tree_store", None) is not None for group in layer.tree_store.groups)
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
         args.json_out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     generator.clear_queue()

@@ -1,9 +1,11 @@
 # Qwen3.8-27B: D-LSA on ROCm
 
-Qwen3.8-27B can use the published **D-LSA Flat** indexer with ordinary EXL3
+Qwen3.8-27B can use the published **D-LSA Flat and Tree** indexers with ordinary EXL3
 loading and generation. V620 (gfx1030) and R9700 (gfx1201) use the same Triton
 implementation. FP16 KV and the existing independently configurable K/V 2–8 bit
 caches are supported. Model weight quantization is independent of LSA.
+The existing INT8/FP8 and native r4d BF16 cache storage can also be selected;
+LSA preserves their requested format instead of replacing it with FP16.
 
 The model's 16 full-attention layers use LSA. Its 48 Gated DeltaNet layers,
 vision tower, output gates and native RoPE settings retain their usual behavior.
@@ -42,12 +44,38 @@ Optional indexer settings use JSON, for example:
 --lsa-config '{"top_k":2048,"top_p":1024,"window_size":512,"sink_size":4}'
 ```
 
+The official Qwen Tree configuration uses the same projection file:
+
+```bash
+--lsa-config '{"top_level":16,"node_bucket_size":4,"node_cluster_block_size":4096,"beam_width":2048,"start_nodes":32768,"node_centroid_precision":"fp8"}'
+```
+
+`top_level=0` is Flat, `top_level=1` is a fixed hierarchy, and larger values
+grow additional levels. Node sizes, cluster block sizes and beam widths accept
+one integer or one integer per level. Node centroids use `bf16` or `fp8` storage.
+The tree grows at 8,192-token index-page boundaries; each query uses the levels
+that were visible at its page start and scores uncovered buckets directly.
+The node grouping and beam search follow the official reference. `start_nodes`
+selects the lowest level within the requested frontier size; `null` starts at
+the highest available level. `query_heads` accepts both `all` (the default)
+and `rank`, matching the official TP query selection choices.
+
+The training-free variant uses the public
+`qwen38_27b__long-16k-1M-heavy-key-and-query-pca-step0.pt` projection asset
+through the same `--lsa-projections` argument. Its file layout is identical;
+no checkpoint rewrite or special loader is needed.
+
 Defaults are `top_k=4096`, `top_p=1024`, `window_size=512`, `sink_size=4`,
 `pool_size=4`, `bucket_size=8`, `bucket_cap=16`. The map determines `index_dim`
 (64 for the release). `index_dim`, if supplied, must match the map.
 `pool_size: null` disables pooling, as in the upstream configuration. Pool,
 bucket and window sizes must nest, and the Ward cap must be at least twice
 the average bucket size, as in the official implementation.
+
+`EXL3_CACHE_I8F8=1` continues to select INT8/FP8 KV storage. For LSA,
+`EXL3_R4D_ATTN=bf16` selects native r4d BF16 storage without requiring libr4d:
+the LSA sparse read uses Triton. Other models retain their usual libr4d path.
+Nonzero cache companding is also supported through the ordinary dequantizer.
 
 ## Python API and model config
 
@@ -91,10 +119,11 @@ buckets; their members are expanded to long-range keys plus the sink/window,
 without duplicates or future positions. Short contexts use dense attention
 whenever the LSA budgets provably cover every causal key.
 
-The index is built from normalized Q/K before KV cache packing. Quantized
-attention reads only selected packed K/V rows, with online dequantization.
-Nonzero cache companding uses the existing dequantization fallback. Selection
-does not require a second unquantized copy of the original KV cache.
+The index is built from normalized Q/K before KV cache packing. Standard 2–8 bit
+KV attention reads selected packed rows with online dequantization. INT8/FP8,
+r4d BF16 and nonzero companding preserve their storage and currently use a
+temporary FP16 materialization for the sparse reader. Selection does not
+require a second persistent unquantized copy of the original KV cache.
 
 The projected keys and page versions are page-major cache tensors, so partial
 prefix copies, defragmentation and CPU paging carry them with KV. A bounded
@@ -104,17 +133,24 @@ keys. Page-version storage respects the native 16-byte rotation alignment.
 TP projects local heads before summing index partials and normalizing; headless
 ranks participate in the same collective. KV remains sharded, while the small
 index planes and maps are replicated and accounted for by the TP allocator.
+Tree node groups are cached by their child page versions in bounded workspaces.
+The hierarchy keeps unnormalized key sums when forming higher levels, and
+uses the official factor of 16 for FP8 node centroid storage. Beam selection
+respects page-time visibility and keeps stable id ordering on score ties.
 
 LSA reduces the KV **read**, not the stored KV length. This implementation uses
 FP32 projected keys and centroids. At the default settings the per-token index
 storage is approximately 296 bytes per full-attention layer (about 148 MiB
 for 32K across all 16 layers), plus small maps/page metadata and temporary
 selection workspaces. K/V quantization still reduces the original KV storage.
+Tree additionally stores leaf key sums and its reachable node levels; these
+are included in cache/TP memory accounting.
 
 LSA attention currently takes the eager path, rather than the existing fused
 C++ attention CUDA graph. Other modules retain their existing dispatch. The
-user does not need graph-disable flags. This port implements D-LSA Flat;
-D-LSA Tree and training N-LSA are separate methods and are not implemented here.
+user does not need graph-disable flags. This port implements the D-LSA
+inference methods for the pretrained checkpoint. N-LSA trains a different
+model from scratch and is not a replacement map for this Qwen checkpoint.
 
 ## Validation
 
@@ -128,6 +164,9 @@ These cover GQA projection, full-budget causal coverage, Ward/expansion versus
 the reference, FP16/quantized sparse reads versus an independent gather-softmax,
 page overwrite/copy/restore/rotation, and TP projection reduction including
 headless participants. The GPU tests run on either V620 or R9700.
+Tree tests compare page-visible multilevel beam results against the upstream
+CPU oracle on both devices, including BF16/FP8 nodes and uncovered frontiers.
+The cache tests also exercise companding, INT8/FP8, r4d storage and page rotation.
 
 Exercise the standard loader and Generator with a retrieval prompt:
 

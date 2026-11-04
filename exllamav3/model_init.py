@@ -7,7 +7,7 @@ from .cache import CacheLayer_fp16, CacheLayer_quant, CacheLayer_i8f8
 from .cache.r4d import CacheLayer_r4d
 
 
-def _r4d_native_cache_wanted() -> bool:
+def _r4d_native_cache_wanted(lsa: bool = False) -> bool:
     """Native r4d cache layers wanted: explicit EXL3_R4D_ATTN=bf16, or the
     EXL3_R4D_DEFAULT=1 bundle on gfx1201 with r4d.so present (graceful fp16
     fallback otherwise; the future default flip changes only this helper)."""
@@ -17,6 +17,9 @@ def _r4d_native_cache_wanted() -> bool:
         return False
     raw = _os.environ.get("EXL3_R4D_ATTN", "0").strip().lower()
     explicit = raw in ("1", "on", "true", "bf16", "bf16kv")
+    if lsa and explicit:
+        # LSA reads this storage through Triton, so it does not need libr4d.
+        return True
     if not explicit and not r4d_bundle():
         return False
     if r4d_lib_path() is None:
@@ -355,7 +358,7 @@ def init(
                 k_bits = k_bits,
                 v_bits = v_bits
             ) if draft_model_dir else None
-        elif _r4d_native_cache_wanted():
+        elif _r4d_native_cache_wanted(lsa=bool(config.lsa)):
             # Native r4d bf16 KV cache (Stage A): K/V live in r4d's block-16
             # HND layout from the first write, prefill and decode run on it
             # with no repack (doc/r4d_attention.md). Explicit EXL3_R4D_ATTN=bf16

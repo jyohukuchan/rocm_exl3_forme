@@ -319,6 +319,234 @@ def ward_merge(
     return labels, reached.bool()
 
 
+@triton.jit
+def _nearest_open_kernel(
+    key_sums_ptr: tl.tensor,
+    square_ptr: tl.tensor,
+    order_ptr: tl.tensor,
+    count_ptr: tl.tensor,
+    key_ptr: tl.tensor,
+    P: tl.tensor,
+    D: tl.constexpr,
+    BLOCK: tl.constexpr,
+    PREC: tl.constexpr,
+) -> None:
+    """Find each open bucket's cheapest open partner by the Ward cost, a tile of them a program.
+
+    The open buckets are listed first in `order`, `count` of them. A program past the count does nothing.
+
+    Args:
+        key_sums_ptr: Bucket key sums [G, P, D] fp32.
+        square_ptr: Squared lengths of the key sums [G, P] fp32.
+        order_ptr: Bucket numbers, the open ones first [G, P] int32.
+        count_ptr: Open buckets each block holds [G] int32.
+        key_ptr: Cheapest partner's merge cost key packed with its place [G, P] int64.
+    """
+    block = tl.program_id(0).to(tl.int64)
+    open_count = tl.load(count_ptr + block)
+    first = tl.program_id(1) * BLOCK
+    if first < open_count:
+        lane = tl.arange(0, BLOCK)
+        dims = tl.arange(0, D)
+        base = block * P
+        rows = first + lane
+        row_open = rows < open_count
+        row_at = tl.load(order_ptr + base + rows, mask=row_open, other=0)
+        row_sums = tl.load(key_sums_ptr + (base + row_at)[:, None] * D + dims[None, :])
+        row_square = tl.load(square_ptr + base + row_at)
+        best = tl.full([BLOCK], MAX_KEY, tl.int64)
+        for column_first in range(0, open_count, BLOCK):
+            columns = column_first + lane
+            column_open = columns < open_count
+            column_at = tl.load(order_ptr + base + columns, mask=column_open, other=0)
+            column_sums = tl.load(key_sums_ptr + (base + column_at)[:, None] * D + dims[None, :])
+            column_square = tl.load(square_ptr + base + column_at)
+            merge_cost = _merge_cost(row_sums, row_square, column_sums, column_square, PREC)
+            allowed = row_open[:, None] & column_open[None, :] & (rows[:, None] != columns[None, :])
+            key = tl.where(allowed, _merge_cost_key(merge_cost, columns[None, :]), MAX_KEY)
+            best = tl.minimum(best, tl.min(key, axis=1))
+        tl.store(key_ptr + base + rows, best, mask=row_open)
+
+
+@triton.jit
+def _fix_mutual_kernel(
+    key_ptr: tl.tensor,
+    order_ptr: tl.tensor,
+    count_ptr: tl.tensor,
+    partner_ptr: tl.tensor,
+    keep_ptr: tl.tensor,
+    P: tl.tensor,
+    BLOCK: tl.constexpr,
+) -> None:
+    """Pair every two open buckets that are each other's cheapest, and keep the rest open for the next round.
+
+    Args:
+        key_ptr: Cheapest partner's merge cost key packed with its place [G, P] int64.
+        order_ptr: Bucket numbers, the open ones first [G, P] int32.
+        count_ptr: Open buckets each block holds [G] int32.
+        partner_ptr: Each bucket's partner [G, P] int64, written for a pair.
+        keep_ptr: Whether the bucket in each place stays open [G, P] int32.
+    """
+    block = tl.program_id(0).to(tl.int64)
+    rows = tl.program_id(1) * BLOCK + tl.arange(0, BLOCK)
+    base = block * P
+    open_count = tl.load(count_ptr + block)
+    row_open = rows < open_count
+    index_mask = (1 << INDEX_BITS) - 1
+    key = tl.load(key_ptr + base + rows, mask=row_open, other=MAX_KEY)
+    best = tl.where(key < MAX_KEY, (key & index_mask).to(tl.int64), -1)
+    back = tl.load(key_ptr + base + tl.maximum(best, 0), mask=best >= 0, other=MAX_KEY)
+    mutual = row_open & (best >= 0) & (back < MAX_KEY) & ((back & index_mask) == rows)
+    bucket = tl.load(order_ptr + base + rows, mask=row_open, other=0)
+    mate = tl.load(order_ptr + base + tl.maximum(best, 0), mask=mutual, other=0)
+    tl.store(partner_ptr + base + bucket, mate, mask=mutual)
+    tl.store(keep_ptr + base + rows, (row_open & ~mutual).to(tl.int32))
+
+
+@triton.jit
+def _compact_kernel(
+    order_ptr: tl.tensor,
+    keep_ptr: tl.tensor,
+    next_ptr: tl.tensor,
+    count_ptr: tl.tensor,
+    P: tl.tensor,
+    BLOCK: tl.constexpr,
+) -> None:
+    """Move the kept buckets to the front of the next order, in order, one program a block.
+
+    Args:
+        order_ptr: Bucket numbers [G, P] int32.
+        keep_ptr: Whether the bucket in each place stays open [G, P] int32.
+        next_ptr: The next order [G, P] int32.
+        count_ptr: Buckets kept a block [G] int32.
+    """
+    block = tl.program_id(0).to(tl.int64)
+    base = block * P
+    lane = tl.arange(0, BLOCK)
+    kept = 0
+    for first in range(0, P, BLOCK):
+        rows = first + lane
+        keep = tl.load(keep_ptr + base + rows)
+        places = kept + tl.cumsum(keep, axis=0) - 1
+        tl.store(next_ptr + base + places, tl.load(order_ptr + base + rows), mask=keep > 0)
+        kept += tl.sum(keep, axis=0)
+    tl.store(count_ptr + block, kept)
+
+
+def pair_leftovers(partner: torch.Tensor) -> None:
+    """Pair every block's still open buckets in index order, in place.
+
+    Args:
+        partner: Each bucket's partner [G, P] int64, -1 for an open one; an even count of them a block, since
+            each pair takes two. Written in place.
+    """
+    for block in torch.nonzero((partner < 0).any(1)).flatten().tolist():
+        left = torch.nonzero(partner[block] < 0).flatten()
+        partner[block, left[0::2]] = left[1::2]
+        partner[block, left[1::2]] = left[0::2]
+
+
+def check_buckets(key_sums: torch.Tensor) -> None:
+    """Check the key sums a pairing takes.
+
+    Args:
+        key_sums: Each block's buckets' key sums [G, P, index_dim].
+
+    Raises:
+        ValueError: If P is not a power of two from 32 to 4,096, or index_dim is not a multiple of 16.
+    """
+    _, buckets, index_dim = key_sums.shape
+    if buckets & (buckets - 1) or not 32 <= buckets <= 1 << 12:
+        raise ValueError(f"a block's buckets must be a power of two from 32 to 4,096 - got {buckets}")
+    if index_dim % 16:
+        raise ValueError(f"the index dim must be a multiple of 16 - got {index_dim}")
+
+
+def cluster_node_buckets(
+    key_sums: torch.Tensor, precision: str = "tf32x3", rounds_a_check: int = 8
+) -> torch.Tensor:
+    """Pair every block's buckets by the Ward cost, the pairs each other's cheapest fixed round by round.
+
+    `ward_merge` to half the buckets under a cap of two - a perfect matching - with each round's search spread
+    over many programs rather than one a block, so a lone block of 4,096 buckets is not one multiprocessor's
+    work. A round searches only the buckets still unpaired, listed first on the device, which halve about every
+    round, so a block costs little more than its first round; the host looks whether any is left once every
+    `rounds_a_check` rounds, and a round past the last finds none and changes nothing.
+
+    Args:
+        key_sums: Each block's buckets' key sums [G, P, index_dim] fp32, P a power of two from 32 to 4,096, index_dim a multiple
+            of 16.
+        precision: The Gram matrix's dot - `ieee`, `tf32x3` or `tf32`.
+        rounds_a_check: Rounds launched between two looks at what is left.
+
+    Returns:
+        Each bucket's pair [G, P] int64, numbered from 0 within its block in the order of its first bucket.
+
+    Raises:
+        ValueError: If P is not a power of two from 32 to 4,096, or index_dim is not a multiple of 16.
+    """
+    check_buckets(key_sums)
+    blocks, buckets, index_dim = key_sums.shape
+    device = key_sums.device
+    key_sums = key_sums.float().contiguous()
+    square = (key_sums * key_sums).sum(-1).contiguous()
+    partner = torch.full((blocks, buckets), -1, dtype=torch.int64, device=device)
+    key = torch.empty(blocks, buckets, dtype=torch.int64, device=device)
+    keep = torch.empty(blocks, buckets, dtype=torch.int32, device=device)
+    # The open buckets listed first, and how many of them - two lists, one read while the other is written
+    order = torch.arange(buckets, device=device).expand(blocks, buckets).contiguous()
+    spare = torch.empty_like(order)
+    count = torch.full((blocks,), buckets, device=device, dtype=torch.int32)
+    tile = min(buckets, 64)
+    grid = (blocks, buckets // tile)
+    # A perfect matching fixes at least the cheapest open pair of every block a round, and real keys halve the open
+    # buckets about every round; near-identical buckets fix a pair or none a round - rounding can leave a tie without
+    # a mutual pair - so a check that finds under a 64th of them paired stops, and they pair in index order
+    previous = count.clone()
+    open_any = True
+    for done in range(0, buckets // 2, rounds_a_check):
+        for _ in range(min(rounds_a_check, buckets // 2 - done)):
+            _nearest_open_kernel[grid](
+                key_sums,
+                square,
+                order,
+                count,
+                key,
+                buckets,
+                D=index_dim,
+                BLOCK=tile,
+                PREC=PRECISION[precision],
+                num_warps=4,
+            )
+            _fix_mutual_kernel[grid](key, order, count, partner, keep, buckets, BLOCK=tile, num_warps=4)
+            _compact_kernel[(blocks,)](order, keep, spare, count, buckets, BLOCK=tile, num_warps=4)
+            order, spare = spare, order
+        # One look a check - whether any bucket is open, and whether the rounds since the last look stalled
+        open_any, stalled = torch.stack([count.any(), ((previous - count) * 64 < previous).all()]).tolist()
+        if not open_any or stalled:
+            break
+        previous = count.clone()
+    if open_any:
+        pair_leftovers(partner)
+    return number_pairs(partner)
+
+
+def number_pairs(partner: torch.Tensor) -> torch.Tensor:
+    """Number each block's pairs from 0 in the order of their first bucket.
+
+    Args:
+        partner: Each bucket's partner [G, P] int64.
+
+    Returns:
+        Each bucket's pair [G, P] int64.
+    """
+    blocks, buckets = partner.shape
+    index = torch.arange(buckets, device=partner.device).expand(blocks, buckets)
+    first = torch.minimum(index, partner)
+    number = torch.cumsum((index == first).long(), 1) - 1
+    return number.gather(1, first)
+
+
 def bucket_members_from_labels(labels: torch.Tensor, bucket_count: int, bucket_cap: int) -> torch.Tensor:
     """Turn each block's labels into its member table - the keys of every bucket, in position order.
 

@@ -1,0 +1,56 @@
+{
+  "model": "/work/models/qwen38-27b-exl3-305-int8grid",
+  "lsa": {
+    "top_level": 16,
+    "node_bucket_size": 4,
+    "node_cluster_block_size": 4096,
+    "beam_width": 2048,
+    "start_nodes": 32768,
+    "node_centroid_precision": "fp8",
+    "query_heads": "rank",
+    "projections": "/work/models/lsa/qwen38_27b.pt"
+  },
+  "cache_quant": "5,4",
+  "gpus": [
+    "AMD Radeon Pro V620",
+    "AMD Radeon Pro V620"
+  ],
+  "input_tokens": 32768,
+  "batch": 1,
+  "runs": [
+    {
+      "repeat": 0,
+      "seconds": 107.82725582795683,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 32768,
+          "new_tokens": 7,
+          "cached_tokens": 0,
+          "time_prefill": 105.88863706588745,
+          "time_generate": 1.9349603652954102
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "seconds": 2.6253245379775763,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 32768,
+          "new_tokens": 7,
+          "cached_tokens": 32512,
+          "time_prefill": 1.0931897163391113,
+          "time_generate": 1.5208377838134766
+        }
+      ]
+    }
+  ],
+  "cache_layer_types": [
+    "CacheLayer_lsa_quant"
+  ],
+  "tree_groups": 0
+}

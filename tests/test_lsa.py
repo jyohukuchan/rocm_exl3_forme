@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import pytest
 
 from exllamav3.modules.lsa import LSAIndexer, LSASettings
-from exllamav3.cache.lsa import CacheLayer_lsa, CacheLayer_lsa_quant
+from exllamav3.cache.lsa import CacheLayer_lsa, CacheLayer_lsa_quant, CacheLayer_lsa_i8f8, CacheLayer_lsa_r4d
 
 
 def make_indexer(device="cpu", **settings):
@@ -60,6 +60,11 @@ def test_tp_reduces_before_normalizing_and_includes_headless_ranks():
     query, key = idx.project(q[:, :, :2], k[:, :, :1], {"backend": Backend()})
     torch.testing.assert_close(query, expected[0])
     torch.testing.assert_close(key, expected[1])
+    from dataclasses import replace
+    idx.settings = replace(idx.settings, query_heads="rank")
+    local_query, global_key = idx.project(q[:, :, :2], k[:, :, :1], {"backend": Backend()})
+    torch.testing.assert_close(local_query, F.normalize(q[:, :, :2, 32:].sum(2) @ idx.query_map[:32], dim=-1))
+    torch.testing.assert_close(global_key, expected[1])
     seen = []
     backend = SimpleNamespace(all_reduce=lambda joined: seen.append(joined.clone()))
     idx.empty_project(torch.zeros(1, 3, 512), {"backend": backend, "attn_mode": "flash_attn"})
@@ -94,13 +99,17 @@ def test_cache_versions_survive_copy_and_cpu_restore():
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="ROCm/CUDA GPU required")
-@pytest.mark.parametrize("quant", [False, True])
+@pytest.mark.parametrize("quant", [False, True, "compand", "i8f8", "r4d"])
 def test_paged_sparse_attention_matches_independent_gather(quant):
     dev = torch.device("cuda:0")
     idx = make_indexer(dev)
     a = fake_attention(idx)
-    cls = CacheLayer_lsa_quant if quant else CacheLayer_lsa
-    cache = cls(None, a, 1, 1024, **({"k_bits": 6, "v_bits": 4} if quant else {}))
+    cls = {False: CacheLayer_lsa, True: CacheLayer_lsa_quant, "compand": CacheLayer_lsa_quant,
+           "i8f8": CacheLayer_lsa_i8f8, "r4d": CacheLayer_lsa_r4d}[quant]
+    kwargs = {"k_bits": 6, "v_bits": 4} if quant is True or quant == "compand" else {}
+    if quant == "compand":
+        kwargs["compand_a"] = 0.5
+    cache = cls(None, a, 1, 1024, **kwargs)
     cache.alloc(dev)
     torch.manual_seed(83)
     q = torch.randn(1, 195, 4, 64, device=dev, dtype=torch.float16)
@@ -153,18 +162,133 @@ def test_gpu_ward_matches_reference_and_expansion():
 
 
 @pytest.mark.skipif(not torch.cuda.is_available(), reason="ROCm/CUDA GPU required")
-def test_index_planes_follow_native_page_rotation():
+@pytest.mark.parametrize("cls", [CacheLayer_lsa, CacheLayer_lsa_i8f8, CacheLayer_lsa_r4d])
+def test_index_planes_follow_native_page_rotation(cls):
     from exllamav3.ext import exllamav3_ext as ext
     idx = make_indexer("cuda:0")
-    cache = CacheLayer_lsa(None, fake_attention(idx), 1, 1024)
+    cache = cls(None, fake_attention(idx), 1, 1024)
     cache.alloc(torch.device("cuda:0"))
     bt = torch.tensor([[2, 0, 3, 1]], device="cuda:0", dtype=torch.int32)
     keys = F.normalize(torch.randn(1, 192, 16, device="cuda:0"), dim=-1)
     cache.append_index(keys, bt, torch.tensor([0]))
+    for tensor in cache.get_tensors()[:-2]:
+        tensor[2].fill_(63)
+        tensor[1].fill_(42)
+    saved = [tensor[2].clone() for tensor in cache.get_tensors()]
     before = cache.buckets(idx, bt[0], 2)
     order = torch.tensor([-1, 2, 2, 1, 1, -1], device="cuda:0", dtype=torch.int32)
     for tensor in cache.get_tensors():
         ext.cache_rotate(tensor, order, torch.empty_like(tensor[0]))
+    for tensor, expected in zip(cache.get_tensors(), saved):
+        torch.testing.assert_close(tensor[1], expected)
     rotated = cache.buckets(idx, torch.tensor([1, 0, 3, 2], device="cuda:0", dtype=torch.int32), 2)
     torch.testing.assert_close(rotated[0], before[0])
     torch.testing.assert_close(rotated[1], before[1])
+
+
+@pytest.mark.parametrize("device", ["cpu", "cuda:0"])
+@pytest.mark.parametrize("precision", ["bf16", "fp8"])
+def test_tree_beam_matches_official_reference(device, precision):
+    if device != "cpu" and not torch.cuda.is_available():
+        pytest.skip("ROCm/CUDA GPU required")
+    from exllamav3.modules.lsa_tree import TreeStore, NODE_SCALE
+    from exllamav3.vendor.lsa.reference import Buckets
+    from exllamav3.vendor.lsa.hierarchy_reference import build_hierarchy, read_hierarchy
+    idx = make_indexer(device, top_level=3, node_bucket_size=2,
+                       node_cluster_block_size=[32, 16, 8], beam_width=[2, 3, 2], start_nodes=8,
+                       node_centroid_precision=precision)
+    torch.manual_seed(92)
+    keys = F.normalize(torch.randn(32, 64, 16), dim=-1)
+    cpu = make_indexer()
+    centroids, members, sums = cpu.cluster(keys, return_sums=True)
+    members = torch.where(members >= 0, members + torch.arange(32)[:, None, None] * 64, -1)
+    buckets = Buckets(centroids.flatten(0, 1), members.flatten(0, 1),
+                      (members >= 0).sum(-1).int().flatten(), 8, 64)
+    hierarchy = build_hierarchy(keys.flatten(0, 1), buckets, 3, 2, [32, 16, 8])
+    # Reference search on the same published centroid storage precision.
+    nodes = [(v * NODE_SCALE).to(torch.float8_e4m3fn).float() / NODE_SCALE if precision == "fp8"
+             else v.bfloat16().float() for v in hierarchy.node_centroids]
+    hierarchy = hierarchy._replace(node_centroids=nodes)
+    positions = torch.tensor([63, 127, 255, 256, 511, 512, 777, 1023, 1536, 2047])
+    queries = F.normalize(torch.randn(len(positions), 16), dim=-1)
+    expected, _ = read_hierarchy(queries, positions, buckets, hierarchy, [2, 3, 2], 8, 8, 32, 4, 64,
+                                 page_size=128, growth_buckets=32)
+    store = TreeStore(idx.settings, len(sums.flatten(0, 1)), 16, device, page_size=128, growth_buckets=32)
+    view = store.view(sums.flatten(0, 1).to(device), list(range(256)))
+    actual = idx.select(queries.to(device), positions.to(device), buckets.bucket_centroids.to(device),
+                        buckets.bucket_members.to(device), view).cpu()
+    torch.testing.assert_close(actual, expected)
+    # Reusing a hierarchy must not rebuild its already closed node groups.
+    before = [list(group.cached) for group in store.groups]
+    store.view(sums.flatten(0, 1).to(device), list(range(256)))
+    assert before == [list(group.cached) for group in store.groups]
+
+
+def test_tree_cache_rebuilds_after_overwrite_and_restored_prefix():
+    idx = make_indexer(top_level=3, node_bucket_size=2, node_cluster_block_size=32, beam_width=2)
+    cache = CacheLayer_lsa(None, fake_attention(idx), 1, 1024)
+    cache.alloc(torch.device("cpu"))
+    bt = torch.tensor([[2, 0, 3, 1]], dtype=torch.int32)
+    keys = F.normalize(torch.randn(1, 1024, 16), dim=-1)
+    cache.append_index(keys, bt, torch.tensor([0]))
+    view = cache.buckets(idx, bt[0], 16, with_tree=True)[2]
+    expected = [(centroids.clone(), children.clone()) for centroids, children in view.levels]
+    persisted = [t.clone() for t in cache.get_tensors()]
+    # The bounded node cache cannot retain all three incarnations of these pages.
+    for _ in range(2):
+        cache.append_index(F.normalize(torch.randn_like(keys), dim=-1), bt, torch.tensor([0]))
+        fresh = cache.buckets(idx, bt[0], 16, with_tree=True)[2]
+        assert not torch.equal(fresh.levels[0][0], expected[0][0])
+    for tensor, saved in zip(cache.get_tensors(), persisted):
+        tensor.copy_(saved)
+    restored = cache.buckets(idx, bt[0], 16, with_tree=True)[2]
+    for (centroids, children), (wanted, wanted_children) in zip(restored.levels, expected):
+        torch.testing.assert_close(centroids, wanted)
+        torch.testing.assert_close(children, wanted_children)
+    arrays = cache.get_tensors() + [cache.centroids, cache.members, cache.bucket_sums]
+    for group in cache.tree_store.groups:
+        arrays += [group.centroids, group.sums, group.children]
+    assert cache.storage_size() == sum(t.numel() * t.element_size() for t in arrays)
+
+
+def test_lsa_r4d_storage_does_not_require_libr4d(monkeypatch):
+    from exllamav3 import model_init
+    from exllamav3.modules.attention_fn import r4d_attn
+    monkeypatch.setenv("EXL3_R4D_ATTN", "bf16")
+    monkeypatch.setenv("EXL3_R4D_OFF", "0")
+    monkeypatch.setattr(r4d_attn, "r4d_lib_path", lambda: None)
+    assert model_init._r4d_native_cache_wanted(lsa=True)
+
+
+def test_quantized_dispatch_sanity_is_exclusive_of_unquantized_cache():
+    from exllamav3.modules.attention_fn.common import AttnArgs
+    q = torch.zeros((1, 1, 4, 64), dtype=torch.float16)
+    k = torch.zeros((1, 1, 2, 64), dtype=torch.float16)
+    args = AttnArgs(1, 1, 4, 64, 256, 2, q, k, k, None, None, True, 0.125,
+                    None, None, None, 0., torch.zeros((1, 1), dtype=torch.int32),
+                    torch.zeros(1, dtype=torch.int32), q_cache=(k, k, k, k, 5, 4))
+    args.sanity_check()
+    with pytest.raises(AssertionError):
+        args._replace(i8f8_cache=(k,)).sanity_check()
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="ROCm/CUDA GPU required")
+def test_r4d_dense_dispatch_keeps_native_storage():
+    from exllamav3.modules.attention_fn import attn_dispatch
+    idx = make_indexer("cuda:0")
+    cache = CacheLayer_lsa_r4d(None, fake_attention(idx), 1, 1024)
+    cache.alloc(torch.device("cuda:0"))
+    q = torch.randn((1, 5, 4, 64), device="cuda:0", dtype=torch.float16)
+    k = torch.randn((1, 5, 2, 64), device="cuda:0", dtype=torch.float16)
+    v = torch.randn_like(k)
+    bt = torch.tensor([[2, 0, 3, 1]], device="cuda:0", dtype=torch.int32)
+    past = torch.zeros(1, device="cuda:0", dtype=torch.int32)
+    actual = attn_dispatch(q, k, v, cache=cache, cache_idx=0, block_table=bt,
+                           cache_seqlens=past, causal=False, sm_scale=0.125)
+    expected = F.scaled_dot_product_attention(q.transpose(1, 2).float(),
+        k.repeat_interleave(2, 2).transpose(1, 2).float(),
+        v.repeat_interleave(2, 2).transpose(1, 2).float(), scale=0.125).transpose(1, 2)
+    torch.testing.assert_close(actual.float(), expected, atol=2e-3, rtol=3e-3)
+    saved_k, saved_v = cache.get_kv(past + 5, bt)
+    torch.testing.assert_close(saved_k[2, :5], k[0].bfloat16().half(), atol=0, rtol=0)
+    torch.testing.assert_close(saved_v[2, :5], v[0].bfloat16().half(), atol=0, rtol=0)

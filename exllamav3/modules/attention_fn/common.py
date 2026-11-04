@@ -34,9 +34,10 @@ class AttnArgs(NamedTuple):
     def sanity_check(self):
         # Cache must be paged
         if self.q_cache is not None:
+            assert self.i8f8_cache is None
             assert self.block_table is not None and self.cache_seqlens is not None
             assert self.k_cache is None and self.v_cache is None
-        if self.i8f8_cache is not None:
+        elif self.i8f8_cache is not None:
             assert self.block_table is not None and self.cache_seqlens is not None
             assert self.k_cache is None and self.v_cache is None
             assert self.q_cache is None
