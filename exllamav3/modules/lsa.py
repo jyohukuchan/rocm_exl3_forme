@@ -34,7 +34,9 @@ def mp_lsa_stats(context):
                 index_bytes=sum(cl.index_storage_size() for cl in module.cache_layers),
                 selection_graph_replays=sum(g.replays for g in getattr(idx, "_tp_read_graphs", {}).values()),
                 attention_graph_replays=sum(g.replays for g in getattr(idx, "_tp_attention_graphs", {}).values())))
-    return dict(device=device, allocated_gib=torch.cuda.memory_allocated(device)/2**30,
+    return dict(device=device, graph_pool=context.get("lsa_graph_pool"),
+                peak_allocated_gib=torch.cuda.max_memory_allocated(device)/2**30,
+                allocated_gib=torch.cuda.memory_allocated(device)/2**30,
                 reserved_gib=torch.cuda.memory_reserved(device)/2**30,
                 free_gib=torch.cuda.mem_get_info(device)[0]/2**30, layers=records)
 
@@ -146,6 +148,8 @@ class LSAIndexer:
         self.tp_mode = False
         self.index_owner = None
         self.owns_index = True
+        self.tp_graph_pool = None
+        self.tp_graph_stream = None
         self.query_map = self.key_map = None
 
     @classmethod

@@ -1401,6 +1401,16 @@ class Attention(Module):
             lsa_indexer.tp_mode = True
             lsa_indexer.index_owner = exported.get("lsa_index_owner")
             lsa_indexer.owns_index = lsa_indexer.index_owner is None or int(device.index if hasattr(device, "index") else device) == lsa_indexer.index_owner
+            if getattr(device, "type", "cuda") == "cuda":
+                # TP forwards serialize selection and local attention. Share
+                # their scratch pool across layers instead of pinning a private
+                # sort workspace for every layer/query shape at long context.
+                if "lsa_graph_pool" not in local_context:
+                    with torch.cuda.device(device):
+                        local_context["lsa_graph_pool"] = torch.cuda.graph_pool_handle()
+                        local_context["lsa_graph_stream"] = torch.cuda.Stream(device=device)
+                lsa_indexer.tp_graph_pool = local_context["lsa_graph_pool"]
+                lsa_indexer.tp_graph_stream = local_context["lsa_graph_stream"]
         if exported.get("qsa_indexer") is not None and num_kv_heads:
             assert num_kv_heads == exported["num_kv_heads"], "QSA attention layers run whole on one device"
             qsa_indexer = _import("qsa_indexer")

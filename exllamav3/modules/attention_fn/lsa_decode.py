@@ -196,7 +196,7 @@ class _TPSelectionGraph(_DeviceGraph):
         self.tables = tables
         self.replays = 0
         with torch.cuda.device(query.device):
-            stream = torch.cuda.Stream(device=query.device)
+            stream = indexer.tp_graph_stream or torch.cuda.Stream(device=query.device)
             stream.wait_stream(torch.cuda.current_stream())
             def run():
                 return indexer.select(self.query, self.positions, tables.centroids, tables.members)
@@ -204,7 +204,7 @@ class _TPSelectionGraph(_DeviceGraph):
                 for _ in range(2): run()
             torch.cuda.current_stream().wait_stream(stream)
             self.graph = torch.cuda.CUDAGraph()
-            with torch.cuda.graph(self.graph, stream=stream):
+            with torch.cuda.graph(self.graph, stream=stream, pool=indexer.tp_graph_pool):
                 self.output = run()
 
 
@@ -223,7 +223,9 @@ def _tp_attend(indexer, layer, q, k, v, indices, scale, bt, qc, kv_heads, batch)
     key = (id(layer), batch, len(q), tuple(q.shape), k.data_ptr(), v.data_ptr())
     state = graphs.get(key)
     if state is None:
-        state = _TPAttentionGraph(layer, q, k, v, indices, scale, bt, qc, kv_heads)
+        state = _TPAttentionGraph(layer, q, k, v, indices, scale, bt, qc, kv_heads,
+                                  getattr(indexer, "tp_graph_pool", None),
+                                  getattr(indexer, "tp_graph_stream", None))
         graphs[key] = state
     else:
         state.stage(q, indices, bt)
@@ -233,7 +235,7 @@ def _tp_attend(indexer, layer, q, k, v, indices, scale, bt, qc, kv_heads, batch)
 
 
 class _TPAttentionGraph(_DeviceGraph):
-    def __init__(self, layer, q, k, v, indices, scale, bt, qc, kv_heads):
+    def __init__(self, layer, q, k, v, indices, scale, bt, qc, kv_heads, pool=None, stream=None):
         from .qsa_triton import qsa_sparse_attend_rows
         self.device = q.device
         self.cache_tensors = tuple(layer.get_tensors())
@@ -242,7 +244,7 @@ class _TPAttentionGraph(_DeviceGraph):
         self.stage(q, indices, bt)
         self.replays = 0
         with torch.cuda.device(q.device):
-            stream = torch.cuda.Stream(device=q.device)
+            stream = stream or torch.cuda.Stream(device=q.device)
             stream.wait_stream(torch.cuda.current_stream())
             def run():
                 return qsa_sparse_attend_rows(self.query, k, v, self.indices, scale, self.bt, PAGE_SIZE, qc, kv_heads)
@@ -250,7 +252,7 @@ class _TPAttentionGraph(_DeviceGraph):
                 for _ in range(2): run()
             torch.cuda.current_stream().wait_stream(stream)
             self.graph = torch.cuda.CUDAGraph()
-            with torch.cuda.graph(self.graph, stream=stream):
+            with torch.cuda.graph(self.graph, stream=stream, pool=pool):
                 self.output = run()
 
     def stage(self, q, indices, bt):

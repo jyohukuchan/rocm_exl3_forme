@@ -471,3 +471,28 @@ def test_tp_attention_graph_accepts_page_table_padding_beyond_pool():
         torch.testing.assert_close(actual,expected,atol=2e-3,rtol=3e-3)
     idx.unload()
     torch.cuda.synchronize()
+
+
+def test_tp_selection_pool_reuse_across_layers_and_row_slots():
+    if not torch.cuda.is_available():pytest.skip('GPU required')
+    from exllamav3.modules.attention_fn.lsa_decode import tp_select
+    pool=torch.cuda.graph_pool_handle()
+    stream=torch.cuda.Stream(device='cuda:0')
+    indices=[make_indexer('cuda:0'),make_indexer('cuda:0')]
+    tables=[]
+    for idx in indices:
+        idx.tp_graph_pool=pool
+        idx.tp_graph_stream=stream
+        keys=F.normalize(torch.randn(5,64,16,device='cuda:0'),dim=-1)
+        c,m=idx.cluster(keys)
+        m=torch.where(m>=0,m+torch.arange(5,device='cuda:0')[:,None,None]*64,-1).flatten(0,1)
+        tables.append((c.flatten(0,1),m))
+    for layer,n in [(0,1),(1,1),(0,3),(1,3),(1,1),(0,1),(1,3),(0,3)]:
+        idx=indices[layer];c,m=tables[layer]
+        q=F.normalize(torch.randn(n,16,device='cuda:0'),dim=-1)
+        positions=torch.arange(256,256+n,device='cuda:0',dtype=torch.int32)
+        actual=tp_select(idx,q,positions,c,m,0).clone()
+        torch.testing.assert_close(actual,idx.select(q,positions,c,m))
+        assert idx._tp_read_graphs[0,n].graph.pool()==pool
+    for idx in indices:idx.unload()
+    torch.cuda.synchronize()
