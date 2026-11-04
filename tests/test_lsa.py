@@ -377,7 +377,8 @@ def test_decode_graph_replay_batch_and_prefix_replacement(monkeypatch, device):
         return idx.attend(attention, q, k, v, params, cache, params['block_table'],
                           params['cache_seqlens'], params['cache_seqlens'])
     attention.decode_flash_attn = forward
-    bt = torch.tensor([[1, 0], [3, 2]], device=device, dtype=torch.int32)
+    bt = torch.tensor([[1, 0, 0, 0, 0, 0, 0, 0], [3, 2, 0, 0, 0, 0, 0, 0]],
+                      device=device, dtype=torch.int32)
     k = torch.randn((2, 180, 2, 64), device=device, dtype=torch.float16)
     q = torch.randn((2, 180, 4, 64), device=device, dtype=torch.float16)
     _, keys = idx.project(q, k, {})
@@ -398,6 +399,8 @@ def test_decode_graph_replay_batch_and_prefix_replacement(monkeypatch, device):
     actual = try_lsa_decode(attention, x, params).clone()
     torch.testing.assert_close(actual, forward(x, 2, 1, params), atol=2e-3, rtol=3e-3)
     assert idx.decode_graph.replays >= 3
+    idx.unload()
+    torch.cuda.synchronize(device)
 
 
 def test_tp_nonowner_holds_only_local_kv():
@@ -442,3 +445,29 @@ def test_tp_short_query_selection_graph_matches_eager():
         positions=torch.arange(256,256+n,device='cuda:0',dtype=torch.int32)
         actual=tp_select(idx,q,positions,c,m,0).clone()
         torch.testing.assert_close(actual,idx.select(q,positions,c,m))
+    idx.unload()
+    torch.cuda.synchronize()
+
+
+def test_tp_attention_graph_accepts_page_table_padding_beyond_pool():
+    if not torch.cuda.is_available(): pytest.skip('GPU required')
+    from exllamav3.modules.attention_fn.lsa_decode import tp_attend
+    from exllamav3.modules.attention_fn.qsa_triton import qsa_sparse_attend_rows
+    idx=make_indexer('cuda:0')
+    layer=CacheLayer_lsa_quant(None,fake_attention(idx),1,1024,4,4)
+    layer.alloc(torch.device('cuda:0'))
+    bt=torch.tensor([[0,1,2,3]+[0]*12],device='cuda:0',dtype=torch.int32)
+    k=torch.randn(1,512,2,64,device='cuda:0',dtype=torch.float16)
+    layer.update_kv_direct(torch.zeros(1,device='cuda:0',dtype=torch.int32),bt,k,k,512)
+    pk,sk,pv,sv,kb,vb=layer.get_qkv()
+    pk,pv=pk.flatten(0,1),pv.flatten(0,1)
+    qc=(sk.flatten(0,1),sv.flatten(0,1),kb,vb)
+    for _ in range(2):
+        q=torch.randn(3,4,64,device='cuda:0',dtype=torch.float16)
+        indices=torch.arange(200,device='cuda:0',dtype=torch.int32).repeat(3,1)
+        tables=bt.expand(3,-1).contiguous()
+        actual=tp_attend(idx,layer,q,pk,pv,indices,0.125,tables,qc,2,0).clone()
+        expected=qsa_sparse_attend_rows(q,pk,pv,indices,0.125,tables,256,qc,2)
+        torch.testing.assert_close(actual,expected,atol=2e-3,rtol=3e-3)
+    idx.unload()
+    torch.cuda.synchronize()

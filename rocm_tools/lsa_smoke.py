@@ -30,7 +30,7 @@ def main():
                           max_chunk_size=args.chunk_size, cpu_cache_size=int(args.cpu_cache_size * 1024**3),
                           draft_model=draft_model, draft_cache=draft_cache,
                           num_draft_tokens=args.num_draft_tokens or (draft_model.caps.get("default_draft_size", 4) if draft_model else 0),
-                          dynamic_draft=args.dynamic_draft)
+                          dynamic_draft=args.dynamic_draft, draft_confidence=args.draft_confidence)
     prefix = tokenizer.encode("<|im_start|>user\nRead the document and remember its secret code.\n", encode_special_tokens=True)
     filler = tokenizer.encode("An ordinary record describes the weather, the road, and the nearby trees.\n")
     needle = tokenizer.encode("\nThe secret code is 739182. Remember this exact number.\n")
@@ -63,6 +63,11 @@ def main():
         start = time.monotonic()
         while generator.num_remaining_jobs():
             for result in generator.iterate():
+                if result["stage"] == "error":
+                    error = result.get("error")
+                    if isinstance(error, BaseException):
+                        raise error
+                    raise RuntimeError(str(error))
                 logits = result.get("logits")
                 if logits is not None:
                     # Sampling masks the model's padded vocabulary with -inf.

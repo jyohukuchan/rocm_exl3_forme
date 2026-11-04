@@ -4,6 +4,7 @@ Clustering and page/version checks stay outside the graph. Shapes grow in
 powers of two; one resident graph per attention module bounds graph memory.
 """
 import os
+from contextlib import nullcontext
 import torch
 from ...cache import CacheLayer
 from ...cache.lsa import CacheLayer_lsa, CacheLayer_lsa_quant
@@ -11,7 +12,27 @@ from ...constants import PAGE_SIZE
 from ...util.tensor import get_for_device
 
 
+class _DeviceGraph:
+    def __del__(self):
+        # Python GC can release a graph while another GPU is current. Reset
+        # its HIP resources on the capture device, including during eviction.
+        graph = getattr(self, "graph", None)
+        if graph is not None:
+            try:
+                with torch.cuda.device(self.device):
+                    graph.reset()
+            except (RuntimeError, AttributeError):
+                pass  # interpreter/runtime teardown; explicit unload runs first
+
+
 def try_lsa_decode(module, x, params):
+    if not x.is_cuda:
+        return None
+    with torch.cuda.device(x.device):
+        return _try_lsa_decode(module, x, params)
+
+
+def _try_lsa_decode(module, x, params):
     indexer = module.lsa_indexer
     if (os.environ.get('EXL3_LSA_DECODE_GRAPH', '1') == '0'
             or params.get('_lsa_graph_state') is not None
@@ -60,10 +81,11 @@ def try_lsa_decode(module, x, params):
     return state.output
 
 
-class LSADecodeGraph:
+class LSADecodeGraph(_DeviceGraph):
     def __init__(self, key, module, layer, x, params, bt, seq, assembled, positions, position_ids, inv_freq):
         self.key = key
-        self.layer = layer
+        self.device = x.device
+        self.cache_tensors = tuple(layer.get_tensors())
         self.replays = 0
         self.x = torch.empty_like(x)
         self.past = torch.empty_like(seq)
@@ -98,7 +120,10 @@ class LSADecodeGraph:
     def stage(self, x, bt, seq, assembled, positions, position_ids, position):
         self.x.copy_(x)
         self.past.copy_(seq)
-        self.bt[:, :bt.shape[1]].copy_(bt)
+        # Generator page tables are SIMD-padded and may be wider than the
+        # physical pool. Only the addressable columns belong in this graph.
+        width = min(bt.shape[1], self.bt.shape[1])
+        self.bt[:, :width].copy_(bt[:, :width])
         if self.position_ids is not None:
             self.position_ids.copy_(position_ids)
         elif positions is not None:
@@ -134,6 +159,11 @@ class _TPReadTables:
 
 
 def tp_select(indexer, query, positions, centroids, members, batch):
+    with torch.cuda.device(query.device) if query.is_cuda else nullcontext():
+        return _tp_select(indexer, query, positions, centroids, members, batch)
+
+
+def _tp_select(indexer, query, positions, centroids, members, batch):
     if (os.environ.get('EXL3_LSA_DECODE_GRAPH', '1') == '0' or not query.is_cuda
             or len(query) > 16 or indexer.settings.decode != 'flat'):
         return indexer.select(query, positions, centroids, members)
@@ -158,9 +188,10 @@ def tp_select(indexer, query, positions, centroids, members, batch):
     return state.output
 
 
-class _TPSelectionGraph:
+class _TPSelectionGraph(_DeviceGraph):
     def __init__(self, indexer, query, positions, tables):
         self.query, self.positions = torch.empty_like(query), torch.empty_like(positions)
+        self.device = query.device
         self.query.copy_(query); self.positions.copy_(positions)
         self.tables = tables
         self.replays = 0
@@ -178,6 +209,11 @@ class _TPSelectionGraph:
 
 
 def tp_attend(indexer, layer, q, k, v, indices, scale, bt, qc, kv_heads, batch):
+    with torch.cuda.device(q.device):
+        return _tp_attend(indexer, layer, q, k, v, indices, scale, bt, qc, kv_heads, batch)
+
+
+def _tp_attend(indexer, layer, q, k, v, indices, scale, bt, qc, kv_heads, batch):
     from .qsa_triton import qsa_sparse_attend_rows
     def eager():
         return qsa_sparse_attend_rows(q, k, v, indices, scale, bt, PAGE_SIZE, qc, kv_heads)
@@ -196,10 +232,11 @@ def tp_attend(indexer, layer, q, k, v, indices, scale, bt, qc, kv_heads, batch):
     return state.output
 
 
-class _TPAttentionGraph:
+class _TPAttentionGraph(_DeviceGraph):
     def __init__(self, layer, q, k, v, indices, scale, bt, qc, kv_heads):
         from .qsa_triton import qsa_sparse_attend_rows
-        self.layer = layer
+        self.device = q.device
+        self.cache_tensors = tuple(layer.get_tensors())
         self.query, self.indices = torch.empty_like(q), torch.empty_like(indices)
         self.bt = torch.zeros((len(q), layer.max_num_tokens // PAGE_SIZE), dtype=bt.dtype, device=bt.device)
         self.stage(q, indices, bt)
@@ -218,4 +255,5 @@ class _TPAttentionGraph:
 
     def stage(self, q, indices, bt):
         self.query.copy_(q); self.indices.copy_(indices)
-        self.bt[:, :bt.shape[1]].copy_(bt)
+        width = min(bt.shape[1], self.bt.shape[1])
+        self.bt[:, :width].copy_(bt[:, :width])
