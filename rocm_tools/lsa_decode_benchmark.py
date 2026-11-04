@@ -72,7 +72,7 @@ def main():
     tokenizer = Tokenizer.from_config(config)
     ids, expected, _ = prompt(tokenizer, bank(tokenizer, 8192), 8192, 1)
     generator = Generator(model, cache, tokenizer, max_batch_size=1, max_chunk_size=4096, enable_defrag=False)
-    report = dict(source=source_info(), gpu=torch.cuda.get_device_name(0), torch=torch.__version__,
+    report = dict(source=source_info(__file__), gpu=torch.cuda.get_device_name(0), torch=torch.__version__,
                   model=args.model, cache_quant=[5,4], prompt_tokens=8192, output_tokens=64,
                   prompt_sha256=hashlib.sha256(ids.numpy().tobytes()).hexdigest(),
                   model_decode={}, block_64k={}, complete=False)

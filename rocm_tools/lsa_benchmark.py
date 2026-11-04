@@ -41,10 +41,10 @@ def write_json(path, data):
     tmp.replace(path)
 
 
-def source_info():
+def source_info(harness_path=None):
     root = Path(__file__).resolve().parents[1]
     return {"commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
-            "harness_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+            "harness_sha256": hashlib.sha256(Path(harness_path or __file__).read_bytes()).hexdigest()}
 
 
 def hardware_snapshot():

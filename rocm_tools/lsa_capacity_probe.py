@@ -24,7 +24,7 @@ def main():
     p.add_argument('--kv',type=int,nargs=2,default=[5,4])
     p.add_argument('--output',type=Path,required=True)
     a=p.parse_args()
-    report=dict(source=source_info(),cache_tokens=a.cache_size,cache_quant=a.kv,
+    report=dict(source=source_info(__file__),cache_tokens=a.cache_size,cache_quant=a.kv,
                 split='layers',gpus=[torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())],
                 full_context_prefill_tested=False,loaded=False,workspace_allocated=False,short_retrieval_correct=False)
     model=None
