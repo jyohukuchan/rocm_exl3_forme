@@ -1,0 +1,60 @@
+{
+  "model": "/work/models/qwen38-27b-exl3-305-int8grid",
+  "lsa": {
+    "projections": "/work/models/lsa/qwen38_27b.pt"
+  },
+  "cache_quant": "5,4",
+  "gpus": [
+    "AMD Radeon AI PRO R9700"
+  ],
+  "input_tokens": 8192,
+  "batch": 2,
+  "runs": [
+    {
+      "repeat": 0,
+      "seconds": 17.42691331205424,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 0,
+          "time_prefill": 15.600637912750244,
+          "time_generate": 1.8144283294677734
+        },
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 0,
+          "time_prefill": 14.388766527175903,
+          "time_generate": 1.817751407623291
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "seconds": 2.6494836709462106,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 7936,
+          "time_prefill": 0.8841376304626465,
+          "time_generate": 1.720376968383789
+        },
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 7936,
+          "time_prefill": 0.4523344039916992,
+          "time_generate": 1.721177101135254
+        }
+      ]
+    }
+  ]
+}

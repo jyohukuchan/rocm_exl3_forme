@@ -9,6 +9,7 @@ Start with [the V620 build and reproduction guide](reproduce_v620.md), [changes 
 
 ## Validated behavior and investigations
 
+- [Qwen3.8-27B D-LSA attention: ROCm, quantized KV, configuration and validation](lsa_attention.md)
 - [XeStrata EXL3 optimizations: CPU tile layout, GPU word sharing, and split-K review](xestrata_exl3_optimization_review.md)
 - [XeStrata-derived EXL3 backports and validation](xestrata_exl3_backport.md)
 - [EXL3 feasibility for image and video generation, with R9700 reconstruction measurements](diffusion_exl3_feasibility.md)

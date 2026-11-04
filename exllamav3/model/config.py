@@ -120,6 +120,9 @@ class Config(ABC):
         with open(self.config_filename, encoding = "utf8") as f:
             self.config_dict = json.load(f)
 
+        # Optional D-LSA settings use the same block as the official SGLang plugin.
+        self.lsa = kwargs.get("lsa", self.config_dict.get("lsa", self.config_dict.get("text_config", {}).get("lsa")))
+
         assert len(self.config_dict["architectures"]) == 1, \
             f"Multiple architectures defined in {self.config_filename}"
 

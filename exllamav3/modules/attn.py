@@ -187,6 +187,7 @@ class Attention(Module):
         select_hq_bits: int = 0,
         qbits_key: str = "bits",
         qsa_indexer: Module | None = None,
+        lsa_indexer = None,
     ):
         super().__init__(config, key, None)
 
@@ -202,6 +203,7 @@ class Attention(Module):
         self.rope = None
         self.qsa_indexer = qsa_indexer
         self.register_submodule(qsa_indexer)
+        self.lsa_indexer = lsa_indexer
         self.out_dtype = out_dtype
         self.sliding_window = sliding_window
         self.logit_softcapping = logit_softcapping
@@ -382,6 +384,9 @@ class Attention(Module):
         self.bc_attn = {}
 
         self.q_norm_tensor = None
+        if self.lsa_indexer is None and getattr(self.config, "lsa", None):
+            from .lsa import LSAIndexer
+            self.lsa_indexer = LSAIndexer.from_attention(self)
         self.k_norm_tensor = None
 
         self.has_split_cache = False
@@ -415,6 +420,8 @@ class Attention(Module):
 
         if self.num_kv_heads == 0:
             return
+        if self.lsa_indexer is not None:
+            self.lsa_indexer.load(device)
 
         # Cache
         for cl in self.cache_layers:
@@ -559,6 +566,8 @@ class Attention(Module):
     @override
     def unload(self):
         super().unload()
+        if self.lsa_indexer is not None:
+            self.lsa_indexer.unload()
 
         self.bc_attn = {}
 
@@ -599,6 +608,8 @@ class Attention(Module):
     ) -> torch.Tensor:
 
         if self.num_kv_heads == 0:
+            if self.lsa_indexer is not None:
+                self.lsa_indexer.empty_project(x, params)
             x = torch.zeros_like(x, dtype = self.out_dtype)
             if self.tp_reduce:
                 self.tp_collect(params["backend"], x, False)
@@ -901,7 +912,9 @@ class Attention(Module):
             _sim_kvq_inplace(k, simulate_kv_quant[0], sq_ca)
             _sim_kvq_inplace(v, simulate_kv_quant[1], sq_ca)
 
-        if qsa_q_idx is not None:
+        if self.lsa_indexer is not None and causal and cu_seqlens is None and not self.lsa_indexer.can_read_dense(seqlen):
+            o = self.lsa_indexer.attend(self, q, k, v, params)
+        elif qsa_q_idx is not None:
             o = self.qsa_indexer.sparse_attend_nc(self, q, k, v, qsa_q_idx, qsa_pooled)
         else:
             o = attn_dispatch(
@@ -963,6 +976,12 @@ class Attention(Module):
     def cache_layer_type(self, default, kwargs: dict):
         """QSA modules need the indexer side planes on their cache layer: map the requested
         K/V layer type to its planes-carrying variant (fp16 or quantized)."""
+        if self.lsa_indexer is not None:
+            from ..cache.lsa import CacheLayer_lsa, CacheLayer_lsa_quant
+            from ..cache.quant import CacheLayer_quant
+            if issubclass(default, CacheLayer_quant):
+                return CacheLayer_lsa_quant, kwargs
+            return CacheLayer_lsa, kwargs
         if self.qsa_indexer is None:
             return default, kwargs
         from ..cache.fp16 import CacheLayer_fp16
@@ -1076,7 +1095,7 @@ class Attention(Module):
         # Graph-captured C++ path for the whole decode attention block (causality is baked
         # into the slot kernels, so non-causal callers like the DFlash draft graph too)
         if (
-            _bc_attn_enable and non_causal_spans is None and
+            self.lsa_indexer is None and _bc_attn_enable and non_causal_spans is None and
             bsz <= _bc_max_bsz and seqlen <= _bc_max_qlen and
             native_projection_rows_supported([self.q_proj,self.k_proj,self.v_proj,self.g_proj,self.o_proj],bsz*seqlen) and
             (self.multi_qkv is None or native_projection_rows_supported(self.multi_qkv.linears,bsz*seqlen,sliced=True))
@@ -1119,7 +1138,21 @@ class Attention(Module):
             _sim_kvq_inplace(k, simulate_kv_quant[0], sq_ca)
             _sim_kvq_inplace(v, simulate_kv_quant[1], sq_ca)
 
-        if qsa_sparse:
+        lsa_sparse = False
+        if self.lsa_indexer is not None:
+            from ..cache import CacheLayer
+            lsa_layer = cache if isinstance(cache, CacheLayer) else cache.layers[self.layer_idx, params.get("layer_instance") or 0]
+            past = get_for_device(params, "cache_seqlens", "cpu")
+            lsa_sparse = causal and non_causal_spans is None and not self.lsa_indexer.can_read_dense(int(past.max()) + seqlen)
+            if not lsa_sparse:
+                # Retain index keys even for dense/vision-span forwards; a subsequent
+                # decode or verification can cross into the sparse regime.
+                _, index_keys = self.lsa_indexer.project(q, k, params)
+                lsa_layer.append_index(index_keys, block_table, past)
+
+        if lsa_sparse:
+            o = self.lsa_indexer.attend(self, q, k, v, params, lsa_layer, block_table, past, cache_seqlens)
+        elif qsa_sparse:
             qsa_layer.update_kv_direct(cache_seqlens, block_table, k, v, seqlen)
             o = self.qsa_indexer.sparse_attend(qsa_layer, self, q, qsa_q_idx, block_table, qsa_seqlens_cpu)
         else:
@@ -1157,10 +1190,15 @@ class Attention(Module):
 
     def make_tp_allocation(self, options: dict) -> list[TPAllocation]:
         storage = 0
+        replicated_lsa = 0
         storage += self.q_proj.storage_size()
         storage += self.k_proj.storage_size()
         storage += self.v_proj.storage_size() if self.v_proj else 0
         storage += self.o_proj.storage_size()
+        if self.lsa_indexer is not None:
+            storage += self.lsa_indexer.storage_size()
+            replicated_lsa = self.lsa_indexer.storage_size() + sum(
+                cl.index_storage_size() for cl in self.cache_layers)
         for cl in self.cache_layers:
             storage += cl.storage_size()
         overhead_d = 0
@@ -1200,8 +1238,8 @@ class Attention(Module):
             key = self.key,
             channel_width = channel_width,
             channel_unit = "heads",
-            storage_per_device = 0,
-            storage_to_split = storage,
+            storage_per_device = replicated_lsa,
+            storage_to_split = storage - replicated_lsa,
             overhead_per_device = overhead_d,
             overhead_to_split = overhead_s,
             recons_temp = recons,
@@ -1259,6 +1297,7 @@ class Attention(Module):
             )},
             # QSA indexer (Qwen3.8): replicated whole on the owning rank
             "qsa_indexer": _export(self.qsa_indexer),
+            "lsa_indexer": self.lsa_indexer.tp_export() if self.lsa_indexer is not None else None,
             # Learned attention sinks (gpt-oss): one logit per query head, sliced to the local heads on import
             "sinks": producer.send(self.sinks) if self.sinks is not None else None,
             "device": self.device,
@@ -1328,6 +1367,11 @@ class Attention(Module):
                 if split and exported.get(name) else None
 
         qsa_indexer = None
+        lsa_indexer = None
+        if exported.get("lsa_indexer") is not None:
+            from .lsa import LSAIndexer
+            lsa_indexer = LSAIndexer(**exported["lsa_indexer"], first_head=first)
+            lsa_indexer.tp_mode = True
         if exported.get("qsa_indexer") is not None and num_kv_heads:
             assert num_kv_heads == exported["num_kv_heads"], "QSA attention layers run whole on one device"
             qsa_indexer = _import("qsa_indexer")
@@ -1338,6 +1382,7 @@ class Attention(Module):
             num_q_heads = num_q_heads,
             num_kv_heads = num_kv_heads,
             qsa_indexer = qsa_indexer,
+            lsa_indexer = lsa_indexer,
             q_norm = _import_split("q_norm", norm_q_split) if tp_split_norm else _import("q_norm"),
             k_norm = _import_split("k_norm", norm_k_split) if tp_split_norm else _import("k_norm"),
             # V norm shares the K/V head geometry (gemma4: unweighted, so the split is a no-op there)

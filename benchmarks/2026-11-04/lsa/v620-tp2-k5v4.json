@@ -1,0 +1,45 @@
+{
+  "model": "/work/models/qwen38-27b-exl3-305-int8grid",
+  "lsa": {
+    "projections": "/work/models/lsa/qwen38_27b.pt"
+  },
+  "cache_quant": "5,4",
+  "gpus": [
+    "AMD Radeon Pro V620",
+    "AMD Radeon Pro V620"
+  ],
+  "input_tokens": 8192,
+  "batch": 1,
+  "runs": [
+    {
+      "repeat": 0,
+      "seconds": 24.478641394991428,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 0,
+          "time_prefill": 23.658599615097046,
+          "time_generate": 0.817328929901123
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "seconds": 1.4681213709991425,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 7936,
+          "time_prefill": 1.0172898769378662,
+          "time_generate": 0.43964695930480957
+        }
+      ]
+    }
+  ]
+}

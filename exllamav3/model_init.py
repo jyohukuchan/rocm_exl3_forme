@@ -1,4 +1,5 @@
 from types import SimpleNamespace
+import json
 
 from . import Model, Config, Cache, Tokenizer
 from .loader import SafetensorsCollection, VariantSafetensorsCollection
@@ -106,6 +107,8 @@ def add_args(
     parser.add_argument("-swa_full", "--swa_full", action = "store_true", help = f"Use full cache for SWA layers. Default is recurrent mode with snapshots")
     parser.add_argument("-ambs", "--autosplit_max_batch_size", type = int, help = f"Max batch size to account for when loading in autosplit mode (default: {default_autosplit_max_batch_size})", default = default_autosplit_max_batch_size)
     parser.add_argument("-chunk_size", "--chunk_size", type = int, help = f"Max chunk size (default: {default_chunk_size})", default = default_chunk_size)
+    parser.add_argument("--lsa_projections", "--lsa-projections", help = "D-LSA projection .pt file (uses the existing cache/quantization settings)")
+    parser.add_argument("--lsa_config", "--lsa-config", help = "JSON D-LSA settings, e.g. '{\"top_k\":2048,\"window_size\":512}'")
 
     parser.add_argument("-lv", "--load_verbose", action = "store_true", help = "Verbose output while loading")
     parser.add_argument("-asnf", "--autosplit_no_forward", action = "store_true", help = "Skip forward pass in autosplit, for debug purposes.")
@@ -236,6 +239,10 @@ def init(
 
     # Config
     config = Config.from_directory(args.model_dir, layer_map = args.layer_map)
+    if getattr(args, "lsa_config", None):
+        config.lsa = {**(config.lsa or {}), **json.loads(args.lsa_config)}
+    if getattr(args, "lsa_projections", None):
+        config.lsa = {**(config.lsa or {}), "projections": str(Path(args.lsa_projections).expanduser().resolve())}
     if getattr(args, "moe_cpu_offload", 0):
         assert not args.tensor_parallel, "--moe_cpu_offload currently requires layer-split mode"
         config.infer_params.moe_cpu_offload = args.moe_cpu_offload

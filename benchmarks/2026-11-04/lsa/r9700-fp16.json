@@ -1,0 +1,29 @@
+{
+  "model": "/work/models/qwen38-27b-exl3-305-int8grid",
+  "lsa": {
+    "projections": "/work/models/lsa/qwen38_27b.pt"
+  },
+  "cache_quant": null,
+  "gpus": [
+    "AMD Radeon AI PRO R9700"
+  ],
+  "input_tokens": 8192,
+  "batch": 1,
+  "runs": [
+    {
+      "repeat": 0,
+      "seconds": 7.925591929932125,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 0,
+          "time_prefill": 7.296848773956299,
+          "time_generate": 0.624988317489624
+        }
+      ]
+    }
+  ]
+}

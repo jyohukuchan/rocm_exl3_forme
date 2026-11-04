@@ -280,6 +280,10 @@ live list.
 
 **KV cache**
 
+Qwen3.8-27B also supports [D-LSA Flat attention](doc/lsa_attention.md): add
+`--lsa-projections /path/to/qwen38_27b.pt` to the usual command. The existing
+`-cq K,V`, GPU split and tensor-parallel settings apply; FP16 KV is also supported.
+
 | flag | what it does |
 |---|---|
 | `-cs N` | total cache size in tokens. **Default = the model's max context**; long-context models advertise 256K-1M, so pass `-cs` (e.g. `-cs 32768`) or `-cq` to keep the cache sane |
