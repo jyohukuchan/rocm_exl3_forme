@@ -1,5 +1,7 @@
 # 通常attention / LSAの速度・長文比較
 
+> **旧実装の測定記録です。** Treeがdecodeでも階層探索を行い、LSAのdecode graphが未対応だった版を測っています。[修正後の限定比較](../../2026-11-05/lsa-decode-fix/README.md)を併せて参照してください。
+
 EXL3 Qwen3.8-27B、K5/V4、batch 1、chunk 4096、64 token固定生成。GPU power modeはauto。
 
 各長さ1回のwarmup後、2回の中央値。通常比は大きいほど高速。小さい差は測定・入力間のばらつきと合わせて判断する。

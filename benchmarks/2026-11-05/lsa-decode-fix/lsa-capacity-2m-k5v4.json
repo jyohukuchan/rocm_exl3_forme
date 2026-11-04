@@ -1,0 +1,36 @@
+{
+  "source": {
+    "commit": "2eebcde45c8567659d2de6367fb332899ca71bfe",
+    "harness_sha256": "f3c02725b5db9432668d35246fc158e371a564c15dd383d97daecf6e4002e4a1"
+  },
+  "cache_tokens": 2097664,
+  "cache_quant": [
+    5,
+    4
+  ],
+  "split": "layers",
+  "gpus": [
+    "AMD Radeon Pro V620",
+    "AMD Radeon Pro V620"
+  ],
+  "full_context_prefill_tested": false,
+  "loaded": false,
+  "workspace_allocated": false,
+  "short_retrieval_correct": false,
+  "cache_storage_gib": 49.26397752761841,
+  "error": "RuntimeError('Insufficient VRAM in split for model and cache')",
+  "memory": [
+    {
+      "device": 0,
+      "allocated_gib": 18.827084064483643,
+      "reserved_gib": 18.83203125,
+      "free_gib": 12.77197265625
+    },
+    {
+      "device": 1,
+      "allocated_gib": 0.15629196166992188,
+      "reserved_gib": 0.177734375,
+      "free_gib": 31.609375
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "source": {
+    "commit": "2eebcde45c8567659d2de6367fb332899ca71bfe",
+    "harness_sha256": "f3c02725b5db9432668d35246fc158e371a564c15dd383d97daecf6e4002e4a1"
+  },
+  "cache_tokens": 2097664,
+  "cache_quant": [
+    4,
+    4
+  ],
+  "split": "layers",
+  "gpus": [
+    "AMD Radeon Pro V620",
+    "AMD Radeon Pro V620"
+  ],
+  "full_context_prefill_tested": false,
+  "loaded": true,
+  "workspace_allocated": true,
+  "short_retrieval_correct": true,
+  "cache_storage_gib": 45.26300096511841,
+  "allocation_failures": [
+    {
+      "module": "model.language_model.layers.35",
+      "error": "CUDA out of memory. Tried to allocate 96.00 MiB. GPU 0 has a total capacity of 31.98 GiB of which 430.50 MiB is free. 31.26 GiB allowed; Of the allocated memory 30.69 GiB is allocated by PyTorch, and 506.80 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)"
+    }
+  ],
+  "cache_layers_per_gpu": {
+    "0": 8,
+    "1": 8
+  },
+  "workspace_gib_per_gpu": {
+    "cuda:0": 1.25,
+    "cuda:1": 1.25
+  },
+  "response": "549339<|im_end|>\n<|endoftext|><|im_start|><|im_start|><|im_start|><|im_start|><|im_start|><|im_start|><|im_start|>",
+  "memory": [
+    {
+      "device": 0,
+      "allocated_gib": 29.135172843933105,
+      "reserved_gib": 29.8125,
+      "free_gib": 1.256591796875
+    },
+    {
+      "device": 1,
+      "allocated_gib": 29.21041440963745,
+      "reserved_gib": 29.927734375,
+      "free_gib": 1.166748046875
+    }
+  ],
+  "graph_replays": 256
+}

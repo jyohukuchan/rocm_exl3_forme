@@ -148,9 +148,20 @@ selection workspaces. K/V quantization still reduces the original KV storage.
 Tree additionally stores leaf key sums and its reachable node levels; these
 are included in cache/TP memory accounting.
 
-LSA attention currently takes the eager path, rather than the existing fused
-C++ attention CUDA graph. Other modules retain their existing dispatch. The
-user does not need graph-disable flags. This port implements the D-LSA
+Single-token cached decode uses flat search by default, including when Tree
+is selected for prefill, matching the official SGLang defaults. On FP16 and
+uncompanded 2–8 bit K/V caches, the Q/K/V projections, normalization/RoPE,
+index projection and append, selection, sparse attention, gate and output
+projection run in a HIP/CUDA graph. Clustering and prefix/page validation run
+outside the graph. One resident graph per attention module grows its bucket
+workspace in powers of two and reuses it across page and position changes.
+Other modules retain their existing dispatch. TP collectives, LoRA, special
+cache formats and nonstandard attention calls retain the eager fallback;
+decode still uses flat search. `EXL3_LSA_DECODE_GRAPH=0` is an A/B diagnostic,
+not a required launch flag. Explicit `"decode":"descend"` retains the
+hierarchical decode research option, with eager execution.
+
+The user does not need graph-disable flags. This port implements the D-LSA
 inference methods for the pretrained checkpoint. N-LSA trains a different
 model from scratch and is not a replacement map for this Qwen checkpoint.
 
@@ -188,6 +199,9 @@ The controlled speed/retrieval comparison protocol is documented in
 [lsa_benchmark_method.md](lsa_benchmark_method.md).
 Measured V620/R9700 results through the model's native 262,144-token window
 are in [the comparison report](../benchmarks/2026-11-04/lsa-performance/README.md).
+That historical report predates the flat-decode/graph correction. The
+[limited correction benchmark and V620-pair capacity probe](../benchmarks/2026-11-05/lsa-decode-fix/README.md)
+record the new path separately.
 
 The official map was distilled with YaRN factor 40. The loader does not
 override the checkpoint's RoPE: use its existing settings, or explicitly

@@ -1,5 +1,9 @@
 # LSA速度・長文比較の測定条件
 
+この文書は2026-11-04の旧実装の測定条件を記録する。
+decodeをFlat検索とHIP graphへ修正した後の限定比較は
+[2026-11-05のレポート](../benchmarks/2026-11-05/lsa-decode-fix/README.md)を参照する。
+
 対象はこのEXL3移植版のQwen3.8-27B全体であり、attention一層だけの
 カーネル倍率ではない。通常attention、D-LSA Flat、D-LSA Treeを比較する。
 このモデルは64層のうち16層がfull attention、48層がGated DeltaNetで、

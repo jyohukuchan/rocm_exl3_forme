@@ -1,0 +1,35 @@
+{
+  "commit": "cf4cfcf8c6524bead6fb526656be102380177a02",
+  "files_sha256": {
+    "exllamav3/modules/lsa.py": "33cf589de6bce402f885dd5a13a26178eca71606f9a7351406a1fc7d9de8af72",
+    "exllamav3/modules/attn.py": "386bcf9829b906ae5fc481ecea2884020b0f6473e156a4adf1d776be36017884",
+    "exllamav3/modules/attention_fn/lsa_decode.py": "5cbb90de96b274d02ca71fa5d935d53dfcf0bb040863029f8bf8b158c919323e",
+    "exllamav3/cache/lsa.py": "acbe41a80690436f228c70407eaa4ade57349e5ae72ee4a917b9bdf3e8d37c67",
+    "rocm_tools/lsa_decode_benchmark.py": "d2e20fc12336749fd2d8f0a88cf046c71d9910b9e546853e66d83f48501f67ab",
+    "rocm_tools/lsa_capacity_probe.py": "14cc758941eea5bbce511a18351d7ff382120f39dc0deb80937cd5f9a994ca17"
+  },
+  "model": "qwen38-27b-exl3-305-int8grid",
+  "model_bpw": 3.05,
+  "head_bits": 6,
+  "torch": "2.12.0+rocm7.2",
+  "power_mode": "auto",
+  "omp_num_threads": 16,
+  "native_binaries": {
+    "v620_native": {
+      "file": "/home/homelab1/datapool/rocm-exl3-rdna2/lib-context-mr-bounds/exllamav3_ext.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "57afa48c9a61b9e7ba2721917bf011096d7cc947e43b2a8444ee8350f0820718"
+    },
+    "r9700_native": {
+      "file": "/home/homelab1/datapool/rocm-exl3-rdna2/lib-r9700-90k/exllamav3_ext.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "b5fd7023e118d29b80e9df0f578a8c88bfbafffefe05f7075971ea31f3c93ba7"
+    }
+  },
+  "capacity_runtime_note": "Capacity probes recorded HEAD 2eebcde; successful run included the workspace sizing and cluster/select GPU guard worktree changes committed in 364f7a7.",
+  "capacity_allocator": {
+    "failed": "expandable_segments:True (library default)",
+    "successful": {
+      "EXL3_EXPANDABLE_SEGMENTS": "0",
+      "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:False"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "source": {
+    "commit": "cf4cfcf8c6524bead6fb526656be102380177a02",
+    "harness_sha256": "d2e20fc12336749fd2d8f0a88cf046c71d9910b9e546853e66d83f48501f67ab"
+  },
+  "gpu": "AMD Radeon Pro V620",
+  "torch": "2.12.0+rocm7.2",
+  "model": "/work/models/qwen38-27b-exl3-305-int8grid",
+  "cache_quant": [
+    5,
+    4
+  ],
+  "prompt_tokens": 8192,
+  "output_tokens": 64,
+  "prompt_sha256": "e078b8b91977cfbed6737623ce974215a7c501d23bbee550575fe94dffb04375",
+  "model_decode": {
+    "descend_eager": {
+      "warmup": {
+        "decode_tps": 13.285065087153665,
+        "wall_seconds": 49.40187883703038,
+        "cached_tokens": 0,
+        "retrieval_correct": true,
+        "response_prefix": "549339<|im_end|>\n<|endoftext|><|im_start|><|im_start|><|im_start"
+      },
+      "timed": {
+        "decode_tps": 13.541284422231316,
+        "wall_seconds": 6.420432546990924,
+        "cached_tokens": 7936,
+        "retrieval_correct": true,
+        "response_prefix": "549339<|im_end|>\n<|endoftext|><|im_start|><|im_start|><|im_start"
+      },
+      "graph_replays": 0
+    },
+    "flat_eager": {
+      "warmup": {
+        "decode_tps": 15.812836551787443,
+        "wall_seconds": 5.925914400955662,
+        "cached_tokens": 7936,
+        "retrieval_correct": true,
+        "response_prefix": "549339<|im_end|>\n<|endoftext|><|im_start|><|im_start|><|im_start"
+      },
+      "timed": {
+        "decode_tps": 15.844323404478876,
+        "wall_seconds": 5.7391925940755755,
+        "cached_tokens": 7936,
+        "retrieval_correct": true,
+        "response_prefix": "549339<|im_end|>\n<|endoftext|><|im_start|><|im_start|><|im_start"
+      },
+      "graph_replays": 0
+    },
+    "flat_graph": {
+      "warmup": {
+        "decode_tps": 17.712286237829392,
+        "wall_seconds": 5.651384762953967,
+        "cached_tokens": 7936,
+        "retrieval_correct": true,
+        "response_prefix": "549339<|im_end|>\n<|endoftext|><|im_start|><|im_start|><|im_start"
+      },
+      "timed": {
+        "decode_tps": 17.664683660036687,
+        "wall_seconds": 5.328334310906939,
+        "cached_tokens": 7936,
+        "retrieval_correct": true,
+        "response_prefix": "549339<|im_end|>\n<|endoftext|><|im_start|><|im_start|><|im_start"
+      },
+      "graph_replays": 2048
+    }
+  },
+  "block_64k": {
+    "descend_eager": {
+      "milliseconds": 13.466639906255296,
+      "samples_ms": [
+        10.254917469865177,
+        13.466639906255296,
+        13.47821318631759
+      ],
+      "iterations": 32,
+      "synthetic_history": true,
+      "graph_matches_eager": false
+    },
+    "flat_eager": {
+      "milliseconds": 1.4372318437381182,
+      "samples_ms": [
+        1.5346733416663483,
+        1.4259698109526653,
+        1.4372318437381182
+      ],
+      "iterations": 32,
+      "synthetic_history": true,
+      "graph_matches_eager": false
+    },
+    "flat_graph": {
+      "milliseconds": 0.999733751086751,
+      "samples_ms": [
+        1.0171965332119726,
+        0.999733751086751,
+        0.9996696899179369
+      ],
+      "iterations": 32,
+      "synthetic_history": true,
+      "graph_matches_eager": true
+    }
+  },
+  "complete": true
+}

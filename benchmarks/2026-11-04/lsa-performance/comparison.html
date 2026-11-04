@@ -8,7 +8,7 @@ svg{display:block;width:100%;min-width:0;height:300px}svg text{fill:var(--muted-
 table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}th,td{text-align:right;padding:7px 4px;border-bottom:1px solid var(--border,#ddd)}th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}th{font-weight:500}
 p{margin:0;line-height:1.6}.note{color:var(--muted-foreground,#666);font-size:12px}summary{cursor:pointer;margin-bottom:10px}h3{font-size:14px;font-weight:500;margin:0}
 @media(max-width:400px){table{font-size:12px}th,td{padding:7px 2px}.legend{gap:12px}.controls{gap:12px}}
-</style></head><body><main id="lsa-results">
+</style></head><body><main id="lsa-results"><p class="note">旧実装の記録：Treeのdecodeは階層探索、LSA graphは無効。<a href="../../2026-11-05/lsa-decode-fix/README.md">修正後の限定比較</a></p>
 <div class="controls"><label>GPU<select id="gpu"></select></label><label>指標<select id="phase"><option value="prefill">入力処理（prefill）</option><option value="decode">生成（decode）</option></select></label></div>
 <div class="legend"><span><i style="background:var(--chart-1,#4477aa)"></i>通常attention</span><span><i style="background:var(--chart-2,#ee7733)"></i>LSA Flat</span><span><i style="background:var(--chart-3,#009988)"></i>LSA Tree</span></div>
 <svg id="chart" role="img" aria-label="コンテキスト長別の処理速度"></svg>
