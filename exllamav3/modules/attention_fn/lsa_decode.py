@@ -114,3 +114,108 @@ class LSADecodeGraph:
             # for an unchanged bucket table after eviction or prefix replacement.
             self.sources = sources
             self.source_tensors = assembled
+
+
+class _TPReadTables:
+    """A bucket table shared by the short-query graph slots of one TP owner."""
+    def __init__(self, centroids, members, capacity):
+        self.centroids = torch.zeros((capacity, centroids.shape[1]), dtype=centroids.dtype, device=centroids.device)
+        self.members = torch.full((capacity, members.shape[1]), -1, dtype=members.dtype, device=members.device)
+        self.source = None
+
+    def update(self, centroids, members):
+        source = (centroids.data_ptr(), members.data_ptr())
+        if source != self.source:
+            self.centroids.zero_(); self.members.fill_(-1)
+            self.centroids[:len(centroids)].copy_(centroids)
+            self.members[:len(members)].copy_(members)
+            self.source = source
+            self.keepalive = (centroids, members)
+
+
+def tp_select(indexer, query, positions, centroids, members, batch):
+    if (os.environ.get('EXL3_LSA_DECODE_GRAPH', '1') == '0' or not query.is_cuda
+            or len(query) > 16 or indexer.settings.decode != 'flat'):
+        return indexer.select(query, positions, centroids, members)
+    capacity = 1 << (max(1, len(centroids)) - 1).bit_length()
+    tables = getattr(indexer, '_tp_read_tables', {})
+    graphs = getattr(indexer, '_tp_read_graphs', {})
+    current = tables.get(batch)
+    if current is None or len(current.centroids) != capacity:
+        # A new range drops graphs that point into the old tables.
+        graphs = {k: v for k, v in graphs.items() if k[0] != batch}
+        current = tables[batch] = _TPReadTables(centroids, members, capacity)
+    current.update(centroids, members)
+    key = (batch, len(query))
+    state = graphs.get(key)
+    if state is None:
+        state = _TPSelectionGraph(indexer, query, positions, current)
+        graphs[key] = state
+    else:
+        state.query.copy_(query); state.positions.copy_(positions)
+    indexer._tp_read_tables, indexer._tp_read_graphs = tables, graphs
+    state.graph.replay(); state.replays += 1
+    return state.output
+
+
+class _TPSelectionGraph:
+    def __init__(self, indexer, query, positions, tables):
+        self.query, self.positions = torch.empty_like(query), torch.empty_like(positions)
+        self.query.copy_(query); self.positions.copy_(positions)
+        self.tables = tables
+        self.replays = 0
+        with torch.cuda.device(query.device):
+            stream = torch.cuda.Stream(device=query.device)
+            stream.wait_stream(torch.cuda.current_stream())
+            def run():
+                return indexer.select(self.query, self.positions, tables.centroids, tables.members)
+            with torch.cuda.stream(stream):
+                for _ in range(2): run()
+            torch.cuda.current_stream().wait_stream(stream)
+            self.graph = torch.cuda.CUDAGraph()
+            with torch.cuda.graph(self.graph, stream=stream):
+                self.output = run()
+
+
+def tp_attend(indexer, layer, q, k, v, indices, scale, bt, qc, kv_heads, batch):
+    from .qsa_triton import qsa_sparse_attend_rows
+    def eager():
+        return qsa_sparse_attend_rows(q, k, v, indices, scale, bt, PAGE_SIZE, qc, kv_heads)
+    if os.environ.get('EXL3_LSA_DECODE_GRAPH', '1') == '0' or len(q) > 16:
+        return eager()
+    graphs = getattr(indexer, '_tp_attention_graphs', {})
+    key = (id(layer), batch, len(q), tuple(q.shape), k.data_ptr(), v.data_ptr())
+    state = graphs.get(key)
+    if state is None:
+        state = _TPAttentionGraph(layer, q, k, v, indices, scale, bt, qc, kv_heads)
+        graphs[key] = state
+    else:
+        state.stage(q, indices, bt)
+    indexer._tp_attention_graphs = graphs
+    state.graph.replay(); state.replays += 1
+    return state.output
+
+
+class _TPAttentionGraph:
+    def __init__(self, layer, q, k, v, indices, scale, bt, qc, kv_heads):
+        from .qsa_triton import qsa_sparse_attend_rows
+        self.layer = layer
+        self.query, self.indices = torch.empty_like(q), torch.empty_like(indices)
+        self.bt = torch.zeros((len(q), layer.max_num_tokens // PAGE_SIZE), dtype=bt.dtype, device=bt.device)
+        self.stage(q, indices, bt)
+        self.replays = 0
+        with torch.cuda.device(q.device):
+            stream = torch.cuda.Stream(device=q.device)
+            stream.wait_stream(torch.cuda.current_stream())
+            def run():
+                return qsa_sparse_attend_rows(self.query, k, v, self.indices, scale, self.bt, PAGE_SIZE, qc, kv_heads)
+            with torch.cuda.stream(stream):
+                for _ in range(2): run()
+            torch.cuda.current_stream().wait_stream(stream)
+            self.graph = torch.cuda.CUDAGraph()
+            with torch.cuda.graph(self.graph, stream=stream):
+                self.output = run()
+
+    def stage(self, q, indices, bt):
+        self.query.copy_(q); self.indices.copy_(indices)
+        self.bt[:, :bt.shape[1]].copy_(bt)

@@ -398,3 +398,47 @@ def test_decode_graph_replay_batch_and_prefix_replacement(monkeypatch, device):
     actual = try_lsa_decode(attention, x, params).clone()
     torch.testing.assert_close(actual, forward(x, 2, 1, params), atol=2e-3, rtol=3e-3)
     assert idx.decode_graph.replays >= 3
+
+
+def test_tp_nonowner_holds_only_local_kv():
+    idx = make_indexer('cpu')
+    idx.owns_index = False
+    attention = fake_attention(idx)
+    layer = CacheLayer_lsa_quant(None, attention, 1, 1024, 4, 4)
+    layer.alloc(torch.device('cpu'))
+    assert layer.index_keys is None and layer.centroids is None
+    assert layer.index_storage_size() == layer.decode_workspace_size() == 0
+    assert len(layer.get_tensors()) == 4
+    layer.append_index(torch.randn(1, 1, 16), torch.zeros(1, 4, dtype=torch.int32), torch.zeros(1, dtype=torch.int32))
+
+
+def test_tp_shared_indices_include_transport_padding():
+    owner = make_indexer('cpu', top_k=31)
+    owner.index_owner = 1
+    class Link:
+        saved = None
+        def broadcast(self, tensor, device):
+            assert device == 1 and tensor.numel() * tensor.element_size() % 16 == 0
+            if self.saved is None: self.saved = tensor.clone()
+            else: tensor.copy_(self.saved)
+    link = Link()
+    rows = torch.arange((31 + 64 + 4) * 2, dtype=torch.int32).reshape(2, -1)
+    sent = owner.share_indices(rows, 2, 'cpu', {'backend':link})
+    got = owner.share_indices(None, 2, 'cpu', {'backend':link})
+    torch.testing.assert_close(sent, rows)
+    torch.testing.assert_close(got, rows)
+
+
+def test_tp_short_query_selection_graph_matches_eager():
+    if not torch.cuda.is_available(): pytest.skip('GPU required')
+    from exllamav3.modules.attention_fn.lsa_decode import tp_select
+    idx=make_indexer('cuda:0')
+    keys=F.normalize(torch.randn(5,64,16,device='cuda:0'),dim=-1)
+    c,m=idx.cluster(keys)
+    m=torch.where(m>=0,m+torch.arange(5,device='cuda:0')[:,None,None]*64,-1).flatten(0,1)
+    c=c.flatten(0,1)
+    for n in [1,3,1,3]:
+        q=F.normalize(torch.randn(n,16,device='cuda:0'),dim=-1)
+        positions=torch.arange(256,256+n,device='cuda:0',dtype=torch.int32)
+        actual=tp_select(idx,q,positions,c,m,0).clone()
+        torch.testing.assert_close(actual,idx.select(q,positions,c,m))

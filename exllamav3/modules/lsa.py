@@ -19,6 +19,26 @@ import torch.nn.functional as F
 _FLAT_SORT_MAX_ELEMENTS = 1 << 24
 
 
+def mp_lsa_stats(context):
+    device = context["device"]
+    records = []
+    for root in context["modules"]:
+        if root is None:
+            continue
+        for module in root:
+            idx = getattr(module, "lsa_indexer", None)
+            if idx is None:
+                continue
+            records.append(dict(key=module.key, kv_heads=module.num_kv_heads,
+                index_owner=idx.index_owner, owns_index=idx.owns_index,
+                index_bytes=sum(cl.index_storage_size() for cl in module.cache_layers),
+                selection_graph_replays=sum(g.replays for g in getattr(idx, "_tp_read_graphs", {}).values()),
+                attention_graph_replays=sum(g.replays for g in getattr(idx, "_tp_attention_graphs", {}).values())))
+    return dict(device=device, allocated_gib=torch.cuda.memory_allocated(device)/2**30,
+                reserved_gib=torch.cuda.memory_reserved(device)/2**30,
+                free_gib=torch.cuda.mem_get_info(device)[0]/2**30, layers=records)
+
+
 def _input_device(function):
     @wraps(function)
     def guarded(self, tensor, *args, **kwargs):
@@ -124,6 +144,8 @@ class LSAIndexer:
         self.rotary_dim = rotary_dim
         self.first_head = first_head
         self.tp_mode = False
+        self.index_owner = None
+        self.owns_index = True
         self.query_map = self.key_map = None
 
     @classmethod
@@ -158,6 +180,9 @@ class LSAIndexer:
     def unload(self):
         self.query_map = self.key_map = None
         self.decode_graph = None
+        self._tp_read_tables = {}
+        self._tp_read_graphs = {}
+        self._tp_attention_graphs = {}
 
     def storage_size(self):
         return self.query_map_cpu.numel() * 8
@@ -194,6 +219,29 @@ class LSAIndexer:
         if self.tp_mode and active:
             params["backend"].all_reduce(torch.zeros((2, *x.shape[:2], self.index_dim),
                                                      dtype=torch.float32, device=x.device))
+            if self.index_owner is not None:
+                from ..util.tensor import get_for_device
+                past = get_for_device(params, "cache_seqlens", "cpu") if cached else None
+                end = int(past.max()) + x.shape[1] if cached else x.shape[1]
+                if (params.get("causal", True) and params.get("non_causal_spans") is None
+                        and not self.can_read_dense(end)):
+                    for _ in range(x.shape[0]):
+                        self.share_indices(None, x.shape[1], x.device, params)
+
+    def share_indices(self, indices, rows, device, params):
+        if self.index_owner is None:
+            return indices
+        width = self.settings.top_k + self.settings.window_size + self.settings.sink_size
+        # Native broadcast transfers 16-byte lanes. Padding is transport only.
+        padded = (width + 3) // 4 * 4
+        if indices is None:
+            transfer = torch.empty((rows, padded), dtype=torch.int32, device=device)
+        elif padded != width:
+            transfer = F.pad(indices, (0, padded - width), value=-1)
+        else:
+            transfer = indices
+        params["backend"].broadcast(transfer, self.index_owner)
+        return transfer[:, :width].contiguous()
 
     def can_read_dense(self, end):
         """A dense read is exact while every closed bucket and historical key fits."""
@@ -288,7 +336,9 @@ class LSAIndexer:
             start = past[batch] if graph_state is not None else int(past[batch]) if past is not None else 0
             positions = (past[batch:batch + 1] if graph_state is not None else
                          torch.arange(start, start + t, dtype=torch.int32, device=q.device))
-            if graph_state is not None:
+            if not self.owns_index:
+                indices = self.share_indices(None, t, q.device, params)
+            elif graph_state is not None:
                 positions = past[batch:batch + 1]
                 centroids, members = graph_state.buckets[batch]
             elif cache_layer is None:
@@ -314,7 +364,13 @@ class LSAIndexer:
                 bucketed = cache_layer.buckets(self, block_table[batch], closed, with_tree=use_tree)
                 centroids, members = bucketed[:2]
                 tree = bucketed[2] if use_tree else None
-            indices = self.select(query[batch], positions, centroids, members, tree)
+            if self.owns_index:
+                if self.index_owner is not None and tree is None:
+                    from .attention_fn.lsa_decode import tp_select
+                    indices = tp_select(self, query[batch], positions, centroids, members, batch)
+                else:
+                    indices = self.select(query[batch], positions, centroids, members, tree)
+                indices = self.share_indices(indices, t, q.device, params)
             qc = None
             bt = None
             if cache_layer is None:
@@ -328,6 +384,12 @@ class LSAIndexer:
                 else:
                     keys, values = cache_layer.get_kv(cache_seqlens + t, block_table)
                 keys, values = keys.flatten(0, 1), values.flatten(0, 1)
-            outputs.append(qsa_sparse_attend_rows(q[batch].contiguous(), keys, values, indices,
-                attention.sm_scale, bt, PAGE_SIZE if bt is not None else 0, qc, attention.num_kv_heads))
+            if self.index_owner is not None and bt is not None and (qc is not None or keys.dtype == torch.float16):
+                from .attention_fn.lsa_decode import tp_attend
+                output = tp_attend(self, cache_layer, q[batch].contiguous(), keys, values, indices,
+                    attention.sm_scale, bt, qc, attention.num_kv_heads, batch)
+            else:
+                output = qsa_sparse_attend_rows(q[batch].contiguous(), keys, values, indices,
+                    attention.sm_scale, bt, PAGE_SIZE if bt is not None else 0, qc, attention.num_kv_heads)
+            outputs.append(output)
         return torch.stack(outputs)

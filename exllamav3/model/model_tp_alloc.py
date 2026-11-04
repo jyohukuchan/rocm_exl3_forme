@@ -25,7 +25,8 @@ class TPAllocation:
         recons_temp: int = 0,
         channels_to_split: int = 1,
         limit_key: str = None,
-        max_devices: int = None
+        max_devices: int = None,
+        affinity_key: str = None,
     ):
         self.key = key
         self.channel_width = channel_width
@@ -39,6 +40,7 @@ class TPAllocation:
         self.recons_temp = recons_temp
         self.channels_to_split = channels_to_split
         self.max_devices = max_devices
+        self.affinity_key = affinity_key
 
         self.current_split = []
 
@@ -98,6 +100,13 @@ class TPAllocator:
             # Mask out devices to satisfy the max split per component type. A module-enforced cap
             # (max_devices, e.g. 1 for attention variants that only run whole on one device) is a
             # hard limit on top of whatever the user set for the type
+            if c.affinity_key is not None:
+                parent = next(p for p in self.components if p.key == c.affinity_key)
+                rem_mem_s = [m if n else 0 for m, n in zip(rem_mem_s, parent.current_split)]
+                if not any(rem_mem_s):
+                    # Reserve on an active parent even if the initial estimate
+                    # already filled its nominal budget; load reports the OOM.
+                    rem_mem_s = [1 if n else 0 for n in parent.current_split]
             dev_limit = self.dev_limits.get(c.limit_key) if c.limit_key else None
             if c.max_devices is not None:
                 dev_limit = c.max_devices if dev_limit is None else min(dev_limit, c.max_devices)

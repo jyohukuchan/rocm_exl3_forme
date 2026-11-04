@@ -98,6 +98,7 @@ def add_args(
     parser.add_argument("-mct", "--moe_cpu_threads", type = int, help = "Worker thread count for --moe_cpu_offload / --moe_cpu_split (default: EXL3_MOE_CPU_THREADS env, else cpu_count/2)", default = None)
     parser.add_argument("-ngr", "--ngram_ram", action = "store_true", help = "Load an n-gram embedding table (PLE models, e.g. Qwen3.8-Flash-Next) fully into system RAM instead of streaming rows from disk per forward (tens of GB of RAM; avoids per-token disk reads)")
     parser.add_argument("-tpb", "--tp_backend", type = str, help = "Tensor-parallel backend, either 'native' (default) or 'nccl'", default = "native")
+    parser.add_argument("--rope-scaling", type=str, help="RoPE scaling JSON override, e.g. the checkpoint's YaRN configuration")
     parser.add_argument("-tp_attn", "--tp_max_parallelism_attn", type = int, help = "(TP) Maximum parallelism for attention layers", default = None)
     parser.add_argument("-tp_mlp", "--tp_max_parallelism_mlp", type = int, help = "(TP) Maximum parallelism for MLP layers", default = None)
     parser.add_argument("-tp_moe", "--tp_max_parallelism_moe", type = int, help = "(TP) Maximum parallelism for MoE layers", default = None)
@@ -155,6 +156,8 @@ def add_args(
         parser.add_argument("-dm", "--draft_model_dir", type = str, help = "Path to draft model directory", default = None)
         parser.add_argument("-ndt", "--num_draft_tokens", type = int, help = "Number of draft tokens (default: draft model default, else 4)", default = None)
         parser.add_argument("-mtp", "--mtp", action = "store_true", help = "Use MTP drafting")
+        parser.add_argument("--draft-device", type=int, help="GPU for the single-device draft/MTP model; TP planning accounts for its resident memory")
+        parser.add_argument("--draft-attention-window", type=int, help="Optional left attention window for the drafter only; target context and verification remain unchanged")
         parser.add_argument("-ngram", "--ngram_match_min", type = int, help = "N-gram draft minimum match length, default = 0 (disabled)", default = 0)
         parser.add_argument("-dds", "--dynamic_draft", action = "store_true", help = "Dynamically adapt draft length to acceptance rate (num_draft_tokens acts as ceiling)")
         parser.add_argument("-dc", "--draft_confidence", type = float, help = "Confidence target for dynamic draft truncation, default: 0.4", default = 0.4)
@@ -242,6 +245,8 @@ def init(
 
     # Config
     config = Config.from_directory(args.model_dir, layer_map = args.layer_map)
+    if getattr(args, "rope_scaling", None):
+        config.rope_settings.rope_scaling = json.loads(args.rope_scaling)
     if getattr(args, "lsa_config", None):
         config.lsa = {**(config.lsa or {}), **json.loads(args.lsa_config)}
     if getattr(args, "lsa_projections", None):
@@ -306,6 +311,12 @@ def init(
         swa_full = args.swa_full,
         component = "mtp" if use_mtp else "text",
     ) if draft_model_dir else None
+    if draft_model is not None and getattr(args, "draft_attention_window", None) is not None:
+        if args.draft_attention_window < 1:
+            raise ValueError("--draft-attention-window must be positive")
+        for module in draft_model:
+            if hasattr(module, "sliding_window"):
+                module.sliding_window = args.draft_attention_window
 
     # Cache
     max_history = max(
@@ -429,7 +440,8 @@ def init(
     if draft_model_dir:
         printp(not quiet, f" -- Loading {draft_model_dir}")
         draft_model.load(
-            use_per_device = split,
+            **({"device": f"cuda:{args.draft_device}"} if getattr(args, "draft_device", None) is not None
+               else {"use_per_device": split}),
             progressbar = progress,
             verbose = args.load_verbose,
             max_batch_size = args.autosplit_max_batch_size,

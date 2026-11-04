@@ -20,6 +20,7 @@ class LSAPlanes:
         indexer = attention.lsa_indexer
         self.index_dim = indexer.index_dim
         self.lsa_settings = indexer.settings
+        self.owns_index = getattr(indexer, "owns_index", True)
         self.index_shape = (max_num_tokens // PAGE_SIZE, PAGE_SIZE, self.index_dim)
         self.block_capacity = max(1, math.ceil(max_num_tokens / self.lsa_settings.window_size))
         self.index_keys = self.page_versions = self.centroids = self.members = None
@@ -29,6 +30,8 @@ class LSAPlanes:
 
     def alloc(self, device):
         super().alloc(device)
+        if not self.owns_index:
+            return
         self.index_keys = torch.zeros(self.index_shape, dtype=torch.float32, device=device)
         # cache_rotate copies uint4 lanes, so every persisted page needs 16 bytes.
         self.page_versions = torch.zeros((self.index_shape[0], 2), dtype=torch.int64, device=device)
@@ -53,10 +56,12 @@ class LSAPlanes:
     def get_tensors(self):
         # Versions travel with index keys through CPU paging and defragmentation.
         # Derived buckets are an LRU workspace, never part of a persisted page.
-        return super().get_tensors() + [self.index_keys, self.page_versions]
+        return super().get_tensors() + ([self.index_keys, self.page_versions] if self.owns_index else [])
 
     def copy_page(self, source, from_page, to_page, num_tokens):
         super().copy_page(source, from_page, to_page, num_tokens)
+        if not self.owns_index:
+            return
         self.index_keys[to_page, :num_tokens].copy_(source.index_keys[from_page, :num_tokens], non_blocking=True)
         # A partial copy may leave a different suffix; give the destination a new version.
         self.page_versions[to_page] = next(_versions)
@@ -65,14 +70,19 @@ class LSAPlanes:
         return super().storage_size() + self.index_storage_size()
 
     def overhead_size(self):
+        return super().overhead_size()
+
+    def decode_workspace_size(self):
         # The last assembled flat read and the graph's static bucket table.
         # Reserve the actual maximum graph range, including power-of-two padding.
         n = ((self.max_num_tokens - 1) // self.lsa_settings.window_size
              * (self.lsa_settings.window_size // self.lsa_settings.bucket_size))
         graph_n = 1 << (max(1, n) - 1).bit_length()
-        return super().overhead_size() + (n + graph_n) * (self.index_dim + self.lsa_settings.bucket_cap) * 4
+        return (n + graph_n) * (self.index_dim + self.lsa_settings.bucket_cap) * 4 if self.owns_index else 0
 
     def index_storage_size(self):
+        if not self.owns_index:
+            return 0
         s = self.lsa_settings
         derived = self.block_capacity * (s.window_size // s.bucket_size) * (self.index_dim + s.bucket_cap) * 4
         if s.top_level:
@@ -87,6 +97,8 @@ class LSAPlanes:
         self.page_versions[pages.flatten()] = next(_versions)
 
     def append_index(self, keys, block_table, past, mark_versions=True):
+        if not self.owns_index:
+            return
         b, t, _ = keys.shape
         positions = past.to(keys.device)[:, None] + torch.arange(t, device=keys.device)[None, :]
         pages = block_table.gather(1, positions // PAGE_SIZE).long()
@@ -239,7 +251,7 @@ class CacheLayer_lsa_r4d(LSAPlanes, CacheLayer_r4d):
 
     def get_tensors(self):
         packed = self.kv.view(self.num_pages, 16, self.hkv, 16, 2 * self.dim) if self.kv is not None else None
-        return [packed, self.index_keys, self.page_versions]
+        return [packed] + ([self.index_keys, self.page_versions] if self.owns_index else [])
 
     def tp_export(self, plan):
         return {"cls": type(self), "args": {"cache_id": self.cache_id, "max_num_tokens": self.max_num_tokens}}

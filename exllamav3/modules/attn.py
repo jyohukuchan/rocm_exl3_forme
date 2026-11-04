@@ -1212,8 +1212,11 @@ class Attention(Module):
         storage += self.o_proj.storage_size()
         if self.lsa_indexer is not None:
             storage += self.lsa_indexer.storage_size()
-            replicated_lsa = self.lsa_indexer.storage_size() + sum(
-                cl.index_storage_size() for cl in self.cache_layers)
+            replicated_lsa = self.lsa_indexer.storage_size()
+            # The global-query design owns one index per layer, rather than
+            # keeping identical long-context planes on every TP rank.
+            if self.lsa_indexer.settings.query_heads != "all":
+                replicated_lsa += sum(cl.index_storage_size() for cl in self.cache_layers)
         for cl in self.cache_layers:
             storage += cl.storage_size()
         overhead_d = 0
@@ -1254,7 +1257,8 @@ class Attention(Module):
             channel_width = channel_width,
             channel_unit = "heads",
             storage_per_device = replicated_lsa,
-            storage_to_split = storage - replicated_lsa,
+            storage_to_split = storage - replicated_lsa - (sum(cl.index_storage_size() for cl in self.cache_layers)
+                if self.lsa_indexer is not None and self.lsa_indexer.settings.query_heads == "all" else 0),
             overhead_per_device = overhead_d,
             overhead_to_split = overhead_s,
             recons_temp = recons,
@@ -1262,6 +1266,11 @@ class Attention(Module):
             limit_key = "attn",
             max_devices = max_devices,
         )
+        if self.lsa_indexer is not None and self.lsa_indexer.settings.query_heads == "all":
+            index = TPAllocation(key=self.key + ".lsa_index", channel_width=1, channel_unit="index",
+                storage_to_split=sum(cl.index_storage_size() + cl.decode_workspace_size() for cl in self.cache_layers),
+                channels_to_split=1, max_devices=1, affinity_key=self.key)
+            return [tpa, index]
         return [tpa]
 
 
@@ -1313,6 +1322,9 @@ class Attention(Module):
             # QSA indexer (Qwen3.8): replicated whole on the owning rank
             "qsa_indexer": _export(self.qsa_indexer),
             "lsa_indexer": self.lsa_indexer.tp_export() if self.lsa_indexer is not None else None,
+            "lsa_index_owner": (next((dev for dev, p in enumerate(plan)
+                if p.get(self.key + ".lsa_index", (0, 0))[1] > p.get(self.key + ".lsa_index", (0, 0))[0]), None)
+                if isinstance(plan, list) else None),
             # Learned attention sinks (gpt-oss): one logit per query head, sliced to the local heads on import
             "sinks": producer.send(self.sinks) if self.sinks is not None else None,
             "device": self.device,
@@ -1387,6 +1399,8 @@ class Attention(Module):
             from .lsa import LSAIndexer
             lsa_indexer = LSAIndexer(**exported["lsa_indexer"], first_head=first)
             lsa_indexer.tp_mode = True
+            lsa_indexer.index_owner = exported.get("lsa_index_owner")
+            lsa_indexer.owns_index = lsa_indexer.index_owner is None or int(device.index if hasattr(device, "index") else device) == lsa_indexer.index_owner
         if exported.get("qsa_indexer") is not None and num_kv_heads:
             assert num_kv_heads == exported["num_kv_heads"], "QSA attention layers run whole on one device"
             qsa_indexer = _import("qsa_indexer")
