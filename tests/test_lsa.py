@@ -259,7 +259,15 @@ def test_hierarchy_child_identifiers_have_bounded_hash_cost():
     nested_leaf_ids = [(tuple(range(64)), i) for i in range(32)]
     _, _, _, identities = group.read(sums, nested_leaf_ids)
     assert all(len(i) == 2 and all(isinstance(part, int) for part in i) for i in identities)
+    from collections import OrderedDict
+    class CountedCache(OrderedDict):
+        lookups = 0
+        def __getitem__(self, key):
+            self.lookups += 1
+            return super().__getitem__(key)
+    group.cached = CountedCache(group.cached)
     _, _, _, same = group.read(sums, nested_leaf_ids)
+    assert group.cached.lookups <= 3  # Group signatures are hashed per group, never once per child.
     assert identities == same
     _, _, _, replaced = group.read(sums + 1, [(tuple(range(64)), i + 32) for i in range(32)])
     assert not set(identities) & set(replaced)  # Reused slots never alias a prior node incarnation.

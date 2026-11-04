@@ -68,7 +68,8 @@ class NodeGroups:
                 self.children[slot].copy_(children[row].int())
                 self.versions[slot] = next(_node_versions)
                 self.cached[sig] = slot
-        slots = torch.tensor([self.cached[sig] for sig in signatures], device=sums.device)
+        slot_indices = [self.cached[sig] for sig in signatures]
+        slots = torch.tensor(slot_indices, device=sums.device)
         for sig in signatures:
             self.cached.move_to_end(sig)
         centroids = self.centroids[slots].flatten(0, 1)
@@ -80,8 +81,8 @@ class NodeGroups:
         # A parent must not recursively hash all descendants for every child.
         # A slot incarnation is unique even after eviction/reuse, while its
         # identity costs O(1) to hash at any depth of the hierarchy.
-        identities = [(self.versions[self.cached[sig]], child)
-                      for sig in signatures for child in range(self.block // self.size)]
+        identities = [(self.versions[slot], child)
+                      for slot in slot_indices for child in range(self.block // self.size)]
         return centroids.float(), children, self.sums[slots].flatten(0, 1), identities
 
 
