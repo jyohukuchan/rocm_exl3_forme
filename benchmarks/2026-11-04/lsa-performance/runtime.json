@@ -1,0 +1,53 @@
+{
+  "model": "qwen38-27b-exl3-305-int8grid",
+  "model_quantization": {
+    "bits": 3.05,
+    "head_bits": 6,
+    "format": "EXL3 int8grid mul1"
+  },
+  "runtime_fix_commit": "84dfb5b",
+  "docker_image_id": "sha256:cb979a9dbf69fa98fc19a303826a3c118b6f27cc144d0a1181185a05363628dc",
+  "native_binaries": {
+    "v620_native": {
+      "file": "/home/homelab1/datapool/rocm-exl3-rdna2/lib-context-mr-bounds/exllamav3_ext.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "57afa48c9a61b9e7ba2721917bf011096d7cc947e43b2a8444ee8350f0820718"
+    },
+    "r9700_native": {
+      "file": "/home/homelab1/datapool/rocm-exl3-rdna2/lib-r9700-90k/exllamav3_ext.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "b5fd7023e118d29b80e9df0f578a8c88bfbafffefe05f7075971ea31f3c93ba7"
+    }
+  },
+  "r9700": {
+    "torch": "2.12.0+rocm7.2",
+    "gpu": "AMD Radeon AI PRO R9700",
+    "arch": "gfx1201",
+    "model_config_sha256": "da0be49e4e33602bb2c0d0043f6f0a7aebfbe05f59163bcd5866034cc6ff3420",
+    "projection_sha256": "24cee934f969756db228a8df7f2bc7613979b63ac3b1d5ac3d9aa42e4339bb9b",
+    "cache_quant": [
+      5,
+      4
+    ],
+    "chunk_size": 4096,
+    "new_tokens": 64
+  },
+  "v620": {
+    "torch": "2.12.0+rocm7.2",
+    "gpu": "AMD Radeon Pro V620",
+    "arch": "gfx1030",
+    "model_config_sha256": "da0be49e4e33602bb2c0d0043f6f0a7aebfbe05f59163bcd5866034cc6ff3420",
+    "projection_sha256": "24cee934f969756db228a8df7f2bc7613979b63ac3b1d5ac3d9aa42e4339bb9b",
+    "cache_quant": [
+      5,
+      4
+    ],
+    "chunk_size": 4096,
+    "new_tokens": 64
+  },
+  "host": {
+    "cpu": "AMD Ryzen Threadripper PRO 3995WX",
+    "omp_num_threads_per_process": 16,
+    "cpu_affinity": "not pinned",
+    "gpu_benchmarks": "separate processes, concurrently on separate GPUs"
+  },
+  "measurements_finished_jst": "2026-11-05T00:15:40.905947+09:00"
+}

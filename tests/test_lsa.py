@@ -342,15 +342,15 @@ def test_quantized_dense_prefix_uses_actual_history_bound_with_shuffled_pages():
     idx = make_indexer("cuda:0")
     cache = CacheLayer_lsa_quant(None, fake_attention(idx), 1, 1024, k_bits=5, v_bits=4)
     cache.alloc(torch.device("cuda:0"))
-    q = torch.randn((1, 5, 4, 64), device="cuda:0", dtype=torch.float16)
-    k = torch.randn((1, 5, 2, 64), device="cuda:0", dtype=torch.float16)
+    q = torch.randn((1, 65, 4, 64), device="cuda:0", dtype=torch.float16)
+    k = torch.randn((1, 65, 2, 64), device="cuda:0", dtype=torch.float16)
     v = torch.randn_like(k)
     bt = torch.tensor([[2, 0, 3, 1]], device="cuda:0", dtype=torch.int32)
     past = torch.zeros(1, device="cuda:0", dtype=torch.int32)
     actual = attn_dispatch(q, k, v, cache=cache, cache_idx=0, block_table=bt,
                            cache_seqlens=past, causal=True, sm_scale=0.125, max_kv_len=0)
-    dk, dv = cache.get_kv(past + 5, bt)
+    dk, dv = cache.get_kv(past + 65, bt)
     expected = F.scaled_dot_product_attention(q.transpose(1, 2).float(),
-        dk[2:3, :5].repeat_interleave(2, 2).transpose(1, 2).float(),
-        dv[2:3, :5].repeat_interleave(2, 2).transpose(1, 2).float(), is_causal=True, scale=0.125).transpose(1, 2)
+        dk[2:3, :65].repeat_interleave(2, 2).transpose(1, 2).float(),
+        dv[2:3, :65].repeat_interleave(2, 2).transpose(1, 2).float(), is_causal=True, scale=0.125).transpose(1, 2)
     torch.testing.assert_close(actual.float(), expected, atol=2e-3, rtol=3e-3)

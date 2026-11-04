@@ -186,6 +186,8 @@ or an end-to-end speedup claim. Raw local validation results are summarized in
 `benchmarks/2026-11-04/lsa/`.
 The controlled speed/retrieval comparison protocol is documented in
 [lsa_benchmark_method.md](lsa_benchmark_method.md).
+Measured V620/R9700 results through the model's native 262,144-token window
+are in [the comparison report](../benchmarks/2026-11-04/lsa-performance/README.md).
 
 The official map was distilled with YaRN factor 40. The loader does not
 override the checkpoint's RoPE: use its existing settings, or explicitly
