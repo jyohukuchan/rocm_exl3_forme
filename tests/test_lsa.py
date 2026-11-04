@@ -354,3 +354,46 @@ def test_quantized_dense_prefix_uses_actual_history_bound_with_shuffled_pages():
         dk[2:3, :65].repeat_interleave(2, 2).transpose(1, 2).float(),
         dv[2:3, :65].repeat_interleave(2, 2).transpose(1, 2).float(), is_causal=True, scale=0.125).transpose(1, 2)
     torch.testing.assert_close(actual.float(), expected, atol=2e-3, rtol=3e-3)
+
+
+def test_decode_graph_replay_batch_and_prefix_replacement(monkeypatch):
+    if not torch.cuda.is_available():
+        pytest.skip('ROCm/CUDA GPU required')
+    from exllamav3.modules.attention_fn.lsa_decode import try_lsa_decode
+    monkeypatch.delenv('EXL3_LSA_DECODE_GRAPH', raising=False)
+    idx = make_indexer('cuda:0', top_level=2)
+    attention = fake_attention(idx)
+    attention.device = torch.device('cuda:0')
+    attention.has_split_cache = False
+    attention.has_lora = lambda: False
+    attention.layer_idx = 0
+    cache = CacheLayer_lsa_quant(None, attention, 1, 1024, 5, 4)
+    cache.alloc(attention.device)
+    # Capture the real index projection, packed cache append and gathered read.
+    def forward(x, bsz, seqlen, params):
+        q = x.reshape(bsz, 1, 4, 64)
+        k, v = q[:, :, :2].contiguous(), q[:, :, 2:].contiguous()
+        return idx.attend(attention, q, k, v, params, cache, params['block_table'],
+                          params['cache_seqlens'], params['cache_seqlens'])
+    attention.decode_flash_attn = forward
+    bt = torch.tensor([[1, 0], [3, 2]], device='cuda:0', dtype=torch.int32)
+    k = torch.randn((2, 180, 2, 64), device='cuda:0', dtype=torch.float16)
+    q = torch.randn((2, 180, 4, 64), device='cuda:0', dtype=torch.float16)
+    _, keys = idx.project(q, k, {})
+    zero = torch.zeros(2, device='cuda:0', dtype=torch.int32)
+    cache.append_index(keys, bt, zero)
+    cache.update_kv_direct(zero, bt, k, k, 180)
+    for position in (126, 127, 128, 129):
+        seq = torch.full((2,), position, device='cuda:0', dtype=torch.int32)
+        params = dict(cache=cache, block_table=bt, cache_seqlens=seq, positions=seq)
+        x = torch.randn((2, 1, 256), device='cuda:0', dtype=torch.float16)
+        actual = try_lsa_decode(attention, x, params).clone()
+        expected = forward(x, 2, 1, params)
+        torch.testing.assert_close(actual, expected, atol=2e-3, rtol=3e-3)
+    # Reuse the same graph range and pages, overwrite a historical prefix.
+    cache.index_keys[1].neg_()
+    cache.page_versions[1].add_(100000)
+    seq.fill_(130)
+    actual = try_lsa_decode(attention, x, params).clone()
+    torch.testing.assert_close(actual, forward(x, 2, 1, params), atol=2e-3, rtol=3e-3)
+    assert idx.decode_graph.replays >= 3

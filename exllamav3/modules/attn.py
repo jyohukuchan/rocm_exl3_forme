@@ -1068,6 +1068,12 @@ class Attention(Module):
         seqlen: int,
         params: dict,
     ):
+        lsa_graph_state = params.get("_lsa_graph_state")
+        if self.lsa_indexer is not None and lsa_graph_state is None:
+            from .attention_fn.lsa_decode import try_lsa_decode
+            output = try_lsa_decode(self, x, params)
+            if output is not None:
+                return output
         cache = params.get("cache")
         # In TP child processes the cache param arrives as an opaque id; resolve it to the local split
         # CacheLayer before anything (like the BC-attn graph path) inspects it
@@ -1148,8 +1154,9 @@ class Attention(Module):
         if self.lsa_indexer is not None:
             from ..cache import CacheLayer
             lsa_layer = cache if isinstance(cache, CacheLayer) else cache.layers[self.layer_idx, params.get("layer_instance") or 0]
-            past = get_for_device(params, "cache_seqlens", "cpu")
-            lsa_sparse = causal and non_causal_spans is None and (
+            past = (lsa_graph_state.past if lsa_graph_state is not None else
+                    get_for_device(params, "cache_seqlens", "cpu"))
+            lsa_sparse = lsa_graph_state is not None or causal and non_causal_spans is None and (
                 getattr(lsa_layer, "lsa_always_sparse", False) or not self.lsa_indexer.can_read_dense(int(past.max()) + seqlen))
             if not lsa_sparse:
                 # Retain index keys even for dense/vision-span forwards; a subsequent

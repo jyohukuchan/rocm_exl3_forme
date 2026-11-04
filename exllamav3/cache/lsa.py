@@ -25,6 +25,7 @@ class LSAPlanes:
         self.index_keys = self.page_versions = self.centroids = self.members = None
         self.bucket_sums = self.tree_store = None
         self.bucket_cache = OrderedDict()
+        self._last_bucket_read = None
 
     def alloc(self, device):
         super().alloc(device)
@@ -40,12 +41,14 @@ class LSAPlanes:
             self.bucket_sums = torch.empty_like(self.centroids)
             self.tree_store = TreeStore(s, self.block_capacity * n, self.index_dim, device)
         self.bucket_cache.clear()
+        self._last_bucket_read = None
 
     def free(self):
         super().free()
         self.index_keys = self.page_versions = self.centroids = self.members = None
         self.bucket_sums = self.tree_store = None
         self.bucket_cache.clear()
+        self._last_bucket_read = None
 
     def get_tensors(self):
         # Versions travel with index keys through CPU paging and defragmentation.
@@ -61,6 +64,13 @@ class LSAPlanes:
     def storage_size(self):
         return super().storage_size() + self.index_storage_size()
 
+    def overhead_size(self):
+        # The last assembled flat read and the graph's static bucket table.
+        # Reserve the actual maximum graph range, including power-of-two padding.
+        n = self.block_capacity * (self.lsa_settings.window_size // self.lsa_settings.bucket_size)
+        graph_n = 1 << (max(1, n) - 1).bit_length()
+        return super().overhead_size() + (n + graph_n) * (self.index_dim + self.lsa_settings.bucket_cap) * 4
+
     def index_storage_size(self):
         s = self.lsa_settings
         derived = self.block_capacity * (s.window_size // s.bucket_size) * (self.index_dim + s.bucket_cap) * 4
@@ -70,13 +80,19 @@ class LSAPlanes:
             derived += buckets * self.index_dim * 4 + TreeStore.storage_size(s, buckets, self.index_dim)
         return math.prod(self.index_shape) * 4 + self.index_shape[0] * 16 + derived
 
-    def append_index(self, keys, block_table, past):
+    def mark_index_pages(self, block_table, past, length):
+        positions = past.to(block_table.device)[:, None] + torch.arange(length, device=block_table.device)[None, :]
+        pages = block_table.gather(1, positions // PAGE_SIZE).long()
+        self.page_versions[pages.flatten()] = next(_versions)
+
+    def append_index(self, keys, block_table, past, mark_versions=True):
         b, t, _ = keys.shape
         positions = past.to(keys.device)[:, None] + torch.arange(t, device=keys.device)[None, :]
         pages = block_table.gather(1, positions // PAGE_SIZE).long()
         slots = pages * PAGE_SIZE + positions % PAGE_SIZE
         self.index_keys.flatten(0, 1).index_copy_(0, slots.flatten(), keys.flatten(0, 1))
-        self.page_versions[pages.flatten()] = next(_versions)
+        if mark_versions:
+            self.page_versions[pages.flatten()] = next(_versions)
 
     def buckets(self, indexer, block_table, closed, with_tree=False):
         s = self.lsa_settings
@@ -87,7 +103,12 @@ class LSAPlanes:
         end = closed * s.window_size
         page_count = math.ceil(end / PAGE_SIZE)
         pages = block_table[:page_count].long()
-        versions = self.page_versions[pages, 0].cpu().tolist()
+        current_versions = self.page_versions[pages, 0]
+        previous = self._last_bucket_read
+        if (not with_tree and previous is not None and previous[0] == closed
+                and torch.equal(pages, previous[1]) and torch.equal(current_versions, previous[2])):
+            return previous[3]
+        versions = current_versions.cpu().tolist()
         page_ids = pages.cpu().tolist()
         signatures = []
         missing = []
@@ -136,7 +157,12 @@ class LSAPlanes:
             identities = [(sig, bucket) for sig in signatures for bucket in range(s.window_size // s.bucket_size)]
             tree = self.tree_store.view(self.bucket_sums[slots].flatten(0, 1), identities)
             return centroids, members, tree
-        return centroids, members
+        result = (centroids, members)
+        if not with_tree:
+            self._last_bucket_read = (closed, pages.clone(), current_versions.clone(), result)
+        else:
+            self._last_bucket_read = None
+        return result
 
 
 class CacheLayer_lsa(LSAPlanes, CacheLayer_fp16):

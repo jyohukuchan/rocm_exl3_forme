@@ -35,6 +35,7 @@ class LSASettings:
     start_nodes: int | None = None
     node_centroid_precision: str = "bf16"
     query_heads: str = "all"
+    decode: str = "flat"
 
     def __post_init__(self):
         for name in ("window_size", "top_k", "top_p", "pool_size", "bucket_size", "bucket_cap"):
@@ -53,6 +54,8 @@ class LSASettings:
             raise ValueError("LSA top_level must be a nonnegative integer")
         if self.query_heads not in ("all", "rank"):
             raise ValueError("LSA query_heads must be all or rank")
+        if self.decode not in ("flat", "descend"):
+            raise ValueError("LSA decode must be flat or descend")
         if self.node_centroid_precision not in ("bf16", "fp8"):
             raise ValueError("LSA node_centroid_precision must be bf16 or fp8")
         if self.start_nodes is not None and self.start_nodes < 1:
@@ -142,6 +145,7 @@ class LSAIndexer:
 
     def unload(self):
         self.query_map = self.key_map = None
+        self.decode_graph = None
 
     def storage_size(self):
         return self.query_map_cpu.numel() * 8
@@ -257,15 +261,20 @@ class LSAIndexer:
         query, key = self.project(q, k, params)
         b, t = q.shape[:2]
         if cache_layer is not None:
-            cache_layer.append_index(key, block_table, past)
+            cache_layer.append_index(key, block_table, past, mark_versions=params.get("_lsa_graph_state") is None)
             cache_layer.update_kv_direct(cache_seqlens, block_table, k, v, t)
         outputs = []
         for batch in range(b):
             tree = None
-            start = int(past[batch]) if past is not None else 0
-            positions = torch.arange(start, start + t, dtype=torch.int32, device=q.device)
-            closed = (start + t - 1) // self.settings.window_size
-            if cache_layer is None:
+            graph_state = params.get("_lsa_graph_state")
+            start = past[batch] if graph_state is not None else int(past[batch]) if past is not None else 0
+            positions = (past[batch:batch + 1] if graph_state is not None else
+                         torch.arange(start, start + t, dtype=torch.int32, device=q.device))
+            if graph_state is not None:
+                positions = past[batch:batch + 1]
+                centroids, members = graph_state.buckets[batch]
+            elif cache_layer is None:
+                closed = (start + t - 1) // self.settings.window_size
                 keys = key[batch, :closed * self.settings.window_size].reshape(closed, self.settings.window_size, -1)
                 if closed:
                     clustered = self.cluster(keys, return_sums=bool(self.settings.top_level))
@@ -282,9 +291,11 @@ class LSAIndexer:
                     centroids = q.new_empty((0, self.index_dim), dtype=torch.float32)
                     members = torch.empty((0, self.settings.bucket_cap), dtype=torch.int32, device=q.device)
             else:
-                bucketed = cache_layer.buckets(self, block_table[batch], closed, with_tree=bool(self.settings.top_level))
+                closed = (start + t - 1) // self.settings.window_size
+                use_tree = bool(self.settings.top_level) and (t != 1 or self.settings.decode == "descend")
+                bucketed = cache_layer.buckets(self, block_table[batch], closed, with_tree=use_tree)
                 centroids, members = bucketed[:2]
-                tree = bucketed[2] if self.settings.top_level else None
+                tree = bucketed[2] if use_tree else None
             indices = self.select(query[batch], positions, centroids, members, tree)
             qc = None
             bt = None
