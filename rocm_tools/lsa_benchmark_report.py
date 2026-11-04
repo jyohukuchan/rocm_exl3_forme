@@ -1,0 +1,101 @@
+#!/usr/bin/env python3
+"""Validate paired LSA benchmark reports and emit compact CSV/JSON summaries."""
+import argparse
+import csv
+import json
+from pathlib import Path
+
+
+def html_report(rows):
+    template = r'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LSAの速度・長文比較</title><style>
+body{margin:0;color:var(--foreground,#222);font:14px var(--font-sans,system-ui);background:transparent}
+#lsa-results{display:grid;gap:16px} .controls,.legend{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+label{display:flex;gap:8px;align-items:center}select{font:inherit;color:inherit;background:var(--background,white);border:1px solid var(--border,#ccc);border-radius:6px;padding:6px}
+svg{display:block;width:100%;height:300px}svg text{fill:var(--muted-foreground,#666);font:12px system-ui}
+.legend span{display:flex;gap:6px;align-items:center}.legend i{display:inline-block;width:20px;height:3px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13px}th,td{text-align:right;padding:7px 4px;border-bottom:1px solid var(--border,#ddd)}th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}th{font-weight:500}
+p{margin:0;line-height:1.6}.note{color:var(--muted-foreground,#666);font-size:12px}summary{cursor:pointer;margin-bottom:10px}h3{font-size:14px;font-weight:500;margin:0}
+</style></head><body><main id="lsa-results">
+<div class="controls"><label>GPU<select id="gpu"></select></label><label>指標<select id="phase"><option value="prefill">入力処理（prefill）</option><option value="decode">生成（decode）</option></select></label></div>
+<div class="legend"><span><i style="background:var(--chart-1,#4477aa)"></i>通常attention</span><span><i style="background:var(--chart-2,#ee7733)"></i>LSA Flat</span><span><i style="background:var(--chart-3,#009988)"></i>LSA Tree</span></div>
+<svg id="chart" role="img" aria-label="コンテキスト長別の処理速度"></svg>
+<p class="note">token/s：大きいほど高速。通常比1.00×が基準。K5/V4・同一入力・64 token生成・prefixヒット0。各長さ1回のウォームアップ後、2回測定した中央値。</p>
+<table id="speeds"><thead><tr><th>入力長</th><th>方式</th><th>token/s</th><th>通常比</th><th>番号取得</th></tr></thead><tbody></tbody></table>
+<details><summary>VRAM・logitsの差・測定ばらつき</summary><table id="details"><thead><tr><th>入力長</th><th>方式</th><th>ピークGiB</th><th>先頭KL</th><th>速度ばらつき</th></tr></thead><tbody></tbody></table></details>
+<p class="note">番号取得は文書の10%・50%・90%に埋めた6桁コードの3配置。KLは最初の回答位置で通常attentionと比較した値です。広範な長文ベンチマークの精度を表すものではありません。VRAMはキャッシュ容量131,584 tokenを確保した状態のPyTorch割当ピーク。現行EXL3移植版のモデル全体を比較しています。</p>
+</main><script>
+const data=__DATA__;const root=document.getElementById('lsa-results');const gpu=root.querySelector('#gpu'),phase=root.querySelector('#phase'),svg=root.querySelector('#chart');
+const modes=['dense','flat','tree'],names={dense:'通常',flat:'Flat',tree:'Tree'},colors=['var(--chart-1,#4477aa)','var(--chart-2,#ee7733)','var(--chart-3,#009988)'];
+const gpus=[...new Set(data.map(r=>r.gpu))];gpus.sort((a,b)=>Number(b.includes('R9700'))-Number(a.includes('R9700')));gpu.innerHTML=gpus.map(g=>`<option>${g}</option>`).join('');
+function render(){const rows=data.filter(r=>r.gpu===gpu.value),p=phase.value,key=p+'_tps',ratio=p+'_vs_dense',spread=p+'_spread';const lengths=[...new Set(rows.map(r=>r.tokens))].sort((a,b)=>a-b);
+const w=Math.max(320,svg.clientWidth||728),h=300,L=54,R=18,T=15,B=35,max=Math.max(...rows.map(r=>r[key]))*1.12;
+const x=n=>L+(lengths.indexOf(n)/Math.max(1,lengths.length-1))*(w-L-R),y=v=>T+(1-v/max)*(h-T-B);svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+let content='';for(let i=0;i<=4;i++){const v=max*i/4,yy=y(v);content+=`<line x1="${L}" x2="${w-R}" y1="${yy}" y2="${yy}" stroke="var(--border,#ddd)"/><text x="${L-8}" y="${yy+4}" text-anchor="end">${Math.round(v)}</text>`}
+for(const n of lengths)content+=`<text x="${x(n)}" y="${h-10}" text-anchor="middle">${n/1024}K</text>`;
+modes.forEach((m,i)=>{const rs=rows.filter(r=>r.mode===m).sort((a,b)=>a.tokens-b.tokens);content+=`<path d="${rs.map((r,j)=>(j?'L':'M')+x(r.tokens)+','+y(r[key])).join(' ')}" fill="none" stroke="${colors[i]}" stroke-width="2" ${i===2?'stroke-dasharray="5 3"':''}/>`;rs.forEach(r=>{const xx=x(r.tokens),yy=y(r[key]);content+=`<circle cx="${xx}" cy="${yy}" r="4" fill="${colors[i]}"><title>${names[m]} ${r.tokens/1024}K: ${r[key].toFixed(2)} token/s (${r[ratio].toFixed(2)}×)</title></circle>`})});svg.innerHTML=content;
+root.querySelector('#speeds tbody').innerHTML=rows.map(r=>`<tr><td>${r.tokens/1024}K</td><td>${names[r.mode]}</td><td>${r[key].toFixed(1)}</td><td>${r[ratio].toFixed(2)}×</td><td>${r.retrieval_passes}/${r.retrieval_cases}</td></tr>`).join('');
+root.querySelector('#details tbody').innerHTML=rows.map(r=>`<tr><td>${r.tokens/1024}K</td><td>${names[r.mode]}</td><td>${r.peak_allocated_gib.toFixed(2)}</td><td>${r.kl.toExponential(2)}</td><td>${(r[spread]*100).toFixed(1)}%</td></tr>`).join('');console.log('rendered',gpu.value,p,rows.length,'rows')}
+gpu.onchange=phase.onchange=render;new ResizeObserver(render).observe(svg);render();
+</script></body></html>'''
+    return template.replace("__DATA__", json.dumps(rows, ensure_ascii=True))
+
+
+def combine(paths):
+    combined = []
+    for path in paths:
+        report = json.loads(path.read_text())
+        if not report.get("complete") or set(report["modes"]) != {"dense", "flat", "tree"}:
+            raise ValueError(f"Incomplete comparison: {path}")
+        dense = report["modes"]["dense"]
+        expected = {(r["length"], r["trial"]): r for r in dense["rows"]}
+        for mode, data in report["modes"].items():
+            if {(r["length"], r["trial"]) for r in data["rows"]} != set(expected):
+                raise ValueError(f"Unpaired cases: {path} {mode}")
+            for row in data["rows"]:
+                baseline = expected[row["length"], row["trial"]]
+                if row["prompt_sha256"] != baseline["prompt_sha256"] or row["cached_tokens"]:
+                    raise ValueError("Comparison contains mismatched prompts or cached prefixes")
+                if row["new_tokens"] != report["new_tokens"]:
+                    raise ValueError("Output lengths differ")
+            for length, summary in data["summaries"].items():
+                baseline = dense["summaries"][length]
+                combined.append(dict(gpu=report["gpu"], mode=mode, tokens=int(length),
+                    prefill_tps=summary["engine_prefill_tps"],
+                    prefill_vs_dense=summary["engine_prefill_tps"] / baseline["engine_prefill_tps"],
+                    prefill_spread=summary["engine_prefill_tps_spread"],
+                    decode_tps=summary["observed_decode_tps"],
+                    decode_vs_dense=summary["observed_decode_tps"] / baseline["observed_decode_tps"],
+                    decode_spread=summary["observed_decode_tps_spread"],
+                    ttft_seconds=summary["observed_ttft_seconds"],
+                    peak_allocated_gib=summary["peak_allocated_bytes"] / 1024**3,
+                    paged_cache_gib=data["cache_storage_bytes"] / 1024**3,
+                    retrieval_passes=summary["retrieval_passes"],
+                    retrieval_cases=summary["retrieval_cases"],
+                    kl=summary.get("first_response_kl_dense_to_mode"),
+                    timed_runs=summary["timed_runs"], source_report=path.name))
+    return sorted(combined, key=lambda r: (r["gpu"], r["tokens"], ["dense", "flat", "tree"].index(r["mode"])))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("reports", nargs="+", type=Path)
+    parser.add_argument("--output-dir", type=Path, required=True)
+    args = parser.parse_args()
+    rows = combine(args.reports)
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    (args.output_dir / "summary.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n")
+    (args.output_dir / "comparison.html").write_text(html_report(rows))
+    with (args.output_dir / "summary.csv").open("w") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    for row in rows:
+        print(f"{row['gpu']} {row['tokens']:>6} {row['mode']:<5} "
+              f"prefill {row['prefill_tps']:.1f} ({row['prefill_vs_dense']:.2f}x) "
+              f"decode {row['decode_tps']:.2f} ({row['decode_vs_dense']:.2f}x) "
+              f"retrieval {row['retrieval_passes']}/{row['retrieval_cases']} KL {row['kl']:.4g}")
+
+
+if __name__ == "__main__":
+    main()
