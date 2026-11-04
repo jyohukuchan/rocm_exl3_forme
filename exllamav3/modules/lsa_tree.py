@@ -4,11 +4,13 @@ Node groups are cached by their children's page versions. A view can contain
 future nodes, but a query only reads the levels grown at its index-page start.
 """
 from collections import OrderedDict
+import itertools
 import math
 import torch
 import torch.nn.functional as F
 
 NODE_SCALE = 16.0
+_node_versions = itertools.count(1)
 
 
 def pair_nodes(sums, size):
@@ -38,6 +40,7 @@ class NodeGroups:
         self.sums = torch.empty((capacity, nodes, dim), dtype=torch.float32, device=device)
         self.children = torch.empty((capacity, nodes, size), dtype=torch.int32, device=device)
         self.cached = OrderedDict()
+        self.versions = [0] * capacity
 
     def read(self, sums, identities):
         count = len(sums) // self.block
@@ -63,6 +66,7 @@ class NodeGroups:
                 self.sums[slot].copy_(node_sums[row])
                 self.centroids[slot].copy_(centroids[row])
                 self.children[slot].copy_(children[row].int())
+                self.versions[slot] = next(_node_versions)
                 self.cached[sig] = slot
         slots = torch.tensor([self.cached[sig] for sig in signatures], device=sums.device)
         for sig in signatures:
@@ -73,7 +77,11 @@ class NodeGroups:
         children = self.children[slots].long()
         offsets = torch.arange(count, device=sums.device)[:, None, None] * self.block
         children = (children + offsets).flatten(0, 1)
-        identities = [(sig, child) for sig in signatures for child in range(self.block // self.size)]
+        # A parent must not recursively hash all descendants for every child.
+        # A slot incarnation is unique even after eviction/reuse, while its
+        # identity costs O(1) to hash at any depth of the hierarchy.
+        identities = [(self.versions[self.cached[sig]], child)
+                      for sig in signatures for child in range(self.block // self.size)]
         return centroids.float(), children, self.sums[slots].flatten(0, 1), identities
 
 

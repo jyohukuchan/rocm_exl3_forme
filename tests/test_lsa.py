@@ -251,6 +251,20 @@ def test_tree_cache_rebuilds_after_overwrite_and_restored_prefix():
     assert cache.storage_size() == sum(t.numel() * t.element_size() for t in arrays)
 
 
+def test_hierarchy_child_identifiers_have_bounded_hash_cost():
+    from exllamav3.modules.lsa_tree import NodeGroups
+    torch.manual_seed(908)
+    group = NodeGroups(1, 32, 2, 16, "bf16", "cpu")
+    sums = torch.randn(32, 16)
+    nested_leaf_ids = [(tuple(range(64)), i) for i in range(32)]
+    _, _, _, identities = group.read(sums, nested_leaf_ids)
+    assert all(len(i) == 2 and all(isinstance(part, int) for part in i) for i in identities)
+    _, _, _, same = group.read(sums, nested_leaf_ids)
+    assert identities == same
+    _, _, _, replaced = group.read(sums + 1, [(tuple(range(64)), i + 32) for i in range(32)])
+    assert not set(identities) & set(replaced)  # Reused slots never alias a prior node incarnation.
+
+
 def test_lsa_r4d_storage_does_not_require_libr4d(monkeypatch):
     from exllamav3 import model_init
     from exllamav3.modules.attention_fn import r4d_attn

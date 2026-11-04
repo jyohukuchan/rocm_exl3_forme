@@ -193,8 +193,13 @@ def main():
     parser.add_argument("--cache-size", type=int)
     parser.add_argument("--cache-quant", default="5,4")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--resume", action="store_true", help="Replace only the selected modes in an existing paired report")
     args = parser.parse_args()
     bits = [int(x) for x in args.cache_quant.split(",")]
+    if len(bits) not in (1, 2):
+        raise ValueError("Cache quantization takes one bit width or a K,V pair")
+    if args.repeats < 1 or args.new_tokens < 2:
+        raise ValueError("Benchmark requires a timed repeat and at least two generated tokens")
     if len(bits) == 1:
         bits *= 2
     maximum = max(args.lengths)
@@ -214,6 +219,25 @@ def main():
         "EXL3_BC_ATTN", "EXL3_QC_STAGING", "EXL3_ATTN_INT8FP8", "EXL3_R4D_ATTN")}
     report["model_config_sha256"] = hashlib.sha256((Path(args.model) / "config.json").read_bytes()).hexdigest()
     report["projection_sha256"] = hashlib.sha256(Path(args.projections).read_bytes()).hexdigest()
+    if args.resume:
+        previous = json.loads(output.read_text())
+        for key in ("model_config_sha256", "projection_sha256", "gpu", "torch", "cache_quant", "cache_tokens",
+                    "chunk_size", "new_tokens", "timed_repeats"):
+            if previous[key] != report[key]:
+                raise ValueError(f"Resume changes the comparison setting {key}")
+        expected = {(n, t) for n in args.lengths for t in range(args.repeats + 1)}
+        for mode, block in previous["modes"].items():
+            block.setdefault("source", previous["source"])
+            if mode not in args.modes and {(r["length"], r["trial"]) for r in block["rows"]} != expected:
+                raise ValueError(f"Cannot preserve incomplete mode {mode}")
+            if mode not in args.modes:
+                block["summaries"] = {str(n): summarize([r for r in block["rows"] if r["length"] == n])
+                                      for n in args.lengths}
+        previous.setdefault("resumes", []).append({"source": report["source"], "replaced_modes": args.modes})
+        previous.pop("error", None)
+        previous["complete"] = False
+        report = previous
+    report["requested_lengths"] = args.lengths
     model = generator = cache = config = tokenizer = None
     try:
         for mode in args.modes:
@@ -234,7 +258,7 @@ def main():
                     capture["logits"] = logits[:, -1, :tokenizer.actual_vocab_size].detach().clone()
                 return logits
             model.forward = observed_forward
-            mode_report = dict(lsa=settings, cache_layer_types=sorted({type(layer).__name__ for layer in cache.layers.values()}),
+            mode_report = dict(lsa=settings, source=source_info(), cache_layer_types=sorted({type(layer).__name__ for layer in cache.layers.values()}),
                                cache_storage_bytes=sum(int(layer.storage_size()) for layer in cache.layers.values()),
                                rows=[], summaries={})
             report["modes"][mode] = mode_report
