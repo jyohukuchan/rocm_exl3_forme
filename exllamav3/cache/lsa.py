@@ -67,7 +67,8 @@ class LSAPlanes:
     def overhead_size(self):
         # The last assembled flat read and the graph's static bucket table.
         # Reserve the actual maximum graph range, including power-of-two padding.
-        n = self.block_capacity * (self.lsa_settings.window_size // self.lsa_settings.bucket_size)
+        n = ((self.max_num_tokens - 1) // self.lsa_settings.window_size
+             * (self.lsa_settings.window_size // self.lsa_settings.bucket_size))
         graph_n = 1 << (max(1, n) - 1).bit_length()
         return super().overhead_size() + (n + graph_n) * (self.index_dim + self.lsa_settings.bucket_cap) * 4
 

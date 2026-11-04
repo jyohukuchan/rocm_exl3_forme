@@ -7,6 +7,8 @@ original keys and values continue to use the caller's cache quantization.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import wraps
+from contextlib import nullcontext
 from pathlib import Path
 import re
 import torch
@@ -15,6 +17,16 @@ import torch.nn.functional as F
 # Bound stable-sort scratch by batching independent query rows, not by
 # restricting the history or changing the selected key budget.
 _FLAT_SORT_MAX_ELEMENTS = 1 << 24
+
+
+def _input_device(function):
+    @wraps(function)
+    def guarded(self, tensor, *args, **kwargs):
+        if tensor.is_cuda:
+            with torch.cuda.device(tensor.device):
+                return function(self, tensor, *args, **kwargs)
+        return function(self, tensor, *args, **kwargs)
+    return guarded
 
 
 @dataclass(frozen=True)
@@ -196,6 +208,7 @@ class LSAIndexer:
         buckets = max(0, (end - 1) // s.window_size) * (s.window_size // s.bucket_size)
         return end <= s.top_k + s.window_size + s.sink_size and buckets <= s.top_p
 
+    @_input_device
     def cluster(self, keys, return_sums=False):
         """Closed blocks [G, window, dim] -> normalized centroids and local member ids."""
         s = self.settings
@@ -221,6 +234,7 @@ class LSAIndexer:
         members = bucket_members_from_labels(labels.repeat_interleave(pool_size, 1), buckets, s.bucket_cap)
         return (centroids, members, sums) if return_sums else (centroids, members)
 
+    @_input_device
     def select(self, queries, positions, centroids, members, tree=None):
         s = self.settings
         if tree is None and len(queries) > 1 and len(queries) * len(centroids) > _FLAT_SORT_MAX_ELEMENTS:
@@ -256,6 +270,10 @@ class LSAIndexer:
         return out
 
     def attend(self, attention, q, k, v, params, cache_layer=None, block_table=None, past=None, cache_seqlens=None):
+        with torch.cuda.device(q.device) if q.is_cuda else nullcontext():
+            return self._attend(attention, q, k, v, params, cache_layer, block_table, past, cache_seqlens)
+
+    def _attend(self, attention, q, k, v, params, cache_layer=None, block_table=None, past=None, cache_seqlens=None):
         from .attention_fn.qsa_triton import qsa_sparse_attend_rows
         from ..constants import PAGE_SIZE
         query, key = self.project(q, k, params)

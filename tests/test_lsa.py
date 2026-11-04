@@ -356,14 +356,15 @@ def test_quantized_dense_prefix_uses_actual_history_bound_with_shuffled_pages():
     torch.testing.assert_close(actual.float(), expected, atol=2e-3, rtol=3e-3)
 
 
-def test_decode_graph_replay_batch_and_prefix_replacement(monkeypatch):
-    if not torch.cuda.is_available():
+@pytest.mark.parametrize("device", ["cuda:0", "cuda:1"])
+def test_decode_graph_replay_batch_and_prefix_replacement(monkeypatch, device):
+    if not torch.cuda.is_available() or int(device[-1]) >= torch.cuda.device_count():
         pytest.skip('ROCm/CUDA GPU required')
     from exllamav3.modules.attention_fn.lsa_decode import try_lsa_decode
     monkeypatch.delenv('EXL3_LSA_DECODE_GRAPH', raising=False)
-    idx = make_indexer('cuda:0', top_level=2)
+    idx = make_indexer(device, top_level=2)
     attention = fake_attention(idx)
-    attention.device = torch.device('cuda:0')
+    attention.device = torch.device(device)
     attention.has_split_cache = False
     attention.has_lora = lambda: False
     attention.layer_idx = 0
@@ -376,17 +377,17 @@ def test_decode_graph_replay_batch_and_prefix_replacement(monkeypatch):
         return idx.attend(attention, q, k, v, params, cache, params['block_table'],
                           params['cache_seqlens'], params['cache_seqlens'])
     attention.decode_flash_attn = forward
-    bt = torch.tensor([[1, 0], [3, 2]], device='cuda:0', dtype=torch.int32)
-    k = torch.randn((2, 180, 2, 64), device='cuda:0', dtype=torch.float16)
-    q = torch.randn((2, 180, 4, 64), device='cuda:0', dtype=torch.float16)
+    bt = torch.tensor([[1, 0], [3, 2]], device=device, dtype=torch.int32)
+    k = torch.randn((2, 180, 2, 64), device=device, dtype=torch.float16)
+    q = torch.randn((2, 180, 4, 64), device=device, dtype=torch.float16)
     _, keys = idx.project(q, k, {})
-    zero = torch.zeros(2, device='cuda:0', dtype=torch.int32)
+    zero = torch.zeros(2, device=device, dtype=torch.int32)
     cache.append_index(keys, bt, zero)
     cache.update_kv_direct(zero, bt, k, k, 180)
     for position in (126, 127, 128, 129):
-        seq = torch.full((2,), position, device='cuda:0', dtype=torch.int32)
+        seq = torch.full((2,), position, device=device, dtype=torch.int32)
         params = dict(cache=cache, block_table=bt, cache_seqlens=seq, positions=seq)
-        x = torch.randn((2, 1, 256), device='cuda:0', dtype=torch.float16)
+        x = torch.randn((2, 1, 256), device=device, dtype=torch.float16)
         actual = try_lsa_decode(attention, x, params).clone()
         expected = forward(x, 2, 1, params)
         torch.testing.assert_close(actual, expected, atol=2e-3, rtol=3e-3)
