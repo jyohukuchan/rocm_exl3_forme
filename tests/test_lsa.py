@@ -46,6 +46,26 @@ def test_full_budget_has_every_causal_position():
         torch.testing.assert_close(ids, torch.arange(p + 1, dtype=torch.int32))
 
 
+@pytest.mark.parametrize("device", ["cpu", "cuda:0"])
+def test_flat_query_batching_preserves_selection_and_ties(device, monkeypatch):
+    if device != "cpu" and not torch.cuda.is_available():
+        pytest.skip("ROCm/CUDA GPU required")
+    import exllamav3.modules.lsa as lsa
+    idx = make_indexer(device)
+    keys = F.normalize(torch.randn(4, 64, 16, device=device), dim=-1)
+    centroids, members = idx.cluster(keys)
+    offsets = torch.arange(4, device=device)[:, None, None] * 64
+    members = torch.where(members >= 0, members + offsets, -1).flatten(0, 1)
+    centroids = centroids.flatten(0, 1)
+    positions = torch.tensor([64, 99, 127, 190, 255], device=device)
+    queries = torch.zeros(5, 16, device=device)
+    queries[1:] = F.normalize(torch.randn(4, 16, device=device), dim=-1)
+    expected = idx.select(queries, positions, centroids, members)
+    monkeypatch.setattr(lsa, "_FLAT_SORT_MAX_ELEMENTS", 32)
+    actual = idx.select(queries, positions, centroids, members)
+    torch.testing.assert_close(actual, expected)
+
+
 def test_tp_reduces_before_normalizing_and_includes_headless_ranks():
     idx = make_indexer()
     q = torch.randn(1, 3, 4, 64)

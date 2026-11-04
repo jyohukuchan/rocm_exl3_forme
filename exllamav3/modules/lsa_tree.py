@@ -153,13 +153,12 @@ class TreeView:
     @staticmethod
     def best(queries, vectors, candidates, count):
         # Candidate ids are ascending before the stable sort: ties choose lower ids.
-        candidates = candidates.sort(dim=1).values
         if not candidates.shape[1]:
             return candidates
         outputs = []
         chunk = max(1, (1 << 19) // candidates.shape[1])
         for first in range(0, len(queries), chunk):
-            ids = candidates[first:first + chunk]
+            ids = candidates[first:first + chunk].sort(dim=1).values
             rows = vectors[ids.clamp_min(0)].float()
             scores = (rows * queries[first:first + chunk, None].float()).sum(-1).masked_fill(ids < 0, -torch.inf)
             keep = scores.argsort(dim=1, descending=True, stable=True)[:, :count]

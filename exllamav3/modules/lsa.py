@@ -12,6 +12,10 @@ import re
 import torch
 import torch.nn.functional as F
 
+# Bound stable-sort scratch by batching independent query rows, not by
+# restricting the history or changing the selected key budget.
+_FLAT_SORT_MAX_ELEMENTS = 1 << 24
+
 
 @dataclass(frozen=True)
 class LSASettings:
@@ -215,6 +219,11 @@ class LSAIndexer:
 
     def select(self, queries, positions, centroids, members, tree=None):
         s = self.settings
+        if tree is None and len(queries) > 1 and len(queries) * len(centroids) > _FLAT_SORT_MAX_ELEMENTS:
+            rows = max(1, _FLAT_SORT_MAX_ELEMENTS // max(1, len(centroids)))
+            rows = 1 << (rows.bit_length() - 1)
+            return torch.cat([self.select(queries[first:first + rows], positions[first:first + rows], centroids, members)
+                              for first in range(0, len(queries), rows)])
         if tree is not None:
             picks = tree.pick(queries, positions, centroids)
         else:
