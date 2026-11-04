@@ -1165,7 +1165,8 @@ class Attention(Module):
         else:
             # QSA dense regime: the past is bounded by the sparse threshold, which lets the
             # quantized-cache prefill size its staging to the window instead of the job's pages
-            max_kv_len = int(qsa_seqlens_cpu.max().item()) if qsa_seqlens_cpu is not None else None
+            max_kv_len = (int(past.max()) if self.lsa_indexer is not None else
+                          int(qsa_seqlens_cpu.max().item()) if qsa_seqlens_cpu is not None else None)
             o = attn_dispatch(
                 q = q,
                 k = k,

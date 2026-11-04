@@ -334,3 +334,23 @@ def test_r4d_dense_dispatch_keeps_native_storage():
     saved_k, saved_v = cache.get_kv(past + 5, bt)
     torch.testing.assert_close(saved_k[2, :5], k[0].bfloat16().half(), atol=0, rtol=0)
     torch.testing.assert_close(saved_v[2, :5], v[0].bfloat16().half(), atol=0, rtol=0)
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="ROCm/CUDA GPU required")
+def test_quantized_dense_prefix_uses_actual_history_bound_with_shuffled_pages():
+    from exllamav3.modules.attention_fn import attn_dispatch
+    idx = make_indexer("cuda:0")
+    cache = CacheLayer_lsa_quant(None, fake_attention(idx), 1, 1024, k_bits=5, v_bits=4)
+    cache.alloc(torch.device("cuda:0"))
+    q = torch.randn((1, 5, 4, 64), device="cuda:0", dtype=torch.float16)
+    k = torch.randn((1, 5, 2, 64), device="cuda:0", dtype=torch.float16)
+    v = torch.randn_like(k)
+    bt = torch.tensor([[2, 0, 3, 1]], device="cuda:0", dtype=torch.int32)
+    past = torch.zeros(1, device="cuda:0", dtype=torch.int32)
+    actual = attn_dispatch(q, k, v, cache=cache, cache_idx=0, block_table=bt,
+                           cache_seqlens=past, causal=True, sm_scale=0.125, max_kv_len=0)
+    dk, dv = cache.get_kv(past + 5, bt)
+    expected = F.scaled_dot_product_attention(q.transpose(1, 2).float(),
+        dk[2:3, :5].repeat_interleave(2, 2).transpose(1, 2).float(),
+        dv[2:3, :5].repeat_interleave(2, 2).transpose(1, 2).float(), is_causal=True, scale=0.125).transpose(1, 2)
+    torch.testing.assert_close(actual.float(), expected, atol=2e-3, rtol=3e-3)
