@@ -119,6 +119,19 @@ def kl_metrics(reference, candidate):
             "first_response_top1_matches_dense": bool(reference.argmax() == candidate.argmax())}
 
 
+def token_timing(observations):
+    intervals = [b[1] - a[1] for a, b in zip(observations, observations[1:])]
+    ordered = sorted(intervals)
+    result = {"token_observations": observations,
+              "token_interval_p50_seconds": statistics.median(intervals),
+              "token_interval_p95_seconds": ordered[(len(ordered) * 95 + 99) // 100 - 1],
+              "token_interval_max_seconds": max(intervals)}
+    if len(observations) > 8:
+        result["decode_after_8_tps"] = ((observations[-1][0] - observations[7][0]) /
+                                         (observations[-1][1] - observations[7][1]))
+    return result
+
+
 def trial_run(generator, model, tokenizer, ids, new_tokens, capture):
     reset_prefix(generator)
     capture.clear()
@@ -128,6 +141,7 @@ def trial_run(generator, model, tokenizer, ids, new_tokens, capture):
               stop_conditions=model.config.eos_token_id_list)
     start = time.perf_counter()
     first = last = None
+    observations = []
     completed = None
     generator.enqueue(job)
     progress = 0
@@ -136,6 +150,7 @@ def trial_run(generator, model, tokenizer, ids, new_tokens, capture):
         results = generator.iterate()
         if job.new_tokens > previous:
             last = time.perf_counter()
+            observations.append([job.new_tokens, last - start])
             if first is None:
                 first = last
         for result in results:
@@ -164,6 +179,7 @@ def trial_run(generator, model, tokenizer, ids, new_tokens, capture):
                peak_allocated_bytes=torch.cuda.max_memory_allocated(),
                peak_reserved_bytes=torch.cuda.max_memory_reserved(),
                response_prefix=text[:256], response_sha256=hashlib.sha256(text.encode()).hexdigest())
+    row.update(token_timing(observations))
     return row, logits
 
 
@@ -178,6 +194,9 @@ def summarize(rows):
         result[key + "_spread"] = (max(values) - min(values)) / median if median else 0.
     if "first_response_kl_dense_to_mode" in measured[0]:
         result["first_response_kl_dense_to_mode"] = statistics.mean(r["first_response_kl_dense_to_mode"] for r in measured)
+    for key in ("token_interval_p50_seconds", "token_interval_p95_seconds", "token_interval_max_seconds", "decode_after_8_tps"):
+        if key in measured[0]:
+            result[key] = statistics.median(r[key] for r in measured)
     return result
 
 
