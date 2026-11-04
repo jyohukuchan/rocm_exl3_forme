@@ -155,7 +155,10 @@ def trial_run(generator, model, tokenizer, ids, new_tokens, capture):
                 first = last
         for result in results:
             if result["stage"] == "error":
-                raise RuntimeError(str(result.get("error")))
+                error = result.get("error")
+                if isinstance(error, BaseException):
+                    raise error
+                raise RuntimeError(str(error))
             if result["stage"] == "prefill":
                 current = result.get("curr_progress", 0)
                 if current >= progress + 16384:
@@ -254,6 +257,7 @@ def main():
                                       for n in args.lengths}
         previous.setdefault("resumes", []).append({"source": report["source"], "replaced_modes": args.modes})
         previous.pop("error", None)
+        previous.pop("error_memory", None)
         previous["complete"] = False
         report = previous
     report["requested_lengths"] = args.lengths
@@ -318,6 +322,13 @@ def main():
         report["complete"] = True
     except BaseException as error:
         report["error"] = repr(error)
+        try:
+            report["error_memory"] = {"free_total": torch.cuda.mem_get_info(),
+                                      "fraction": torch.cuda.get_per_process_memory_fraction(),
+                                      "allocated": torch.cuda.memory_allocated(),
+                                      "reserved": torch.cuda.memory_reserved()}
+        except Exception:
+            pass
         raise
     finally:
         write_json(output, report)
