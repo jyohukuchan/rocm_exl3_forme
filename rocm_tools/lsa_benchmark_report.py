@@ -20,22 +20,23 @@ p{margin:0;line-height:1.6}.note{color:var(--muted-foreground,#666);font-size:12
 <div class="controls"><label>GPU<select id="gpu"></select></label><label>指標<select id="phase"><option value="prefill">入力処理（prefill）</option><option value="decode">生成（decode）</option></select></label></div>
 <div class="legend"><span><i style="background:var(--chart-1,#4477aa)"></i>通常attention</span><span><i style="background:var(--chart-2,#ee7733)"></i>LSA Flat</span><span><i style="background:var(--chart-3,#009988)"></i>LSA Tree</span></div>
 <svg id="chart" role="img" aria-label="コンテキスト長別の処理速度"></svg>
-<p class="note">token/s：大きいほど高速。通常比1.00×が基準。K5/V4・同一入力・64 token生成・prefixヒット0。各長さ1回のウォームアップ後、2回測定した中央値。</p>
+<p class="note">token/s：大きいほど高速。横軸は入力長のlog2目盛。通常比1.00×が基準。K5/V4・同一入力・64 token生成・prefixヒット0。各長さ1回のウォームアップ後、2回測定した中央値。</p>
 <table id="speeds"><thead><tr><th>入力長</th><th>方式</th><th>token/s</th><th>通常比</th><th>番号取得</th></tr></thead><tbody></tbody></table>
 <details><summary>VRAM・logitsの差・測定ばらつき</summary><table id="details"><thead><tr><th>入力長</th><th>方式</th><th>ピークGiB</th><th>先頭KL</th><th>速度ばらつき</th></tr></thead><tbody></tbody></table></details>
-<p class="note">番号取得は文書の10%・50%・90%に埋めた6桁コードの3配置。KLは最初の回答位置で通常attentionと比較した値です。広範な長文ベンチマークの精度を表すものではありません。VRAMはキャッシュ容量131,584 tokenを確保した状態のPyTorch割当ピーク。現行EXL3移植版のモデル全体を比較しています。</p>
+<p class="note">番号取得は文書の10%・50%・90%に埋めた6桁コードの3配置。KLは最初の回答位置で通常attentionと比較した値です。広範な長文ベンチマークの精度を表すものではありません。VRAMは確保済みキャッシュ込みのPyTorch割当ピーク（8〜128K: 131,584 token、約256K: 262,656 token）。現行EXL3移植版のモデル全体を比較しています。</p>
 </main><script>
 const data=__DATA__;const root=document.getElementById('lsa-results');const gpu=root.querySelector('#gpu'),phase=root.querySelector('#phase'),svg=root.querySelector('#chart');
 const modes=['dense','flat','tree'],names={dense:'通常',flat:'Flat',tree:'Tree'},colors=['var(--chart-1,#4477aa)','var(--chart-2,#ee7733)','var(--chart-3,#009988)'];
+const tokenLabel=n=>(n%1024?(n/1024).toFixed(2):n/1024)+'K';
 const gpus=[...new Set(data.map(r=>r.gpu))];gpus.sort((a,b)=>Number(b.includes('R9700'))-Number(a.includes('R9700')));gpu.innerHTML=gpus.map(g=>`<option>${g}</option>`).join('');
 function render(){const rows=data.filter(r=>r.gpu===gpu.value),p=phase.value,key=p+'_tps',ratio=p+'_vs_dense',spread=p+'_spread';const lengths=[...new Set(rows.map(r=>r.tokens))].sort((a,b)=>a-b);
 const w=Math.max(320,svg.clientWidth||728),h=300,L=54,R=18,T=15,B=35,max=Math.max(...rows.map(r=>r[key]))*1.12;
-const x=n=>L+(lengths.indexOf(n)/Math.max(1,lengths.length-1))*(w-L-R),y=v=>T+(1-v/max)*(h-T-B);svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+const x=n=>L+(Math.log2(n)-Math.log2(lengths[0]))/Math.max(1,Math.log2(lengths.at(-1))-Math.log2(lengths[0]))*(w-L-R),y=v=>T+(1-v/max)*(h-T-B);svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
 let content='';for(let i=0;i<=4;i++){const v=max*i/4,yy=y(v);content+=`<line x1="${L}" x2="${w-R}" y1="${yy}" y2="${yy}" stroke="var(--border,#ddd)"/><text x="${L-8}" y="${yy+4}" text-anchor="end">${Math.round(v)}</text>`}
-for(const n of lengths)content+=`<text x="${x(n)}" y="${h-10}" text-anchor="middle">${n/1024}K</text>`;
+for(const [i,n] of lengths.entries())content+=`<text x="${x(n)}" y="${h-10}" text-anchor="${i===0?'start':i===lengths.length-1?'end':'middle'}">${tokenLabel(n)}</text>`;
 modes.forEach((m,i)=>{const rs=rows.filter(r=>r.mode===m).sort((a,b)=>a.tokens-b.tokens);content+=`<path d="${rs.map((r,j)=>(j?'L':'M')+x(r.tokens)+','+y(r[key])).join(' ')}" fill="none" stroke="${colors[i]}" stroke-width="2" ${i===2?'stroke-dasharray="5 3"':''}/>`;rs.forEach(r=>{const xx=x(r.tokens),yy=y(r[key]);content+=`<circle cx="${xx}" cy="${yy}" r="4" fill="${colors[i]}"><title>${names[m]} ${r.tokens/1024}K: ${r[key].toFixed(2)} token/s (${r[ratio].toFixed(2)}×)</title></circle>`})});svg.innerHTML=content;
-root.querySelector('#speeds tbody').innerHTML=rows.map(r=>`<tr><td>${r.tokens/1024}K</td><td>${names[r.mode]}</td><td>${r[key].toFixed(1)}</td><td>${r[ratio].toFixed(2)}×</td><td>${r.retrieval_passes}/${r.retrieval_cases}</td></tr>`).join('');
-root.querySelector('#details tbody').innerHTML=rows.map(r=>`<tr><td>${r.tokens/1024}K</td><td>${names[r.mode]}</td><td>${r.peak_allocated_gib.toFixed(2)}</td><td>${r.kl.toExponential(2)}</td><td>${(r[spread]*100).toFixed(1)}%</td></tr>`).join('');console.log('rendered',gpu.value,p,rows.length,'rows')}
+root.querySelector('#speeds tbody').innerHTML=rows.map(r=>`<tr><td>${tokenLabel(r.tokens)}</td><td>${names[r.mode]}</td><td>${r[key].toFixed(1)}</td><td>${r[ratio].toFixed(2)}×</td><td>${r.retrieval_passes}/${r.retrieval_cases}</td></tr>`).join('');
+root.querySelector('#details tbody').innerHTML=rows.map(r=>`<tr><td>${tokenLabel(r.tokens)}</td><td>${names[r.mode]}</td><td>${r.peak_allocated_gib.toFixed(2)}</td><td>${r.kl.toExponential(2)}</td><td>${(r[spread]*100).toFixed(1)}%</td></tr>`).join('');console.log('rendered',gpu.value,p,rows.length,'rows')}
 gpu.onchange=phase.onchange=render;new ResizeObserver(render).observe(svg);render();
 </script></body></html>'''
     return template.replace("__DATA__", json.dumps(rows, ensure_ascii=True))
@@ -70,6 +71,7 @@ def combine(paths):
                     ttft_seconds=summary["observed_ttft_seconds"],
                     peak_allocated_gib=summary["peak_allocated_bytes"] / 1024**3,
                     paged_cache_gib=data["cache_storage_bytes"] / 1024**3,
+                    cache_tokens=report["cache_tokens"],
                     retrieval_passes=summary["retrieval_passes"],
                     retrieval_cases=summary["retrieval_cases"],
                     kl=summary.get("first_response_kl_dense_to_mode"),

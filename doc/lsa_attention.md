@@ -134,6 +134,8 @@ TP projects local heads before summing index partials and normalizing; headless
 ranks participate in the same collective. KV remains sharded, while the small
 index planes and maps are replicated and accounted for by the TP allocator.
 Tree node groups are cached by their child page versions in bounded workspaces.
+Each node has an opaque slot-incarnation identifier, so a higher level does not
+recursively hash every descendant when checking its cache identity.
 The hierarchy keeps unnormalized key sums when forming higher levels, and
 uses the official factor of 16 for FP8 node centroid storage. Beam selection
 respects page-time visibility and keeps stable id ordering on score ties.
@@ -182,6 +184,8 @@ The smoke records actual-vocabulary finite logits, the retrieved number,
 prefix hits and timings. It is a smoke check, not a broad accuracy benchmark
 or an end-to-end speedup claim. Raw local validation results are summarized in
 `benchmarks/2026-11-04/lsa/`.
+The controlled speed/retrieval comparison protocol is documented in
+[lsa_benchmark_method.md](lsa_benchmark_method.md).
 
 The official map was distilled with YaRN factor 40. The loader does not
 override the checkpoint's RoPE: use its existing settings, or explicitly
