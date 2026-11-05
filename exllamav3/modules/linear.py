@@ -407,7 +407,7 @@ class Linear(Module):
         svh = opt(".svh", self.device)
         trellis = stc.get_tensor(key + ".trellis", self.device)
         mcg = opt(".mcg", "cpu")
-        mul1 = opt(".mul1", "cpu")
+        mul1 = opt(".mul1", "cpu", no_defer = True)  # read in LinearEXL3.__init__ (format check)
         bias = opt(".bias", self.device)
         # s0 is consumed at init time (LinearEXL3 reads s0.item()), so like su/sv
         # it must bypass deferred loading, which would hand back an unfilled
