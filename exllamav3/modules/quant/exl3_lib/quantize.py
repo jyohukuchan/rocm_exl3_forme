@@ -25,6 +25,14 @@ def tensor_core_perm(device):
 
     The cached index maps row-major tile elements into the lane/interleave order used by the CUDA encoder.
     """
+    if os.environ.get("EXL3_TILE_ORDER", "") == "frag":
+        # Experimental: stream position 8L + j is (row = 8 * (L // 16) + j, column = L % 16), i.e. lane L's
+        # eight values are one WMMA int8 B fragment (one column, eight consecutive k). See research/codebook.
+        perm_f = [0] * 256
+        for t in range(256):
+            lane, j = t // 8, t % 8
+            perm_f[t] = (8 * (lane // 16) + j) * 16 + (lane % 16)
+        return torch.tensor(perm_f, dtype = torch.int, device = device)
     perm_a = [0] * 256
     for t in range(32):
         r0 = (t % 4) * 2
