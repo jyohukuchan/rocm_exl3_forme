@@ -51,18 +51,14 @@ def test_real_decoder_matches_shift_formula():
     wmap = json.load(open(os.path.join(model, "model.safetensors.index.json")))["weight_map"]
     names = sorted(k for k in wmap if k.endswith(".trellis"))
     names = [names[0], names[len(names) // 2], names[-1]]
-    seen = np.zeros(1021, dtype=bool)
+    from exllamav3.util.exl3_int8_ref import decode_q
     for name in names:
         with safe_open(os.path.join(model, wmap[name]), "pt", device="cpu") as f:
-            trellis = f.get_tensor(name).cuda()
+            trellis = f.get_tensor(name)
         k = trellis.shape[-1] // 16
         w = torch.empty((trellis.shape[0] * 16, trellis.shape[1] * 16), dtype=torch.half, device="cuda")
-        ext.reconstruct(w, trellis, k, False, True)
-        v = w.double().cpu().numpy().ravel()
-        b = np.rint((v * 131072.0 + 452608.0) / 887.0).astype(np.int64)
-        assert b.min() >= 0 and b.max() <= 1020
-        assert np.abs(b - (v * 131072.0 + 452608.0) / 887.0).max() < 0.25
-        q = np.clip(np.rint(v / S_FIX), -128, 127).astype(np.int64)
-        assert (q == _q_shift(b)).all()
-        seen[np.unique(b)] = True
-    assert seen.sum() > 900
+        ext.reconstruct(w, trellis.cuda(), k, False, True)
+        q_dev = np.clip(np.rint(w.double().cpu().numpy() / S_FIX), -128, 127).astype(np.int8).T
+        q_ref = decode_q(trellis.numpy())
+        assert q_ref.shape == q_dev.shape
+        assert (q_ref == q_dev).all(), name
