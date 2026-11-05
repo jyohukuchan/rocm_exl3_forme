@@ -1,4 +1,4 @@
-# EXL3-INT8 仕様 (固定グリッド)
+# EXL3-INT8 仕様 (固定グリッド + mul24)
 
 shelf Issue #10「EXL3-INT8の実装」の仕様書。この文書を正本とし、shelf はこれに合わせる。
 実装は `feat/exl3-int8-fixed-grid` (rocm_exl3)。
@@ -103,14 +103,48 @@ KV の量子化は INT8 と無関係で、通常の EXL3 でも同じ KV 設定�
 
 評価スクリプトは `eval/kl_q30b/` (`compare_kld.py` は GPU 版)。
 
+## mul24 形式 (shelf の trellis 常駐 GEMM 用)
+
+shelf は INT8 の重みを持たず、trellis のまま常駐させて GEMM が読むたびに INT8 へ展開する。
+その展開を最短にするため、codebook の乗数と tile 内の並びを変えた形式を持つ。詳細と検討は `research/codebook/README.md`。
+
+- 乗数 `0xDCD12D` (24 bit)。`x = state * 0xDCD12D` の 4 byte の和 `B`、`q = (B − 509) >> 2`、`S_FIX` は上と同じ。
+  `v_mul_u32_u24` + `v_dot4_u32_u8` で 2 命令。
+- tile の stream 位置 t は、行 `8*(t/128) + t%8`、列 `(t/8)%16` に置く (WMMA iu8 の B fragment、lane = t/8)。
+- 識別: 保存される `<base>.mul1` tensor の値が乗数 (mul1 は 0x83DCD12D、mul24 は 0xDCD12D)。
+  shelf は mul24 だけを読み、他は再量子化を促して拒否する。
+- 作り方: ビルド時に `EXL3_MUL1_MULT=0xDCD12D` を指定して拡張を作り、`convert.py` を通常どおり実行する。
+  量子化器は同じ (mul1 と同じ Viterbi、探索と質は同等)。
+- rocm_exl3 での扱い: reconstruct は mul1 の並びで復号するので Python 側で並べ替える (`_frag_fix`)。
+  mul24 のモデルは reconstruct + hgemm にだけ載せる (品質測定用)。**行数 <= 32 のネイティブ GEMM / 融合経路は mul1 の並びを
+  前提にしているので使えない。** 速度測定は shelf で行う。
+
+### 27B (Qwen3.8-27B 4.0bpw、head 6bit、R9700) の KLD
+
+BF16 (llama.cpp) に対し、`qwen38-kld-20260918` の 8 ケース・2632 位置の mean KLD。
+ネイティブ GEMM の制約で各ケースの最終行 (1 行 chunk) が壊れるため、両モデルとも最終行を除いた値で比べる
+(`eval/kld_mul24/rows_excl_last.py`)。
+
+| モデル | 最終行除く | 全行 |
+|---|---|---|
+| 4bpw mul1 (同じ量子化器) fp16 | 0.01931 | 0.01927 |
+| 4bpw mul24 fp16 | 0.01979 | 0.05814 |
+| 4bpw mul24 INT8 (固定 grid + 活性 INT8) | 0.02175 | 0.06027 |
+
+mul24 は mul1 に対し +0.0005 (+2.5%)、INT8 化でさらに +0.0020 (約 +10%)。
+重みの再構成誤差も同等 (層 0 の in_proj_qkv で 0.0767 / 0.0764)。
+
+### 修正
+
+- `.mul1` tensor は遅延ロードの対象にしない (`no_defer`)。`LinearEXL3.__init__` が値を読んで形式を確認するため。
+
 ## 未検証・未実装
 
 - **expert の INT8 実行は未実装**。既存の MoE INT8 経路は、全 expert の `suh` が一致するモデル
   (`--share-input-su`) を前提にし、通常のモデルでは使えない。expert の活性 INT8 化の影響も未測定。
 - 全部を同時に INT8 にした KLD の実測、別モデル (Flash Next など) での確認は無い。
 - ノイズフロアは未測定 (21 ケースのみ)。
-- 速度は未評価。復号は FP16 を経由して丸めており、q を直接出すカーネルは無い。
-  `q = (B − 509) >> 2` は整数演算だけなので、shelf ではカーネル内で直接生成できる。
+- 速度は shelf で測る (`docs/research/20261105/exl3_int8_qwen38_27b.md`)。rocm_exl3 の復号は FP16 を経由して丸める。
 - cb0 と mcg は未対応。
 
 ## shelf への引き継ぎ
