@@ -148,6 +148,7 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m)
             py::arg("temp_costs"), py::arg("temp_edges"), py::arg("K"), py::arg("mcg"),
             py::arg("mul1"), py::arg("s0") = 0.0,
             "quantize_tiles");
+    m.def("exl3_mul1_multiplier", &exl3_mul1_multiplier, "exl3_mul1_multiplier");
     m.def("quantize_tiles_scratch", &quantize_tiles_scratch, "quantize_tiles_scratch");
     m.def("test_distribution", &test_distribution, "test_distribution");
     m.def("decode", &decode, "decode");

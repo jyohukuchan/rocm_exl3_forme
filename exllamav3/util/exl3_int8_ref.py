@@ -11,6 +11,8 @@ tests/test_exl3_int8_fixed_grid.py):
   (t*K + K - 16 + 256*K) mod (256*K).
 * mul1: x = state * 0x83DCD12D (uint32), B = sum of the 4 bytes of x,
   q = (B - 509) >> 2 (int8 grid, value = q * S_FIX).
+* mul24 (24-bit multiplier 0xDCD12D) places t at row = 8 * (t // 128) + t % 8, col = (t // 8) % 16 instead of
+  the tensor-core placement below. It is selected by the multiplier (0xDCD12D), see research/codebook.
 * tensor-core placement of t inside the tile: lane = t // 8, j = t % 8,
   row = (lane % 4) * 2 + (j & 1) + 8 * ((j >> 1) & 1), col = lane // 4 + 8 * (j >> 2).
 """
@@ -19,9 +21,15 @@ import numpy as np
 S_FIX = 4.0 * 887.0 / 131072.0
 
 
-def tile_positions():
+MUL1 = 0x83DCD12D
+MUL24 = 0xDCD12D
+
+
+def tile_positions(mult=MUL1):
     t = np.arange(256)
     lane, j = t // 8, t % 8
+    if mult == MUL24:
+        return 8 * (lane // 16) + j, lane % 16
     row = (lane % 4) * 2 + (j & 1) + 8 * ((j >> 1) & 1)
     col = lane // 4 + 8 * (j >> 2)
     return row, col
@@ -43,18 +51,18 @@ def states(trellis: np.ndarray) -> np.ndarray:
     return ((merged >> shift) & np.uint64(0xFFFF)).astype(np.uint32)
 
 
-def byte_sum(state: np.ndarray) -> np.ndarray:
-    x = (state.astype(np.uint64) * np.uint64(0x83DCD12D)) & np.uint64(0xFFFFFFFF)
+def byte_sum(state: np.ndarray, mult=MUL1) -> np.ndarray:
+    x = (state.astype(np.uint64) * np.uint64(mult)) & np.uint64(0xFFFFFFFF)
     return (x & 255) + ((x >> 8) & 255) + ((x >> 16) & 255) + ((x >> 24) & 255)
 
 
-def decode_q(trellis: np.ndarray, chunk: int = 8) -> np.ndarray:
+def decode_q(trellis: np.ndarray, chunk: int = 8, mult=MUL1) -> np.ndarray:
     """trellis uint16[Kt, Nt, 16*K] -> int8 q [out_features, in_features] (row = output n, col = input k)"""
     kt, nt, _ = trellis.shape
-    row, col = tile_positions()
+    row, col = tile_positions(mult)
     out = np.zeros((nt, 16, kt, 16), dtype=np.int8)
     for k0 in range(0, kt, chunk):
-        b = byte_sum(states(trellis[k0:k0 + chunk])).astype(np.int32)
+        b = byte_sum(states(trellis[k0:k0 + chunk]), mult).astype(np.int32)
         q = ((b - 509) >> 2).astype(np.int8)
         for t in range(256):
             out[:, col[t], k0:k0 + q.shape[0], row[t]] = q[:, :, t].T

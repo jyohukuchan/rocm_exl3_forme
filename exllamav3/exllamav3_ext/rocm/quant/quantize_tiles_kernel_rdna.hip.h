@@ -146,8 +146,8 @@ void quantize_tiles_kernel
             }
             else if constexpr (cb == 2)
             {
-                product0 = out_edge_idx * 0x83DCD12Du;
-                product1 = product0 + 0x83DCD12Du;
+                product0 = out_edge_idx * EXL3_MUL1_MULT;
+                product1 = product0 + EXL3_MUL1_MULT;
                 decoded2 = grid_round_3inst_2(decode_mul1_product_2(product0, product1), s0);
             }
             else
@@ -176,7 +176,7 @@ void quantize_tiles_kernel
                 else if constexpr (cb == 2)
                 {
                     // The mul1 multiplication is equally linear modulo 2^32.
-                    constexpr uint32_t product_step = 0x83DCD12Du << Kr;
+                    constexpr uint32_t product_step = EXL3_MUL1_MULT << Kr;
                     product0 += product_step;
                     product1 += product_step;
                     decoded2 = grid_round_3inst_2(decode_mul1_product_2(product0, product1), s0);
@@ -233,8 +233,8 @@ void quantize_tiles_kernel
                 }
                 else if constexpr (cb == 2)
                 {
-                    product0 = out_edge_idx * 0x83DCD12Du;
-                    product1 = product0 + 0x83DCD12Du;
+                    product0 = out_edge_idx * EXL3_MUL1_MULT;
+                    product1 = product0 + EXL3_MUL1_MULT;
                     decoded2 = grid_round_3inst_2(decode_mul1_product_2(product0, product1), s0);
                 }
                 else
@@ -262,7 +262,7 @@ void quantize_tiles_kernel
                     else if constexpr (cb == 2)
                     {
                         // The mul1 multiplication is equally linear modulo 2^32.
-                        constexpr uint32_t product_step = 0x83DCD12Du << Kr;
+                        constexpr uint32_t product_step = EXL3_MUL1_MULT << Kr;
                         product0 += product_step;
                         product1 += product_step;
                         decoded2 = grid_round_3inst_2(decode_mul1_product_2(product0, product1), s0);

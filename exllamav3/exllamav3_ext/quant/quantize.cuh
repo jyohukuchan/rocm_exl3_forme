@@ -3,6 +3,8 @@
 #include <ATen/Tensor.h>
 #include <tuple>
 
+int64_t exl3_mul1_multiplier();
+
 std::tuple<bool, int64_t> quantize_tiles_scratch(int device, int K, bool mcg, bool mul1, int L);
 
 // s0: INT8-exact codebook grid step (round 2 of the W8A8 prefill work). When

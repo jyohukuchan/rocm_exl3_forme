@@ -1,7 +1,7 @@
 from __future__ import annotations
 import torch
 from ...model.config import Config
-from .exl3_lib.quantize import preapply_had_l, preapply_had_r, had_k, had_n
+from .exl3_lib.quantize import preapply_had_l, preapply_had_r, had_k, had_n, mul24_to_mul1_gather, mul24_mult, codebook_mul1_mult
 from ...ext import exllamav3_ext as ext
 from ...util.tensor import g_tensor_cache
 import os
@@ -72,6 +72,14 @@ def _hgemm_fp16_out() -> bool:
 
 # Shapes that already logged int8 engagement (one line per unique GEMM shape).
 _int8_logged_shapes = set()
+
+
+def _frag_fix(w: torch.Tensor):
+    # ext.reconstruct places stream position t at the mul1 tile slot; mul24 puts it at the fragment slot
+    g = mul24_to_mul1_gather(w.device)
+    k, n = w.shape
+    t = w.view(k // 16, 16, n // 16, 16).permute(0, 2, 1, 3).reshape(k // 16, n // 16, 256)
+    w.copy_(t[:, :, g].reshape(k // 16, n // 16, 16, 16).permute(0, 2, 1, 3).reshape(k, n))
 
 
 def _exact_int32_gemm(a8: torch.Tensor, w8: torch.Tensor) -> torch.Tensor:
@@ -171,6 +179,12 @@ class LinearEXL3:
         self.mul1_tensor = mul1
         self.mcg = self.mcg_tensor is not None
         self.mul1 = self.mul1_tensor is not None
+        # mul24: 24-bit multiplier, WMMA B-fragment tile order. The ext reconstructs in the mul1 tile order,
+        # so the weights are re-tiled after reconstruct and the fused / gemm kernels (mul1 order) are not used.
+        self.frag = self.mul1 and (int(self.mul1_tensor.item()) & 0xFFFFFFFF) == mul24_mult
+        if self.mul1:
+            assert (int(self.mul1_tensor.item()) & 0xFFFFFFFF) == codebook_mul1_mult, \
+                f"{key}: model multiplier {int(self.mul1_tensor.item()) & 0xFFFFFFFF:#x} != ext build {codebook_mul1_mult:#x}"
 
         # INT8-exact codebook grid step (round 2 of the W8A8 prefill work).
         # Present only in models encoded with the int8 grid; the decoded tile
@@ -245,6 +259,9 @@ class LinearEXL3:
         # responsible for contiguity (a silent copy here would hide a hot-path inefficiency
         # and break CUDA-graph address stability)
         assert x.is_contiguous(), f"LinearEXL3 {self.key}: non-contiguous input {tuple(x.shape)}"
+
+        if self.frag:
+            return self.reconstruct_hgemm(x, out_dtype, params)
 
         reconstruct = params.get("reconstruct")
         if not reconstruct:
@@ -333,7 +350,7 @@ class LinearEXL3:
         if self._fused_reconstruct is None:
             self._fused_reconstruct = (
                 self.in_features % 128 == 0 and self.out_features % 128 == 0
-                and not no_fused_reconstruct
+                and not no_fused_reconstruct and not self.frag
             )
 
         # The fused kernel costs ~4x plain reconstruct (k*n-proportional) while the saved
@@ -351,7 +368,7 @@ class LinearEXL3:
             if use_fused:
                 ext.reconstruct_had_slice(w, self.trellis, self.suh, self.svh, self.K, self.mcg, self.mul1, 0)
             else:
-                ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+                self._recon(w)
             ext.hgemm_recon(xh, w, y_)
         else:
             numel_ = self.in_features * MAX_RECONSTRUCT_SLICE_N
@@ -364,7 +381,7 @@ class LinearEXL3:
                     ext.reconstruct_had_slice(
                         w, self.trellis, self.suh, self.svh[n_start:], self.K, self.mcg, self.mul1, n_start)
                 else:
-                    ext.reconstruct_slice(w, self.trellis, self.K, self.mcg, self.mul1, n_start)
+                    self._recon_slice(w, n_start)
                 ext.hgemm_recon(xh, w, y_[:, n_start:n_end])
 
         if not use_fused:
@@ -381,6 +398,16 @@ class LinearEXL3:
         )
 
 
+    def _recon(self, w):
+        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        if self.frag:
+            _frag_fix(w)
+
+    def _recon_slice(self, w, n_start):
+        ext.reconstruct_slice(w, self.trellis, self.K, self.mcg, self.mul1, n_start)
+        if self.frag:
+            _frag_fix(w)
+
     def _emu_w(self, x, out_dtype):
         shape = x.shape
         rows = x.numel() // shape[-1]
@@ -390,7 +417,7 @@ class LinearEXL3:
         xh = torch.empty_like(x)
         ext.had_r_128(x, xh, self.suh, None, 1.0)
         w = torch.empty((self.in_features, self.out_features), dtype = torch.half, device = self.trellis.device)
-        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        self._recon(w)
         with torch.inference_mode():
             wf = w.float()
             if not _emu_noround:
@@ -451,7 +478,7 @@ class LinearEXL3:
         ext.had_r_128(x, xh, self.suh, None, 1.0)
         w = torch.empty((self.in_features, self.out_features),
                         dtype=torch.half, device=self.trellis.device)
-        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        self._recon(w)
         w8, ws = self._quant_w8(w)
         if _int8_ablate == "w":
             # Weight-grid error only: fp32 activations, fp32 matmul on the
@@ -518,7 +545,7 @@ class LinearEXL3:
         del xh
         w = torch.empty((self.in_features, self.out_features),
                         dtype=torch.half, device=self.trellis.device)
-        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        self._recon(w)
         w8 = torch.empty((1, self.in_features, self.out_features),
                          dtype=torch.int8, device=w.device)
         s0t = self.s0.to(dtype=torch.float32, device=w.device)
@@ -572,7 +599,7 @@ class LinearEXL3:
             nw = n_end - n_start
             w = torch.empty((self.in_features, nw),
                             dtype=torch.half, device=self.trellis.device)
-            ext.reconstruct_slice(w, self.trellis, self.K, self.mcg, self.mul1, n_start)
+            self._recon_slice(w, n_start)
             if fast:
                 w8 = torch.empty((1, self.in_features, nw), dtype=torch.int8,
                                  device=w.device)
@@ -612,7 +639,7 @@ class LinearEXL3:
 
     def get_inner_weight_tensor(self, n_offset: int = 0, n_features: int | None = None):
         w = torch.empty((self.in_features, self.out_features), dtype = torch.half, device = self.trellis.device)
-        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        self._recon(w)
         if self.s0 is not None:
             # INT8-exact models: the states were chosen for the rounded grid
             # values, so decode must round (a stock decode reads measurably

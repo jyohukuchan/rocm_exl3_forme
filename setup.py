@@ -438,6 +438,11 @@ class HIPBuildExtension(build_ext):
                       "~1.4-1.6x slower MoE -- bisect setting)")
             defines.append(f"-DEXL3_RDNA_MOE_TILESIZE_K={moe_tk}")
 
+        # EXL3-INT8 "mul24" format: a build with EXL3_MUL1_MULT=0xDCD12D reads and writes it instead of mul1
+        mul1_mult = os.environ.get("EXL3_MUL1_MULT", "").strip()
+        if mul1_mult:
+            defines.append(f"-DEXL3_MUL1_MULT={int(mul1_mult, 0):#x}u")
+
         # Warnings from code we do not own, which otherwise fire by the thousand.
         quiet = [] if os.environ.get("EXLLAMA_VERBOSE_BUILD") == "1" else [
             "-Wno-unused-command-line-argument",
