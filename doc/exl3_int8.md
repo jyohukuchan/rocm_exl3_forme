@@ -124,6 +124,8 @@ shelf は INT8 の重みを持たず、trellis のまま常駐させて GEMM が
 - 検証: `tests/test_exl3_mul24.py` (R9700 と V620 の両方で 15 本)。量子化 → 詰め込み → 復号が NumPy 参照と一致し、
   K=1..8、rows 1〜300 の全 GEMM 経路と multi-matrix GEMM が reconstruct 経由の参照と一致する。
   27B の実モデルは R9700 と V620 で生成が一致し、INT8 経路でも通る (`eval/exl3_int8_check.py --gen`)。
+- 速度 (V620、27B 4bpw、`rocm_tools/bench_model.py`): decode は mul24 22.1 tok/s、mul1 21.8 tok/s、prefill 512 は 233.5 / 232.5 tok/s
+  で、mul24 の復号 (行対を 4 か所から取る) による遅れは無い。
 - 未検証: ルーティング付きの融合 MoE カーネル (`exl3_moe`) を mul24 の実モデルで通したことはない
   (Flash Next の mul24 版が無いため)。decode の共通部は上と同じだが、全体の確認には再量子化が要る。
 
