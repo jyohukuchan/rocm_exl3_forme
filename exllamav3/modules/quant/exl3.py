@@ -35,6 +35,12 @@ int8_prefill = os.environ.get("EXL3_INT8_PREFILL", "0") != "0"
 # maps B onto [-128, 127] with no per-tensor/per-channel scale. Experimental.
 _int8_fixed_grid = os.environ.get("EXL3_INT8_FIXED_GRID", "0") != "0"
 INT8_FIXED_S0 = 4.0 * 887.0 / 131072.0
+# Weight-only emulation (evaluation): while EMU_W["on"] is set (the MoE emulation
+# path turns it on around the expert MLPs), every mul1 linear decodes its weights,
+# rounds them to the fixed grid (unless EXL3_INT8_EMU_NOROUND=1, the control) and runs
+# an fp32 matmul in the rotated basis. Speed is irrelevant here.
+EMU_W = {"on": False}
+_emu_noround = os.environ.get("EXL3_INT8_EMU_NOROUND", "0") != "0"
 
 # K-block size for the exact-int32 emulation GEMM: partial sums stay below
 # 2^24, so every fp32 block product is bit-exact and the fp64 tail is too.
@@ -231,6 +237,9 @@ class LinearEXL3:
             if self.key in ovr and ovr[self.key].inner is not self:
                 return ovr[self.key].forward(x, params, out_dtype)
 
+        if EMU_W["on"] and self.mul1:
+            return self._emu_w(x, out_dtype)
+
         # The EXL3 kernels read x as contiguous rows; a strided view (e.g. a head-group slice
         # of a wider tensor) would be silently misread as interleaved garbage. Producers are
         # responsible for contiguity (a silent copy here would hide a hot-path inefficiency
@@ -370,6 +379,27 @@ class LinearEXL3:
             self.in_features % 16 == 0 and self.out_features % 16 == 0
             and self.trellis.is_cuda
         )
+
+
+    def _emu_w(self, x, out_dtype):
+        shape = x.shape
+        rows = x.numel() // shape[-1]
+        x = x.view(rows, self.in_features).contiguous()
+        y = torch.empty(shape[:-1] + (self.out_features,), dtype = out_dtype or self.default_out_dtype, device = x.device)
+        y_ = y.view(rows, self.out_features)
+        xh = torch.empty_like(x)
+        ext.had_r_128(x, xh, self.suh, None, 1.0)
+        w = torch.empty((self.in_features, self.out_features), dtype = torch.half, device = self.trellis.device)
+        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        with torch.inference_mode():
+            wf = w.float()
+            if not _emu_noround:
+                wf = (wf / INT8_FIXED_S0).round().clamp(-128, 127) * INT8_FIXED_S0
+            y_.copy_((xh.float() @ wf).to(y_.dtype))
+        ext.had_r_128(y_, y_, None, self.svh, 1.0)
+        if self.bias is not None:
+            y += self.bias
+        return y
 
 
     def _quant_w8(self, w):
