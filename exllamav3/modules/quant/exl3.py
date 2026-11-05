@@ -48,6 +48,9 @@ _int8_ablate = os.environ.get("EXL3_INT8_ABLATE", "")
 # Minimum row count for INT8 engagement (perf heuristic; accuracy work such
 # as KLD can lower it to bring more cases onto the int8 path).
 _int8_min_rows = int(os.environ.get("EXL3_INT8_MIN_ROWS", "1024"))
+# Evaluation scope: "" = all eligible linears, "head" = only vocab-sized N
+# (lm_head), "nohead" = everything except the lm_head.
+_int8_scope = os.environ.get("EXL3_INT8_SCOPE", "")
 
 
 def _hgemm_fp16_out() -> bool:
@@ -394,6 +397,9 @@ class LinearEXL3:
         # with fp32 accumulation output on the big linears (hg32 ~3x slower
         # than hg16, measured per shape), while igemm accumulates int32.
         if rows < _int8_min_rows or self.out_features <= 2048:
+            return None
+        is_head = self.out_features > MAX_RECONSTRUCT_SLICE_N
+        if (_int8_scope == "head" and not is_head) or (_int8_scope == "nohead" and is_head):
             return None
         # Vocab-sized N (lm_head) takes the sliced path with one shared
         # activation quant; ablation modes decline it (fall back to fp16).
