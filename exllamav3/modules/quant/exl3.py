@@ -30,6 +30,11 @@ no_fused_reconstruct = os.environ.get("EXL3_NO_FUSED_RECONSTRUCT", "0") != "0"
 # The math is backend-agnostic torch ops plus one int8->int32 GEMM; on ROCm
 # that GEMM is ext.igemm_recon (rocBLAS int8), elsewhere an exact emulation.
 int8_prefill = os.environ.get("EXL3_INT8_PREFILL", "0") != "0"
+# Fixed global int8 grid for mul1 models without a stored s0: the mul1 value is
+# (887*B - 452608) * 2^-17 with B in 0..1020, so a step of 4 * 887 * 2^-17
+# maps B onto [-128, 127] with no per-tensor/per-channel scale. Experimental.
+_int8_fixed_grid = os.environ.get("EXL3_INT8_FIXED_GRID", "0") != "0"
+INT8_FIXED_S0 = 4.0 * 887.0 / 131072.0
 
 # K-block size for the exact-int32 emulation GEMM: partial sums stay below
 # 2^24, so every fp32 block product is bit-exact and the fp64 tail is too.
@@ -170,6 +175,9 @@ class LinearEXL3:
             self.s0_value = float(s0.item())
         else:
             self.s0_value = 0.0
+        if s0 is None and _int8_fixed_grid and self.mul1:
+            s0 = torch.tensor([INT8_FIXED_S0], dtype = torch.float32)
+            self.s0_value = INT8_FIXED_S0
         self.s0 = s0
 
         self._fused_reconstruct = None
@@ -413,7 +421,7 @@ class LinearEXL3:
             # Weight-grid error only: fp32 activations, fp32 matmul on the
             # dequantized int8 weights, original svh.
             with torch.inference_mode():
-                y_.copy_((xh.float() @ (w8.float() * self._wscales(w))).to(y_.dtype))
+                y_.copy_((xh.float() @ (w8.float() * ws)).to(y_.dtype))
             del w
             ext.had_r_128(y_, y_, None, self.svh, 1.0)
             if self.bias is not None:
