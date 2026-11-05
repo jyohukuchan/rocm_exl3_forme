@@ -2,7 +2,7 @@
 """Macro case-mean KLD of candidate .f32 dumps vs the llama.cpp BF16 reference.
 
 Metric: per-position KL(ref || cand) at temperature 1 (log-softmax both
-sides, float64 accumulation). Case score = mean over positions; macro KLD =
+sides in float32 on the GPU in row chunks, float64 row sums). Case score = mean over positions; macro KLD =
 mean over cases. Top-1 agreement likewise (macro + position-weighted).
 Only the shared leading vocab columns are compared.
 
@@ -13,12 +13,31 @@ import json
 from pathlib import Path
 
 import numpy as np
+import torch
+
+CHUNK = 256
 
 
 def load_f32(p, rows, cols):
-    a = np.fromfile(p, dtype="<f4")
+    a = np.memmap(p, dtype="<f4", mode="r")
     assert a.size == rows * cols, f"{p}: size {a.size} != {rows}x{cols}"
-    return a.reshape(rows, cols).astype(np.float64)
+    return a.reshape(rows, cols)
+
+
+def kld_top1(r, c, v, dev):
+    kl = []
+    agree = []
+    for i in range(0, r.shape[0], CHUNK):
+        rt = torch.from_numpy(np.ascontiguousarray(r[i:i + CHUNK, :v])).to(dev)
+        ct = torch.from_numpy(np.ascontiguousarray(c[i:i + CHUNK, :v])).to(dev)
+        assert bool(torch.isfinite(rt).all()), "ref nonfinite"
+        cnf = int((~torch.isfinite(ct)).sum())
+        assert cnf == 0, f"candidate nonfinite={cnf}"
+        lr = torch.log_softmax(rt, dim=1)
+        lc = torch.log_softmax(ct, dim=1)
+        kl.append((lr.exp() * (lr - lc)).double().sum(dim=1).cpu())
+        agree.append((rt.argmax(dim=1) == ct.argmax(dim=1)).cpu())
+    return torch.cat(kl), torch.cat(agree)
 
 
 def main():
@@ -36,6 +55,7 @@ def main():
     candman = json.loads((canddir / "manifest.json").read_text())
     candcases = {c["id"]: c for c in candman["cases"]}
 
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
     rows = []
     tot_pos = tot_agree = 0
     for rc in refman["cases"]:
@@ -50,20 +70,11 @@ def main():
         cr, cv = cc["shape"]
         assert rr == cr, f"{cid}: row count {cr} != ref {rr}"
         v = min(rv, cv)
-        r = load_f32(refdir / rc["logits_file"], rr, rv)[:, :v]
-        c = load_f32(canddir / cc["logits_file"], cr, cv)[:, :v]
-        assert int((~np.isfinite(r)).sum()) == 0, f"{cid}: ref nonfinite"
-        cnf = int((~np.isfinite(c)).sum())
-        assert cnf == 0, f"{cid}: candidate nonfinite={cnf}"
-        r -= r.max(axis=1, keepdims=True)
-        c -= c.max(axis=1, keepdims=True)
-        lr = r - np.log(np.exp(r).sum(axis=1, keepdims=True))
-        lc = c - np.log(np.exp(c).sum(axis=1, keepdims=True))
-        pr = np.exp(lr)
-        kld = (pr * (lr - lc)).sum(axis=1)
-        agree = (r.argmax(axis=1) == c.argmax(axis=1))
+        r = load_f32(refdir / rc["logits_file"], rr, rv)
+        c = load_f32(canddir / cc["logits_file"], cr, cv)
+        kld, agree = kld_top1(r, c, v, dev)
         rows.append({"id": cid, "positions": rr, "kld": float(kld.mean()),
-                     "top1": float(agree.mean())})
+                     "top1": float(agree.float().mean())})
         tot_pos += rr
         tot_agree += int(agree.sum())
 
