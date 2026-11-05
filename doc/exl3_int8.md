@@ -115,23 +115,31 @@ shelf は INT8 の重みを持たず、trellis のまま常駐させて GEMM が
   shelf は mul24 だけを読み、他は再量子化を促して拒否する。
 - 作り方: ビルド時に `EXL3_MUL1_MULT=0xDCD12D` を指定して拡張を作り、`convert.py` を通常どおり実行する。
   量子化器は同じ (mul1 と同じ Viterbi、探索と質は同等)。
-- rocm_exl3 での扱い: reconstruct は mul1 の並びで復号するので Python 側で並べ替える (`_frag_fix`)。
-  mul24 のモデルは reconstruct + hgemm にだけ載せる (品質測定用)。**行数 <= 32 のネイティブ GEMM / 融合経路は mul1 の並びを
-  前提にしているので使えない。** 速度測定は shelf で行う。
+- rocm_exl3 での扱い: 並びの違いは復号の入口 `dq_dispatch` (`exl3_dq_rdna.hip.h`) だけで吸収する。lane ごとに 4 組の行対を
+  ストリームの 4 か所から復号し、mul1 の並びと同じ fragment の位置へ渡すので、GEMV・multi-row・cooperative GEMM・
+  reconstruct・multi-matrix (MoE の expert 束、K/V) の各 kernel は gfx1201 と gfx1030 (V620) でそのまま動く。
+  拡張は `EXL3_MUL1_MULT=0xDCD12D` のビルドを使う (R9700 と V620 で別ビルド)。mul1 のモデルは mul1 のビルドで読む。
+  乗数の合わないモデルは `LinearEXL3` の assert で拒否する。
+  CPU の expert offload (`-mcl` / `-mcs`) は復号が mul1 固定なので、mul24 のビルドでは対象外になる。
+- 検証: `tests/test_exl3_mul24.py` (R9700 と V620 の両方で 15 本)。量子化 → 詰め込み → 復号が NumPy 参照と一致し、
+  K=1..8、rows 1〜300 の全 GEMM 経路と multi-matrix GEMM が reconstruct 経由の参照と一致する。
+  27B の実モデルは R9700 と V620 で生成が一致し、INT8 経路でも通る (`eval/exl3_int8_check.py --gen`)。
+- 未検証: ルーティング付きの融合 MoE カーネル (`exl3_moe`) を mul24 の実モデルで通したことはない
+  (Flash Next の mul24 版が無いため)。decode の共通部は上と同じだが、全体の確認には再量子化が要る。
 
 ### 27B (Qwen3.8-27B 4.0bpw、head 6bit、R9700) の KLD
 
 BF16 (llama.cpp) に対し、`qwen38-kld-20260918` の 8 ケース・2632 位置の mean KLD。
-ネイティブ GEMM の制約で各ケースの最終行 (1 行 chunk) が壊れるため、両モデルとも最終行を除いた値で比べる
-(`eval/kld_mul24/rows_excl_last.py`)。
-
-| モデル | 最終行除く | 全行 |
+| モデル | mean KLD (全行) | top-1 |
 |---|---|---|
-| 4bpw mul1 (同じ量子化器) fp16 | 0.01931 | 0.01927 |
-| 4bpw mul24 fp16 | 0.01979 | 0.05814 |
-| 4bpw mul24 INT8 (固定 grid + 活性 INT8) | 0.02175 | 0.06027 |
+| 4bpw mul1 (同じ量子化器) fp16 | 0.01927 | 0.9457 |
+| 4bpw mul24 fp16 | 0.01973 | 0.9472 |
+| 4bpw mul24 INT8 (固定 grid + 活性 INT8) | 0.02167 | 0.9403 |
 
-mul24 は mul1 に対し +0.0005 (+2.5%)、INT8 化でさらに +0.0020 (約 +10%)。
+(最初の測定は復号が mul24 の並びに対応する前で、各ケース最終の 1 行 chunk が壊れ、全行の KLD が 0.058 になった。
+その行を除くと 0.0198 で、対応後の値と一致する。`eval/kld_mul24/rows_excl_last.py` はその切り分けに使った。)
+
+mul24 は mul1 に対し +0.0005 (+2.4%)、INT8 化でさらに +0.0019 (約 +10%)。
 重みの再構成誤差も同等 (層 0 の in_proj_qkv で 0.0767 / 0.0764)。
 
 ### 修正

@@ -68,3 +68,34 @@ def test_native_kernels_match_reconstruct(K):
             y = lin.forward(x, params, out_dtype=torch.half).float()
             err = ((y - ref).norm() / ref.norm()).item()
             assert err < 2e-3, (K, rows, params, err)
+
+
+def _synthetic_linear(in_f, out_f, K, seed):
+    dev = "cuda"
+    kt, nt = in_f // 16, out_f // 16
+    torch.manual_seed(seed)
+    w = torch.randn(in_f, out_f, device=dev)
+    tiles = w.reshape(kt, 16, nt, 16).permute(0, 2, 1, 3).reshape(kt * nt, 256)
+    _, qi = quantize_tiles(tiles[:, tensor_core_perm(dev)].contiguous(), {"K": K, "mul1": True})
+    trellis = pack_trellis(qi.reshape(kt, nt, 256), {"K": K})
+    suh = (torch.randint(0, 2, (in_f,), device=dev) * 2 - 1).half()
+    svh = (torch.randint(0, 2, (out_f,), device=dev) * 2 - 1).half()
+    mul1 = torch.tensor(codebook_mul1_mult, dtype=torch.uint32).view(torch.int)
+    return LinearEXL3(None, in_f, out_f, suh=suh, svh=svh, trellis=trellis, mul1=mul1, key=f"t{seed}")
+
+
+@pytest.mark.parametrize("K", [2, 3, 4, 6])
+def test_multi_matrix_gemm_matches_reference(K):
+    """The multi-matrix kernels (expert bundles, K/V projections) read the same tile order."""
+    in_f, out_f, n = 512, 384, 6
+    lins = [_synthetic_linear(in_f, out_f, K, 200 + 10 * K + i) for i in range(n)]
+    ptrs = lambda f: torch.tensor([f(l) for l in lins], dtype=torch.long, device="cuda")
+    p_tr, p_suh, p_svh = ptrs(lambda l: l.trellis.data_ptr()), ptrs(lambda l: l.suh.data_ptr()), ptrs(lambda l: l.svh.data_ptr())
+    for rows in (1, 5):
+        x = torch.randn(1, rows, in_f, device="cuda", dtype=torch.half) * 0.25
+        y = torch.zeros(n, rows, out_f, device="cuda", dtype=torch.half)
+        had = torch.empty(n, rows, in_f, device="cuda", dtype=torch.half)
+        ext.exl3_mgemm(x, p_tr, y, p_suh, had, p_svh, None, None, K, -1, False, True, -1, -1, 0, 1, None, None)
+        ref = torch.stack([x[0].float() @ l.get_weight_tensor().float() for l in lins])
+        err = ((y.float() - ref).norm() / ref.norm()).item()
+        assert err < 2e-3, (K, rows, err)
