@@ -1,0 +1,567 @@
+ -- Loading /work/models/qwen38-27b-exl3-4bpw
+ -- Loading /work/models/qwen38-27b-exl3-4bpw
+ -- RCCL init: world_size 2, rank 1, device 0, init_method tcp://127.0.0.1:40339, timeout 180.0s
+ -- RCCL init: world_size 2, rank 0, device 1, init_method tcp://127.0.0.1:40339, timeout 180.0s
+ -- RCCL warmup, device 0, please wait...
+ -- RCCL warmup, device 1, please wait...
+ -- Finished RCCL warmup, device 0
+ -- Finished RCCL warmup, device 1
+ -- Loading tokenizer...
+[rank0]:[W1104 21:03:06.825808606 ProcessGroupNCCL.cpp:4215] Warning: An unbatched P2P op (send/recv) was called on this ProcessGroup with size 2.  In lazy initialization mode, this will result in a new 2-rank NCCL communicator to be created. (function operator())
+[rank1]:[W1104 21:03:06.826404676 ProcessGroupNCCL.cpp:4215] Warning: An unbatched P2P op (send/recv) was called on this ProcessGroup with size 2.  In lazy initialization mode, this will result in a new 2-rank NCCL communicator to be created. (function operator())
+{"prefill_progress": 4096, "target": 1835008, "elapsed_seconds": 16.45733949006535}
+{"prefill_progress": 8192, "target": 1835008, "elapsed_seconds": 29.71779341401998}
+{"prefill_progress": 12288, "target": 1835008, "elapsed_seconds": 42.33552470302675}
+{"prefill_progress": 16384, "target": 1835008, "elapsed_seconds": 55.69356887496542}
+{"prefill_progress": 20480, "target": 1835008, "elapsed_seconds": 68.78859861497767}
+{"prefill_progress": 24576, "target": 1835008, "elapsed_seconds": 82.11257575405762}
+{"prefill_progress": 28672, "target": 1835008, "elapsed_seconds": 95.65882419398986}
+{"prefill_progress": 32768, "target": 1835008, "elapsed_seconds": 110.99340535106603}
+{"prefill_progress": 36864, "target": 1835008, "elapsed_seconds": 124.68350538203958}
+{"prefill_progress": 40960, "target": 1835008, "elapsed_seconds": 138.94209818402305}
+{"prefill_progress": 45056, "target": 1835008, "elapsed_seconds": 153.72588733700104}
+{"prefill_progress": 49152, "target": 1835008, "elapsed_seconds": 168.40871512400918}
+{"prefill_progress": 53248, "target": 1835008, "elapsed_seconds": 183.34686623106245}
+{"prefill_progress": 57344, "target": 1835008, "elapsed_seconds": 198.44199502200354}
+{"prefill_progress": 61440, "target": 1835008, "elapsed_seconds": 213.75838765501976}
+{"prefill_progress": 65536, "target": 1835008, "elapsed_seconds": 232.50090046506375}
+{"prefill_progress": 69632, "target": 1835008, "elapsed_seconds": 245.49826356000267}
+{"prefill_progress": 73728, "target": 1835008, "elapsed_seconds": 261.3614975119708}
+{"prefill_progress": 77824, "target": 1835008, "elapsed_seconds": 277.2479360840516}
+{"prefill_progress": 81920, "target": 1835008, "elapsed_seconds": 293.11971661797725}
+{"prefill_progress": 86016, "target": 1835008, "elapsed_seconds": 309.0367142370669}
+{"prefill_progress": 90112, "target": 1835008, "elapsed_seconds": 324.91233992099296}
+{"prefill_progress": 94208, "target": 1835008, "elapsed_seconds": 340.82009069796186}
+{"prefill_progress": 98304, "target": 1835008, "elapsed_seconds": 359.9981790999882}
+{"prefill_progress": 102400, "target": 1835008, "elapsed_seconds": 372.7823550970061}
+{"prefill_progress": 106496, "target": 1835008, "elapsed_seconds": 388.7148282700218}
+{"prefill_progress": 110592, "target": 1835008, "elapsed_seconds": 404.9134213459911}
+{"prefill_progress": 114688, "target": 1835008, "elapsed_seconds": 420.8809509680141}
+{"prefill_progress": 118784, "target": 1835008, "elapsed_seconds": 436.89622588607017}
+{"prefill_progress": 122880, "target": 1835008, "elapsed_seconds": 452.9083466749871}
+{"prefill_progress": 126976, "target": 1835008, "elapsed_seconds": 468.9256688460009}
+{"prefill_progress": 131072, "target": 1835008, "elapsed_seconds": 488.2309740879573}
+{"prefill_progress": 135168, "target": 1835008, "elapsed_seconds": 501.3484500440536}
+{"prefill_progress": 139264, "target": 1835008, "elapsed_seconds": 517.4241088590352}
+{"prefill_progress": 143360, "target": 1835008, "elapsed_seconds": 533.5229453550419}
+{"prefill_progress": 147456, "target": 1835008, "elapsed_seconds": 549.6187938989606}
+{"prefill_progress": 151552, "target": 1835008, "elapsed_seconds": 565.7684424309991}
+{"prefill_progress": 155648, "target": 1835008, "elapsed_seconds": 581.8808952079853}
+{"prefill_progress": 159744, "target": 1835008, "elapsed_seconds": 597.9746582979569}
+{"prefill_progress": 163840, "target": 1835008, "elapsed_seconds": 617.4539383640513}
+{"prefill_progress": 167936, "target": 1835008, "elapsed_seconds": 630.6308135329746}
+{"prefill_progress": 172032, "target": 1835008, "elapsed_seconds": 646.8028410549741}
+{"prefill_progress": 176128, "target": 1835008, "elapsed_seconds": 663.1363662229851}
+{"prefill_progress": 180224, "target": 1835008, "elapsed_seconds": 679.3015850069933}
+{"prefill_progress": 184320, "target": 1835008, "elapsed_seconds": 695.4489317910047}
+{"prefill_progress": 188416, "target": 1835008, "elapsed_seconds": 711.6319382700603}
+{"prefill_progress": 192512, "target": 1835008, "elapsed_seconds": 727.8397675110027}
+{"prefill_progress": 196608, "target": 1835008, "elapsed_seconds": 747.3482629610226}
+{"prefill_progress": 200704, "target": 1835008, "elapsed_seconds": 760.403557860991}
+{"prefill_progress": 204800, "target": 1835008, "elapsed_seconds": 776.6361913309665}
+{"prefill_progress": 208896, "target": 1835008, "elapsed_seconds": 793.0758116419893}
+{"prefill_progress": 212992, "target": 1835008, "elapsed_seconds": 809.3162624849938}
+{"prefill_progress": 217088, "target": 1835008, "elapsed_seconds": 825.5498166549951}
+{"prefill_progress": 221184, "target": 1835008, "elapsed_seconds": 841.7998726390069}
+{"prefill_progress": 225280, "target": 1835008, "elapsed_seconds": 858.0543683080468}
+{"prefill_progress": 229376, "target": 1835008, "elapsed_seconds": 877.5799145409837}
+{"prefill_progress": 233472, "target": 1835008, "elapsed_seconds": 890.9108092610259}
+{"prefill_progress": 237568, "target": 1835008, "elapsed_seconds": 907.2031726010609}
+{"prefill_progress": 241664, "target": 1835008, "elapsed_seconds": 923.4905970409745}
+{"prefill_progress": 245760, "target": 1835008, "elapsed_seconds": 939.7826420259662}
+{"prefill_progress": 249856, "target": 1835008, "elapsed_seconds": 956.1116428540554}
+{"prefill_progress": 253952, "target": 1835008, "elapsed_seconds": 972.6278611250455}
+{"prefill_progress": 258048, "target": 1835008, "elapsed_seconds": 989.1453595650382}
+{"prefill_progress": 262144, "target": 1835008, "elapsed_seconds": 1008.9090936790453}
+{"prefill_progress": 266240, "target": 1835008, "elapsed_seconds": 1022.5627013370395}
+{"prefill_progress": 270336, "target": 1835008, "elapsed_seconds": 1038.9233491830528}
+{"prefill_progress": 274432, "target": 1835008, "elapsed_seconds": 1055.31074739201}
+{"prefill_progress": 278528, "target": 1835008, "elapsed_seconds": 1071.7096728649922}
+{"prefill_progress": 282624, "target": 1835008, "elapsed_seconds": 1088.1098553730408}
+{"prefill_progress": 286720, "target": 1835008, "elapsed_seconds": 1104.5283238659613}
+{"prefill_progress": 290816, "target": 1835008, "elapsed_seconds": 1120.9730456779944}
+{"prefill_progress": 294912, "target": 1835008, "elapsed_seconds": 1140.7553302940214}
+{"prefill_progress": 299008, "target": 1835008, "elapsed_seconds": 1154.2692779860226}
+{"prefill_progress": 303104, "target": 1835008, "elapsed_seconds": 1170.7762361760251}
+{"prefill_progress": 307200, "target": 1835008, "elapsed_seconds": 1187.3006777249975}
+{"prefill_progress": 311296, "target": 1835008, "elapsed_seconds": 1203.8083952120505}
+{"prefill_progress": 315392, "target": 1835008, "elapsed_seconds": 1220.3089171219617}
+{"prefill_progress": 319488, "target": 1835008, "elapsed_seconds": 1236.7935780390399}
+{"prefill_progress": 323584, "target": 1835008, "elapsed_seconds": 1253.2995091429912}
+{"prefill_progress": 327680, "target": 1835008, "elapsed_seconds": 1273.0363434180617}
+{"prefill_progress": 331776, "target": 1835008, "elapsed_seconds": 1286.6438899489585}
+{"prefill_progress": 335872, "target": 1835008, "elapsed_seconds": 1303.1745186629705}
+{"prefill_progress": 339968, "target": 1835008, "elapsed_seconds": 1319.7284287969815}
+{"prefill_progress": 344064, "target": 1835008, "elapsed_seconds": 1336.289417876047}
+{"prefill_progress": 348160, "target": 1835008, "elapsed_seconds": 1352.8413926380454}
+{"prefill_progress": 352256, "target": 1835008, "elapsed_seconds": 1369.3923413270386}
+{"prefill_progress": 356352, "target": 1835008, "elapsed_seconds": 1385.972062136978}
+{"prefill_progress": 360448, "target": 1835008, "elapsed_seconds": 1405.840051118983}
+{"prefill_progress": 364544, "target": 1835008, "elapsed_seconds": 1419.504447472049}
+{"prefill_progress": 368640, "target": 1835008, "elapsed_seconds": 1436.1448524689768}
+{"prefill_progress": 372736, "target": 1835008, "elapsed_seconds": 1452.7975266380236}
+{"prefill_progress": 376832, "target": 1835008, "elapsed_seconds": 1469.4448877980467}
+{"prefill_progress": 380928, "target": 1835008, "elapsed_seconds": 1486.2800644329982}
+{"prefill_progress": 385024, "target": 1835008, "elapsed_seconds": 1502.953881792957}
+{"prefill_progress": 389120, "target": 1835008, "elapsed_seconds": 1519.8613962329691}
+{"prefill_progress": 393216, "target": 1835008, "elapsed_seconds": 1539.8558028590633}
+{"prefill_progress": 397312, "target": 1835008, "elapsed_seconds": 1553.3699993629707}
+{"prefill_progress": 401408, "target": 1835008, "elapsed_seconds": 1570.3145552789792}
+{"prefill_progress": 405504, "target": 1835008, "elapsed_seconds": 1587.0814783480018}
+{"prefill_progress": 409600, "target": 1835008, "elapsed_seconds": 1603.8362583749695}
+{"prefill_progress": 413696, "target": 1835008, "elapsed_seconds": 1620.635521151009}
+{"prefill_progress": 417792, "target": 1835008, "elapsed_seconds": 1637.396863257978}
+{"prefill_progress": 421888, "target": 1835008, "elapsed_seconds": 1654.2171453400515}
+{"prefill_progress": 425984, "target": 1835008, "elapsed_seconds": 1674.391508774017}
+{"prefill_progress": 430080, "target": 1835008, "elapsed_seconds": 1688.0115855970653}
+{"prefill_progress": 434176, "target": 1835008, "elapsed_seconds": 1705.1004637379665}
+{"prefill_progress": 438272, "target": 1835008, "elapsed_seconds": 1721.9835720550036}
+{"prefill_progress": 442368, "target": 1835008, "elapsed_seconds": 1738.874142167042}
+{"prefill_progress": 446464, "target": 1835008, "elapsed_seconds": 1755.765005414025}
+{"prefill_progress": 450560, "target": 1835008, "elapsed_seconds": 1772.7631590380333}
+{"prefill_progress": 454656, "target": 1835008, "elapsed_seconds": 1789.6468261349946}
+{"prefill_progress": 458752, "target": 1835008, "elapsed_seconds": 1809.8229319569655}
+{"prefill_progress": 462848, "target": 1835008, "elapsed_seconds": 1823.5378057870548}
+{"prefill_progress": 466944, "target": 1835008, "elapsed_seconds": 1840.7252101199701}
+{"prefill_progress": 471040, "target": 1835008, "elapsed_seconds": 1857.6535182680236}
+{"prefill_progress": 475136, "target": 1835008, "elapsed_seconds": 1874.8361055590212}
+{"prefill_progress": 479232, "target": 1835008, "elapsed_seconds": 1891.822351127048}
+{"prefill_progress": 483328, "target": 1835008, "elapsed_seconds": 1909.0368249349995}
+{"prefill_progress": 487424, "target": 1835008, "elapsed_seconds": 1926.0473200039705}
+{"prefill_progress": 491520, "target": 1835008, "elapsed_seconds": 1946.418443926028}
+{"prefill_progress": 495616, "target": 1835008, "elapsed_seconds": 1960.4256587929558}
+{"prefill_progress": 499712, "target": 1835008, "elapsed_seconds": 1977.4287115420448}
+{"prefill_progress": 503808, "target": 1835008, "elapsed_seconds": 1994.4443674390204}
+{"prefill_progress": 507904, "target": 1835008, "elapsed_seconds": 2011.4871867790353}
+{"prefill_progress": 512000, "target": 1835008, "elapsed_seconds": 2028.5754668989684}
+{"prefill_progress": 516096, "target": 1835008, "elapsed_seconds": 2045.6245712430682}
+{"prefill_progress": 520192, "target": 1835008, "elapsed_seconds": 2062.688535962021}
+{"prefill_progress": 524288, "target": 1835008, "elapsed_seconds": 2082.998835959006}
+{"prefill_progress": 528384, "target": 1835008, "elapsed_seconds": 2097.121941011981}
+{"prefill_progress": 532480, "target": 1835008, "elapsed_seconds": 2114.194501718972}
+{"prefill_progress": 536576, "target": 1835008, "elapsed_seconds": 2131.2890595090576}
+{"prefill_progress": 540672, "target": 1835008, "elapsed_seconds": 2148.4192335270345}
+{"prefill_progress": 544768, "target": 1835008, "elapsed_seconds": 2165.5725060770055}
+{"prefill_progress": 548864, "target": 1835008, "elapsed_seconds": 2182.737948816037}
+{"prefill_progress": 552960, "target": 1835008, "elapsed_seconds": 2200.1054163359804}
+{"prefill_progress": 557056, "target": 1835008, "elapsed_seconds": 2220.594177662977}
+{"prefill_progress": 561152, "target": 1835008, "elapsed_seconds": 2234.6044525860343}
+{"prefill_progress": 565248, "target": 1835008, "elapsed_seconds": 2252.194904942997}
+{"prefill_progress": 569344, "target": 1835008, "elapsed_seconds": 2269.4334537370596}
+{"prefill_progress": 573440, "target": 1835008, "elapsed_seconds": 2286.693496442982}
+{"prefill_progress": 577536, "target": 1835008, "elapsed_seconds": 2303.965746775968}
+{"prefill_progress": 581632, "target": 1835008, "elapsed_seconds": 2321.323722394067}
+{"prefill_progress": 585728, "target": 1835008, "elapsed_seconds": 2338.6163157600677}
+{"prefill_progress": 589824, "target": 1835008, "elapsed_seconds": 2359.2057484190445}
+{"prefill_progress": 593920, "target": 1835008, "elapsed_seconds": 2373.354353887029}
+{"prefill_progress": 598016, "target": 1835008, "elapsed_seconds": 2390.9152623850387}
+{"prefill_progress": 602112, "target": 1835008, "elapsed_seconds": 2408.2893172759796}
+{"prefill_progress": 606208, "target": 1835008, "elapsed_seconds": 2425.890851653996}
+{"prefill_progress": 610304, "target": 1835008, "elapsed_seconds": 2443.2992558330297}
+{"prefill_progress": 614400, "target": 1835008, "elapsed_seconds": 2460.8576607920695}
+{"prefill_progress": 618496, "target": 1835008, "elapsed_seconds": 2478.301310674986}
+{"prefill_progress": 622592, "target": 1835008, "elapsed_seconds": 2499.0718351789983}
+{"prefill_progress": 626688, "target": 1835008, "elapsed_seconds": 2513.620733381016}
+{"prefill_progress": 630784, "target": 1835008, "elapsed_seconds": 2531.168304895051}
+{"prefill_progress": 634880, "target": 1835008, "elapsed_seconds": 2548.769317763974}
+{"prefill_progress": 638976, "target": 1835008, "elapsed_seconds": 2566.361061909003}
+{"prefill_progress": 643072, "target": 1835008, "elapsed_seconds": 2584.0235913500655}
+{"prefill_progress": 647168, "target": 1835008, "elapsed_seconds": 2601.666377237998}
+{"prefill_progress": 651264, "target": 1835008, "elapsed_seconds": 2619.353483273997}
+{"prefill_progress": 655360, "target": 1835008, "elapsed_seconds": 2640.558162981062}
+{"prefill_progress": 659456, "target": 1835008, "elapsed_seconds": 2655.1105298750335}
+{"prefill_progress": 663552, "target": 1835008, "elapsed_seconds": 2673.066179190064}
+{"prefill_progress": 667648, "target": 1835008, "elapsed_seconds": 2690.9188394410303}
+{"prefill_progress": 671744, "target": 1835008, "elapsed_seconds": 2708.7787319370545}
+{"prefill_progress": 675840, "target": 1835008, "elapsed_seconds": 2726.6853143089684}
+{"prefill_progress": 679936, "target": 1835008, "elapsed_seconds": 2744.6480173099553}
+{"prefill_progress": 684032, "target": 1835008, "elapsed_seconds": 2762.6164783090353}
+{"prefill_progress": 688128, "target": 1835008, "elapsed_seconds": 2783.932079705992}
+{"prefill_progress": 692224, "target": 1835008, "elapsed_seconds": 2798.976013752981}
+{"prefill_progress": 696320, "target": 1835008, "elapsed_seconds": 2816.9733555440325}
+{"prefill_progress": 700416, "target": 1835008, "elapsed_seconds": 2835.0617349150125}
+{"prefill_progress": 704512, "target": 1835008, "elapsed_seconds": 2853.12674943998}
+{"prefill_progress": 708608, "target": 1835008, "elapsed_seconds": 2871.220586703974}
+{"prefill_progress": 712704, "target": 1835008, "elapsed_seconds": 2889.316250034957}
+{"prefill_progress": 716800, "target": 1835008, "elapsed_seconds": 2907.467376064975}
+{"prefill_progress": 720896, "target": 1835008, "elapsed_seconds": 2929.034200555063}
+{"prefill_progress": 724992, "target": 1835008, "elapsed_seconds": 2944.0049085969804}
+{"prefill_progress": 729088, "target": 1835008, "elapsed_seconds": 2962.3880295760464}
+{"prefill_progress": 733184, "target": 1835008, "elapsed_seconds": 2980.62805216806}
+{"prefill_progress": 737280, "target": 1835008, "elapsed_seconds": 2998.899524700013}
+{"prefill_progress": 741376, "target": 1835008, "elapsed_seconds": 3017.168996431981}
+{"prefill_progress": 745472, "target": 1835008, "elapsed_seconds": 3035.4415416660486}
+{"prefill_progress": 749568, "target": 1835008, "elapsed_seconds": 3053.777973141987}
+{"prefill_progress": 753664, "target": 1835008, "elapsed_seconds": 3075.394582584966}
+{"prefill_progress": 757760, "target": 1835008, "elapsed_seconds": 3090.773563095019}
+{"prefill_progress": 761856, "target": 1835008, "elapsed_seconds": 3109.1753784350585}
+{"prefill_progress": 765952, "target": 1835008, "elapsed_seconds": 3127.6038842260605}
+{"prefill_progress": 770048, "target": 1835008, "elapsed_seconds": 3146.019591885037}
+{"prefill_progress": 774144, "target": 1835008, "elapsed_seconds": 3164.557937119971}
+{"prefill_progress": 778240, "target": 1835008, "elapsed_seconds": 3182.988857691991}
+{"prefill_progress": 782336, "target": 1835008, "elapsed_seconds": 3201.553210327984}
+{"prefill_progress": 786432, "target": 1835008, "elapsed_seconds": 3223.2587045410182}
+{"prefill_progress": 790528, "target": 1835008, "elapsed_seconds": 3238.572013481986}
+{"prefill_progress": 794624, "target": 1835008, "elapsed_seconds": 3257.327024894068}
+{"prefill_progress": 798720, "target": 1835008, "elapsed_seconds": 3275.905439157039}
+{"prefill_progress": 802816, "target": 1835008, "elapsed_seconds": 3294.5031659969827}
+{"prefill_progress": 806912, "target": 1835008, "elapsed_seconds": 3313.150255271001}
+{"prefill_progress": 811008, "target": 1835008, "elapsed_seconds": 3332.0445013310527}
+{"prefill_progress": 815104, "target": 1835008, "elapsed_seconds": 3350.753356036963}
+{"prefill_progress": 819200, "target": 1835008, "elapsed_seconds": 3372.8299259450287}
+{"prefill_progress": 823296, "target": 1835008, "elapsed_seconds": 3388.6259165010415}
+{"prefill_progress": 827392, "target": 1835008, "elapsed_seconds": 3407.4871496519772}
+{"prefill_progress": 831488, "target": 1835008, "elapsed_seconds": 3426.351175533957}
+{"prefill_progress": 835584, "target": 1835008, "elapsed_seconds": 3445.307517232024}
+{"prefill_progress": 839680, "target": 1835008, "elapsed_seconds": 3464.318940742989}
+{"prefill_progress": 843776, "target": 1835008, "elapsed_seconds": 3483.1881923580077}
+{"prefill_progress": 847872, "target": 1835008, "elapsed_seconds": 3502.1927360510454}
+{"prefill_progress": 851968, "target": 1835008, "elapsed_seconds": 3524.351252801018}
+{"prefill_progress": 856064, "target": 1835008, "elapsed_seconds": 3540.0796525559854}
+{"prefill_progress": 860160, "target": 1835008, "elapsed_seconds": 3559.2879416580545}
+{"prefill_progress": 864256, "target": 1835008, "elapsed_seconds": 3578.3103320329683}
+{"prefill_progress": 868352, "target": 1835008, "elapsed_seconds": 3597.3032690830296}
+{"prefill_progress": 872448, "target": 1835008, "elapsed_seconds": 3616.301959195989}
+{"prefill_progress": 876544, "target": 1835008, "elapsed_seconds": 3635.3363977969857}
+{"prefill_progress": 880640, "target": 1835008, "elapsed_seconds": 3654.4130777900573}
+{"prefill_progress": 884736, "target": 1835008, "elapsed_seconds": 3676.8758116620593}
+{"prefill_progress": 888832, "target": 1835008, "elapsed_seconds": 3692.841797188041}
+{"prefill_progress": 892928, "target": 1835008, "elapsed_seconds": 3712.1959946709685}
+{"prefill_progress": 897024, "target": 1835008, "elapsed_seconds": 3731.4107422700617}
+{"prefill_progress": 901120, "target": 1835008, "elapsed_seconds": 3750.671158096986}
+{"prefill_progress": 905216, "target": 1835008, "elapsed_seconds": 3769.8926597890677}
+{"prefill_progress": 909312, "target": 1835008, "elapsed_seconds": 3789.1834707540693}
+{"prefill_progress": 913408, "target": 1835008, "elapsed_seconds": 3808.510494139977}
+{"prefill_progress": 917504, "target": 1835008, "elapsed_seconds": 3831.1380391749553}
+{"prefill_progress": 921600, "target": 1835008, "elapsed_seconds": 3847.640309166047}
+{"prefill_progress": 925696, "target": 1835008, "elapsed_seconds": 3867.2034040889703}
+{"prefill_progress": 929792, "target": 1835008, "elapsed_seconds": 3886.6675211619586}
+{"prefill_progress": 933888, "target": 1835008, "elapsed_seconds": 3906.1330536620226}
+{"prefill_progress": 937984, "target": 1835008, "elapsed_seconds": 3925.639964214992}
+{"prefill_progress": 942080, "target": 1835008, "elapsed_seconds": 3945.1504043929745}
+{"prefill_progress": 946176, "target": 1835008, "elapsed_seconds": 3964.6786937089637}
+{"prefill_progress": 950272, "target": 1835008, "elapsed_seconds": 3987.6046874170424}
+{"prefill_progress": 954368, "target": 1835008, "elapsed_seconds": 4004.2107317970367}
+{"prefill_progress": 958464, "target": 1835008, "elapsed_seconds": 4023.849924993003}
+{"prefill_progress": 962560, "target": 1835008, "elapsed_seconds": 4043.618091905024}
+{"prefill_progress": 966656, "target": 1835008, "elapsed_seconds": 4063.320507469005}
+{"prefill_progress": 970752, "target": 1835008, "elapsed_seconds": 4083.0023591880454}
+{"prefill_progress": 974848, "target": 1835008, "elapsed_seconds": 4102.7241634409875}
+{"prefill_progress": 978944, "target": 1835008, "elapsed_seconds": 4122.43969148607}
+{"prefill_progress": 983040, "target": 1835008, "elapsed_seconds": 4145.567683481029}
+{"prefill_progress": 987136, "target": 1835008, "elapsed_seconds": 4162.296762634069}
+{"prefill_progress": 991232, "target": 1835008, "elapsed_seconds": 4182.056536891963}
+{"prefill_progress": 995328, "target": 1835008, "elapsed_seconds": 4202.020146794035}
+{"prefill_progress": 999424, "target": 1835008, "elapsed_seconds": 4221.926694688038}
+{"prefill_progress": 1003520, "target": 1835008, "elapsed_seconds": 4241.797838450992}
+{"prefill_progress": 1007616, "target": 1835008, "elapsed_seconds": 4261.618495975039}
+{"prefill_progress": 1011712, "target": 1835008, "elapsed_seconds": 4281.464549908997}
+{"prefill_progress": 1015808, "target": 1835008, "elapsed_seconds": 4304.614492707071}
+{"prefill_progress": 1019904, "target": 1835008, "elapsed_seconds": 4321.642174617038}
+{"prefill_progress": 1024000, "target": 1835008, "elapsed_seconds": 4341.526418347959}
+{"prefill_progress": 1028096, "target": 1835008, "elapsed_seconds": 4361.393554260023}
+{"prefill_progress": 1032192, "target": 1835008, "elapsed_seconds": 4381.374138104962}
+{"prefill_progress": 1036288, "target": 1835008, "elapsed_seconds": 4401.393340007053}
+{"prefill_progress": 1040384, "target": 1835008, "elapsed_seconds": 4421.503038748051}
+{"prefill_progress": 1044480, "target": 1835008, "elapsed_seconds": 4441.42552753503}
+{"prefill_progress": 1048576, "target": 1835008, "elapsed_seconds": 4464.827832379029}
+{"prefill_progress": 1052672, "target": 1835008, "elapsed_seconds": 4482.633048256976}
+{"prefill_progress": 1056768, "target": 1835008, "elapsed_seconds": 4502.032571671065}
+{"prefill_progress": 1060864, "target": 1835008, "elapsed_seconds": 4521.635887120967}
+{"prefill_progress": 1064960, "target": 1835008, "elapsed_seconds": 4541.076745989034}
+{"prefill_progress": 1069056, "target": 1835008, "elapsed_seconds": 4560.554455636069}
+{"prefill_progress": 1073152, "target": 1835008, "elapsed_seconds": 4580.047892555012}
+{"prefill_progress": 1077248, "target": 1835008, "elapsed_seconds": 4599.551089860033}
+{"prefill_progress": 1081344, "target": 1835008, "elapsed_seconds": 4622.511552970973}
+{"prefill_progress": 1085440, "target": 1835008, "elapsed_seconds": 4638.876578842057}
+{"prefill_progress": 1089536, "target": 1835008, "elapsed_seconds": 4658.669092101045}
+{"prefill_progress": 1093632, "target": 1835008, "elapsed_seconds": 4678.387774778064}
+{"prefill_progress": 1097728, "target": 1835008, "elapsed_seconds": 4697.974046956981}
+{"prefill_progress": 1101824, "target": 1835008, "elapsed_seconds": 4717.588105972041}
+{"prefill_progress": 1105920, "target": 1835008, "elapsed_seconds": 4737.209734259988}
+{"prefill_progress": 1110016, "target": 1835008, "elapsed_seconds": 4757.0178311000345}
+{"prefill_progress": 1114112, "target": 1835008, "elapsed_seconds": 4779.965090138023}
+{"prefill_progress": 1118208, "target": 1835008, "elapsed_seconds": 4796.567206453066}
+{"prefill_progress": 1122304, "target": 1835008, "elapsed_seconds": 4816.387909480021}
+{"prefill_progress": 1126400, "target": 1835008, "elapsed_seconds": 4836.194470574032}
+{"prefill_progress": 1130496, "target": 1835008, "elapsed_seconds": 4855.8977049509995}
+{"prefill_progress": 1134592, "target": 1835008, "elapsed_seconds": 4875.625978988013}
+{"prefill_progress": 1138688, "target": 1835008, "elapsed_seconds": 4895.365512549062}
+{"prefill_progress": 1142784, "target": 1835008, "elapsed_seconds": 4915.269336563069}
+{"prefill_progress": 1146880, "target": 1835008, "elapsed_seconds": 4938.791957322042}
+{"prefill_progress": 1150976, "target": 1835008, "elapsed_seconds": 4955.472520190058}
+{"prefill_progress": 1155072, "target": 1835008, "elapsed_seconds": 4975.53067860601}
+{"prefill_progress": 1159168, "target": 1835008, "elapsed_seconds": 4995.358537488035}
+{"prefill_progress": 1163264, "target": 1835008, "elapsed_seconds": 5015.430247851997}
+{"prefill_progress": 1167360, "target": 1835008, "elapsed_seconds": 5035.534941544989}
+{"prefill_progress": 1171456, "target": 1835008, "elapsed_seconds": 5055.430219192058}
+{"prefill_progress": 1175552, "target": 1835008, "elapsed_seconds": 5075.432279553963}
+{"prefill_progress": 1179648, "target": 1835008, "elapsed_seconds": 5098.897702065995}
+{"prefill_progress": 1183744, "target": 1835008, "elapsed_seconds": 5115.680538855959}
+{"prefill_progress": 1187840, "target": 1835008, "elapsed_seconds": 5135.865069693071}
+{"prefill_progress": 1191936, "target": 1835008, "elapsed_seconds": 5156.061050583958}
+{"prefill_progress": 1196032, "target": 1835008, "elapsed_seconds": 5176.212409817032}
+{"prefill_progress": 1200128, "target": 1835008, "elapsed_seconds": 5196.249010480009}
+{"prefill_progress": 1204224, "target": 1835008, "elapsed_seconds": 5216.295953448978}
+{"prefill_progress": 1208320, "target": 1835008, "elapsed_seconds": 5236.374475068995}
+{"prefill_progress": 1212416, "target": 1835008, "elapsed_seconds": 5259.877162585966}
+{"prefill_progress": 1216512, "target": 1835008, "elapsed_seconds": 5276.8016863800585}
+{"prefill_progress": 1220608, "target": 1835008, "elapsed_seconds": 5297.165390616981}
+{"prefill_progress": 1224704, "target": 1835008, "elapsed_seconds": 5317.301878732978}
+{"prefill_progress": 1228800, "target": 1835008, "elapsed_seconds": 5337.4825824430445}
+{"prefill_progress": 1232896, "target": 1835008, "elapsed_seconds": 5357.850033822004}
+{"prefill_progress": 1236992, "target": 1835008, "elapsed_seconds": 5378.1424933000235}
+{"prefill_progress": 1241088, "target": 1835008, "elapsed_seconds": 5398.40548029996}
+{"prefill_progress": 1245184, "target": 1835008, "elapsed_seconds": 5422.1844179320615}
+{"prefill_progress": 1249280, "target": 1835008, "elapsed_seconds": 5439.253153746016}
+{"prefill_progress": 1253376, "target": 1835008, "elapsed_seconds": 5459.557123088976}
+{"prefill_progress": 1257472, "target": 1835008, "elapsed_seconds": 5479.944056567969}
+{"prefill_progress": 1261568, "target": 1835008, "elapsed_seconds": 5500.539450527052}
+{"prefill_progress": 1265664, "target": 1835008, "elapsed_seconds": 5520.934318323038}
+{"prefill_progress": 1269760, "target": 1835008, "elapsed_seconds": 5541.2393991560675}
+{"prefill_progress": 1273856, "target": 1835008, "elapsed_seconds": 5561.682584883063}
+{"prefill_progress": 1277952, "target": 1835008, "elapsed_seconds": 5586.040377301048}
+{"prefill_progress": 1282048, "target": 1835008, "elapsed_seconds": 5603.255154884071}
+{"prefill_progress": 1286144, "target": 1835008, "elapsed_seconds": 5623.937068097992}
+{"prefill_progress": 1290240, "target": 1835008, "elapsed_seconds": 5644.327955109999}
+{"prefill_progress": 1294336, "target": 1835008, "elapsed_seconds": 5664.843924254063}
+{"prefill_progress": 1298432, "target": 1835008, "elapsed_seconds": 5685.4301119149895}
+{"prefill_progress": 1302528, "target": 1835008, "elapsed_seconds": 5705.882301063044}
+{"prefill_progress": 1306624, "target": 1835008, "elapsed_seconds": 5726.507750243065}
+{"prefill_progress": 1310720, "target": 1835008, "elapsed_seconds": 5750.358455001027}
+{"prefill_progress": 1314816, "target": 1835008, "elapsed_seconds": 5767.73024020507}
+{"prefill_progress": 1318912, "target": 1835008, "elapsed_seconds": 5788.514927449985}
+{"prefill_progress": 1323008, "target": 1835008, "elapsed_seconds": 5809.08443724399}
+{"prefill_progress": 1327104, "target": 1835008, "elapsed_seconds": 5829.633108537062}
+{"prefill_progress": 1331200, "target": 1835008, "elapsed_seconds": 5850.183233260061}
+{"prefill_progress": 1335296, "target": 1835008, "elapsed_seconds": 5870.876744498964}
+{"prefill_progress": 1339392, "target": 1835008, "elapsed_seconds": 5891.470129327965}
+{"prefill_progress": 1343488, "target": 1835008, "elapsed_seconds": 5915.717581385048}
+{"prefill_progress": 1347584, "target": 1835008, "elapsed_seconds": 5933.382564486004}
+{"prefill_progress": 1351680, "target": 1835008, "elapsed_seconds": 5954.251064780052}
+{"prefill_progress": 1355776, "target": 1835008, "elapsed_seconds": 5974.986153710983}
+{"prefill_progress": 1359872, "target": 1835008, "elapsed_seconds": 5995.792338554049}
+{"prefill_progress": 1363968, "target": 1835008, "elapsed_seconds": 6016.511060665012}
+{"prefill_progress": 1368064, "target": 1835008, "elapsed_seconds": 6037.184673449025}
+{"prefill_progress": 1372160, "target": 1835008, "elapsed_seconds": 6057.899989207042}
+{"prefill_progress": 1376256, "target": 1835008, "elapsed_seconds": 6082.477454993059}
+{"prefill_progress": 1380352, "target": 1835008, "elapsed_seconds": 6100.30096093507}
+{"prefill_progress": 1384448, "target": 1835008, "elapsed_seconds": 6121.174752563005}
+{"prefill_progress": 1388544, "target": 1835008, "elapsed_seconds": 6142.069875105983}
+{"prefill_progress": 1392640, "target": 1835008, "elapsed_seconds": 6162.937985328957}
+{"prefill_progress": 1396736, "target": 1835008, "elapsed_seconds": 6183.783864935976}
+{"prefill_progress": 1400832, "target": 1835008, "elapsed_seconds": 6204.787537473021}
+{"prefill_progress": 1404928, "target": 1835008, "elapsed_seconds": 6225.759947616956}
+{"prefill_progress": 1409024, "target": 1835008, "elapsed_seconds": 6250.435188762029}
+{"prefill_progress": 1413120, "target": 1835008, "elapsed_seconds": 6268.473018583027}
+{"prefill_progress": 1417216, "target": 1835008, "elapsed_seconds": 6289.408754189964}
+{"prefill_progress": 1421312, "target": 1835008, "elapsed_seconds": 6310.515777664026}
+{"prefill_progress": 1425408, "target": 1835008, "elapsed_seconds": 6331.496675080038}
+{"prefill_progress": 1429504, "target": 1835008, "elapsed_seconds": 6352.5645431879675}
+{"prefill_progress": 1433600, "target": 1835008, "elapsed_seconds": 6373.677037516958}
+{"prefill_progress": 1437696, "target": 1835008, "elapsed_seconds": 6394.693845225032}
+{"prefill_progress": 1441792, "target": 1835008, "elapsed_seconds": 6419.508207089966}
+{"prefill_progress": 1445888, "target": 1835008, "elapsed_seconds": 6437.697641693987}
+{"prefill_progress": 1449984, "target": 1835008, "elapsed_seconds": 6458.820386792067}
+{"prefill_progress": 1454080, "target": 1835008, "elapsed_seconds": 6479.971543667023}
+{"prefill_progress": 1458176, "target": 1835008, "elapsed_seconds": 6501.09851560602}
+{"prefill_progress": 1462272, "target": 1835008, "elapsed_seconds": 6522.348745747004}
+{"prefill_progress": 1466368, "target": 1835008, "elapsed_seconds": 6543.6094320389675}
+{"prefill_progress": 1470464, "target": 1835008, "elapsed_seconds": 6564.829688636004}
+{"prefill_progress": 1474560, "target": 1835008, "elapsed_seconds": 6589.735743017984}
+{"prefill_progress": 1478656, "target": 1835008, "elapsed_seconds": 6607.962170635001}
+{"prefill_progress": 1482752, "target": 1835008, "elapsed_seconds": 6629.366768277017}
+{"prefill_progress": 1486848, "target": 1835008, "elapsed_seconds": 6650.5950333189685}
+{"prefill_progress": 1490944, "target": 1835008, "elapsed_seconds": 6671.852955727023}
+{"prefill_progress": 1495040, "target": 1835008, "elapsed_seconds": 6693.329765942064}
+{"prefill_progress": 1499136, "target": 1835008, "elapsed_seconds": 6714.677900447976}
+{"prefill_progress": 1503232, "target": 1835008, "elapsed_seconds": 6735.99464124802}
+{"prefill_progress": 1507328, "target": 1835008, "elapsed_seconds": 6760.648105829023}
+{"prefill_progress": 1511424, "target": 1835008, "elapsed_seconds": 6779.051222500042}
+{"prefill_progress": 1515520, "target": 1835008, "elapsed_seconds": 6800.386857809033}
+{"prefill_progress": 1519616, "target": 1835008, "elapsed_seconds": 6821.7682103420375}
+{"prefill_progress": 1523712, "target": 1835008, "elapsed_seconds": 6843.319057918037}
+{"prefill_progress": 1527808, "target": 1835008, "elapsed_seconds": 6864.689281756058}
+{"prefill_progress": 1531904, "target": 1835008, "elapsed_seconds": 6886.114215946058}
+{"prefill_progress": 1536000, "target": 1835008, "elapsed_seconds": 6907.548079667962}
+{"prefill_progress": 1540096, "target": 1835008, "elapsed_seconds": 6933.6063267630525}
+{"prefill_progress": 1544192, "target": 1835008, "elapsed_seconds": 6952.04279791296}
+{"prefill_progress": 1548288, "target": 1835008, "elapsed_seconds": 6973.5047470979625}
+{"prefill_progress": 1552384, "target": 1835008, "elapsed_seconds": 6995.138782346039}
+{"prefill_progress": 1556480, "target": 1835008, "elapsed_seconds": 7016.82446448796}
+{"prefill_progress": 1560576, "target": 1835008, "elapsed_seconds": 7038.390238563996}
+{"prefill_progress": 1564672, "target": 1835008, "elapsed_seconds": 7059.949540967005}
+{"prefill_progress": 1568768, "target": 1835008, "elapsed_seconds": 7081.640057779034}
+{"prefill_progress": 1572864, "target": 1835008, "elapsed_seconds": 7107.148483005003}
+{"prefill_progress": 1576960, "target": 1835008, "elapsed_seconds": 7125.741098862956}
+{"prefill_progress": 1581056, "target": 1835008, "elapsed_seconds": 7147.683416906977}
+{"prefill_progress": 1585152, "target": 1835008, "elapsed_seconds": 7169.495158490958}
+{"prefill_progress": 1589248, "target": 1835008, "elapsed_seconds": 7191.151239344035}
+{"prefill_progress": 1593344, "target": 1835008, "elapsed_seconds": 7212.868007960962}
+{"prefill_progress": 1597440, "target": 1835008, "elapsed_seconds": 7234.584311197046}
+{"prefill_progress": 1601536, "target": 1835008, "elapsed_seconds": 7256.354245200986}
+{"prefill_progress": 1605632, "target": 1835008, "elapsed_seconds": 7281.423080470064}
+{"prefill_progress": 1609728, "target": 1835008, "elapsed_seconds": 7300.195770606981}
+{"prefill_progress": 1613824, "target": 1835008, "elapsed_seconds": 7322.060385185061}
+{"prefill_progress": 1617920, "target": 1835008, "elapsed_seconds": 7343.989666259033}
+{"prefill_progress": 1622016, "target": 1835008, "elapsed_seconds": 7365.822736202972}
+{"prefill_progress": 1626112, "target": 1835008, "elapsed_seconds": 7387.729534095968}
+{"prefill_progress": 1630208, "target": 1835008, "elapsed_seconds": 7409.686405968969}
+{"prefill_progress": 1634304, "target": 1835008, "elapsed_seconds": 7431.628733891994}
+{"prefill_progress": 1638400, "target": 1835008, "elapsed_seconds": 7457.473927853047}
+{"prefill_progress": 1642496, "target": 1835008, "elapsed_seconds": 7476.329963730066}
+{"prefill_progress": 1646592, "target": 1835008, "elapsed_seconds": 7498.424243962043}
+{"prefill_progress": 1650688, "target": 1835008, "elapsed_seconds": 7520.425436428981}
+{"prefill_progress": 1654784, "target": 1835008, "elapsed_seconds": 7542.434556639986}
+{"prefill_progress": 1658880, "target": 1835008, "elapsed_seconds": 7564.520723273978}
+{"prefill_progress": 1662976, "target": 1835008, "elapsed_seconds": 7586.467165100039}
+{"prefill_progress": 1667072, "target": 1835008, "elapsed_seconds": 7608.429127590964}
+{"prefill_progress": 1671168, "target": 1835008, "elapsed_seconds": 7634.559106523055}
+{"prefill_progress": 1675264, "target": 1835008, "elapsed_seconds": 7653.627129830071}
+{"prefill_progress": 1679360, "target": 1835008, "elapsed_seconds": 7675.688913466991}
+{"prefill_progress": 1683456, "target": 1835008, "elapsed_seconds": 7698.029214292066}
+{"prefill_progress": 1687552, "target": 1835008, "elapsed_seconds": 7720.158992534969}
+{"prefill_progress": 1691648, "target": 1835008, "elapsed_seconds": 7742.244633113034}
+{"prefill_progress": 1695744, "target": 1835008, "elapsed_seconds": 7764.535225030966}
+{"prefill_progress": 1699840, "target": 1835008, "elapsed_seconds": 7786.6600774610415}
+{"prefill_progress": 1703936, "target": 1835008, "elapsed_seconds": 7812.0585253050085}
+{"prefill_progress": 1708032, "target": 1835008, "elapsed_seconds": 7831.278896262986}
+{"prefill_progress": 1712128, "target": 1835008, "elapsed_seconds": 7853.605151355965}
+{"prefill_progress": 1716224, "target": 1835008, "elapsed_seconds": 7875.830925101065}
+{"prefill_progress": 1720320, "target": 1835008, "elapsed_seconds": 7898.071124128997}
+{"prefill_progress": 1724416, "target": 1835008, "elapsed_seconds": 7920.452318144031}
+{"prefill_progress": 1728512, "target": 1835008, "elapsed_seconds": 7942.753511473071}
+{"prefill_progress": 1732608, "target": 1835008, "elapsed_seconds": 7965.135807704995}
+{"prefill_progress": 1736704, "target": 1835008, "elapsed_seconds": 7991.461820602068}
+{"prefill_progress": 1740800, "target": 1835008, "elapsed_seconds": 8010.7807577820495}
+{"prefill_progress": 1744896, "target": 1835008, "elapsed_seconds": 8033.1327269930625}
+{"prefill_progress": 1748992, "target": 1835008, "elapsed_seconds": 8055.826045489986}
+{"prefill_progress": 1753088, "target": 1835008, "elapsed_seconds": 8078.210547558963}
+{"prefill_progress": 1757184, "target": 1835008, "elapsed_seconds": 8100.722582216957}
+{"prefill_progress": 1761280, "target": 1835008, "elapsed_seconds": 8123.231245339033}
+{"prefill_progress": 1765376, "target": 1835008, "elapsed_seconds": 8145.683796324069}
+{"prefill_progress": 1769472, "target": 1835008, "elapsed_seconds": 8172.134699015063}
+{"prefill_progress": 1773568, "target": 1835008, "elapsed_seconds": 8191.642060523969}
+{"prefill_progress": 1777664, "target": 1835008, "elapsed_seconds": 8214.349187124055}
+{"prefill_progress": 1781760, "target": 1835008, "elapsed_seconds": 8236.897859942983}
+{"prefill_progress": 1785856, "target": 1835008, "elapsed_seconds": 8259.490393168991}
+{"prefill_progress": 1789952, "target": 1835008, "elapsed_seconds": 8282.099411334028}
+{"prefill_progress": 1794048, "target": 1835008, "elapsed_seconds": 8304.627332061995}
+{"prefill_progress": 1798144, "target": 1835008, "elapsed_seconds": 8327.263870227966}
+{"prefill_progress": 1802240, "target": 1835008, "elapsed_seconds": 8353.994666752988}
+{"prefill_progress": 1806336, "target": 1835008, "elapsed_seconds": 8373.554586349055}
+{"prefill_progress": 1810432, "target": 1835008, "elapsed_seconds": 8396.249112916063}
+{"prefill_progress": 1814528, "target": 1835008, "elapsed_seconds": 8418.817245519022}
+{"prefill_progress": 1818624, "target": 1835008, "elapsed_seconds": 8441.54683036101}
+{"prefill_progress": 1822720, "target": 1835008, "elapsed_seconds": 8464.415229590028}
+{"prefill_progress": 1826816, "target": 1835008, "elapsed_seconds": 8491.120007622056}
+{"prefill_progress": 1830912, "target": 1835008, "elapsed_seconds": 8514.891534458031}
+{"prefill_progress": 1834752, "target": 1835008, "elapsed_seconds": 8536.474974969053}
+----------------------------------------
+ ## Exception in child process
+Traceback (most recent call last):
+  File "/src/exllamav3/model/model_tp_fn.py", line 133, in mp_model_worker
+    result = func(local_context, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/model/model_tp_fn.py", line 286, in mp_model_forward
+    x = module.forward(x, params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/transformer.py", line 159, in forward
+    y = self.attn.forward(y, params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/attn.py", line 621, in forward
+    x = self.decode_flash_attn(x, bsz, seqlen, params)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/attn.py", line 1168, in decode_flash_attn
+    o = self.lsa_indexer.attend(self, q, k, v, params, lsa_layer, block_table, past, cache_seqlens)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/lsa.py", line 322, in attend
+    return self._attend(attention, q, k, v, params, cache_layer, block_table, past, cache_seqlens)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/lsa.py", line 370, in _attend
+    indices = tp_select(self, query[batch], positions, centroids, members, batch)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/attention_fn/lsa_decode.py", line 163, in tp_select
+    return _tp_select(indexer, query, positions, centroids, members, batch)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/attention_fn/lsa_decode.py", line 182, in _tp_select
+    state = _TPSelectionGraph(indexer, query, positions, current)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/attention_fn/lsa_decode.py", line 204, in __init__
+    for _ in range(2): run()
+                       ^^^^^
+  File "/src/exllamav3/modules/attention_fn/lsa_decode.py", line 202, in run
+    return indexer.select(self.query, self.positions, tables.centroids, tables.members)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/lsa.py", line 47, in guarded
+    return function(self, tensor, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/exllamav3/modules/lsa.py", line 301, in select
+    picks = scores.argsort(dim=1, descending=True, stable=True)[:, :s.top_p]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 16.00 MiB. GPU 1 has a total capacity of 31.98 GiB of which 0 bytes is free. Of the allocated memory 30.21 GiB is allocated by PyTorch, with 940.77 MiB allocated in private pools (e.g., CUDA Graphs), and 835.63 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+
+----------------------------------------
+[rank1]:[E1104 23:28:11.551160097 ProcessGroupNCCL.cpp:757] [Rank 1] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=71983, OpType=BROADCAST, NumelIn=23060, NumelOut=23060, Timeout(ms)=180000) ran for 180099 milliseconds before timing out.
+[rank1]:[E1104 23:28:11.553027991 ProcessGroupNCCL.cpp:2395] [PG ID 0 PG GUID 0(default_pg) Rank 1]  failure detected by watchdog at work sequence id: 71983 PG status: last enqueued work: 71983, last completed work: 71982
+[rank1]:[E1104 23:28:11.553542398 ProcessGroupNCCL.cpp:801] Stack trace of the failed collective:
+#0 broadcast from /opt/venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:3074
+#1 wrapper from /opt/venv/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83
+#2 broadcast from /src/exllamav3/model/model_tp_rccl.py:225
+#3 share_indices from /src/exllamav3/modules/lsa.py:243
+#4 _attend from /src/exllamav3/modules/lsa.py:340
+#5 attend from /src/exllamav3/modules/lsa.py:322
+#6 decode_flash_attn from /src/exllamav3/modules/attn.py:1168
+#7 forward from /src/exllamav3/modules/attn.py:621
+#8 forward from /src/exllamav3/modules/transformer.py:159
+#9 mp_model_forward from /src/exllamav3/model/model_tp_fn.py:286
+#10 send from /src/exllamav3/model/model_tp_fn.py:592
+#11 tp_worker_dispatch from /src/exllamav3/model/model_tp.py:468
+#12 forward_tp from /src/exllamav3/model/model_tp.py:1011
+#13 forward from /src/exllamav3/model/model.py:255
+#14 decorate_context from /opt/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124
+#15 iterate_gen from /src/exllamav3/generator/generator.py:1035
+#16 iterate from /src/exllamav3/generator/generator.py:550
+#17 decorate_context from /opt/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py:124
+#18 main from /src/rocm_tools/lsa_smoke.py:65
+#19 <module> from /src/rocm_tools/lsa_smoke.py:102
+
+[rank1]:[E1104 23:28:11.553592909 ProcessGroupNCCL.cpp:2732] [PG ID 0 PG GUID 0(default_pg) Rank 1] First PG on this rank to signal dumping.
+[rank1]:[E1104 23:28:11.296315381 ProcessGroupNCCL.cpp:1987] [PG ID 0 PG GUID 0(default_pg) Rank 1] Received a dump signal due to a collective timeout from this local rank and we will try our best to dump the debug info. Last enqueued NCCL work: 71983, last completed NCCL work: 71982.This is most likely caused by incorrect usages of collectives, e.g., wrong sizes used across ranks, the order of collectives is not same for all ranks or the scheduled collective, for some reason, didn't run. Additionally, this can be caused by GIL deadlock or other reasons such as network errors or bugs in the communications library (e.g. NCCL), etc.
+[rank0]:[E1104 23:28:11.296449483 ProcessGroupNCCL.cpp:1922] [PG ID 0 PG GUID 0(default_pg) Rank 0] Observed flight recorder dump signal from another rank via TCPStore.
+[rank1]:[E1104 23:28:11.296478623 ProcessGroupNCCL.cpp:1700] [PG ID 0 PG GUID 0(default_pg) Rank 1] ProcessGroupNCCL preparing to dump debug info. Include stack trace: 1, only active collectives: 0
+[rank0]:[E1104 23:28:11.296587735 ProcessGroupNCCL.cpp:1987] [PG ID 0 PG GUID 0(default_pg) Rank 0] Received a dump signal due to a collective timeout from  rank 1 and we will try our best to dump the debug info. Last enqueued NCCL work: 71982, last completed NCCL work: 71982.This is most likely caused by incorrect usages of collectives, e.g., wrong sizes used across ranks, the order of collectives is not same for all ranks or the scheduled collective, for some reason, didn't run. Additionally, this can be caused by GIL deadlock or other reasons such as network errors or bugs in the communications library (e.g. NCCL), etc.
+[rank0]:[E1104 23:28:11.296741057 ProcessGroupNCCL.cpp:1700] [PG ID 0 PG GUID 0(default_pg) Rank 0] ProcessGroupNCCL preparing to dump debug info. Include stack trace: 1, only active collectives: 0
+[rank1]:[E1104 23:29:11.553697357 ProcessGroupNCCL.cpp:818] [Rank 1] Some NCCL operations have failed or timed out. Due to the asynchronous nature of CUDA kernels, subsequent GPU operations might run on corrupted/incomplete data.
+[rank1]:[E1104 23:29:11.553719897 ProcessGroupNCCL.cpp:832] [Rank 1] To avoid data inconsistency, we are taking the entire process down.
+[rank1]:[E1104 23:29:11.557478617 ProcessGroupNCCL.cpp:2197] [PG ID 0 PG GUID 0(default_pg) Rank 1] Process group watchdog thread terminated with exception: [Rank 1] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=71983, OpType=BROADCAST, NumelIn=23060, NumelOut=23060, Timeout(ms)=180000) ran for 180099 milliseconds before timing out.
+Exception raised from checkTimeout at /pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:760 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x793a699571ed in /opt/venv/lib/python3.12/site-packages/torch/lib/libc10.so)
+frame #1: c10d::ProcessGroupNCCL::WorkNCCL::checkTimeout(std::optional<std::chrono::duration<long, std::ratio<1l, 1000l> > >) + 0x2b1 (0x793ae0860e61 in /opt/venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so)
+frame #2: c10d::ProcessGroupNCCL::Watchdog::runLoop() + 0x1711 (0x793ae086ce21 in /opt/venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so)
+frame #3: c10d::ProcessGroupNCCL::Watchdog::run() + 0x157 (0x793ae086e097 in /opt/venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so)
+frame #4: <unknown function> + 0xecdb4 (0x793b16244db4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x793b165a1aa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: __clone + 0x44 (0x793b1662ea64 in /lib/x86_64-linux-gnu/libc.so.6)
+
+terminate called after throwing an instance of 'c10::DistBackendError'
+  what():  [PG ID 0 PG GUID 0(default_pg) Rank 1] Process group watchdog thread terminated with exception: [Rank 1] Watchdog caught collective operation timeout: WorkNCCL(SeqNum=71983, OpType=BROADCAST, NumelIn=23060, NumelOut=23060, Timeout(ms)=180000) ran for 180099 milliseconds before timing out.
+Exception raised from checkTimeout at /pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:760 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x793a699571ed in /opt/venv/lib/python3.12/site-packages/torch/lib/libc10.so)
+frame #1: c10d::ProcessGroupNCCL::WorkNCCL::checkTimeout(std::optional<std::chrono::duration<long, std::ratio<1l, 1000l> > >) + 0x2b1 (0x793ae0860e61 in /opt/venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so)
+frame #2: c10d::ProcessGroupNCCL::Watchdog::runLoop() + 0x1711 (0x793ae086ce21 in /opt/venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so)
+frame #3: c10d::ProcessGroupNCCL::Watchdog::run() + 0x157 (0x793ae086e097 in /opt/venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so)
+frame #4: <unknown function> + 0xecdb4 (0x793b16244db4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #5: <unknown function> + 0x9caa4 (0x793b165a1aa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #6: __clone + 0x44 (0x793b1662ea64 in /lib/x86_64-linux-gnu/libc.so.6)
+
+Exception raised from run at /pytorch/torch/csrc/distributed/c10d/ProcessGroupNCCL.cpp:2203 (most recent call first):
+frame #0: c10::Error::Error(c10::SourceLocation, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) + 0x9d (0x793a699571ed in /opt/venv/lib/python3.12/site-packages/torch/lib/libc10.so)
+frame #1: <unknown function> + 0xe98dcd (0x793addd38dcd in /opt/venv/lib/python3.12/site-packages/torch/lib/libtorch_hip.so)
+frame #2: <unknown function> + 0xecdb4 (0x793b16244db4 in /lib/x86_64-linux-gnu/libstdc++.so.6)
+frame #3: <unknown function> + 0x9caa4 (0x793b165a1aa4 in /lib/x86_64-linux-gnu/libc.so.6)
+frame #4: __clone + 0x44 (0x793b1662ea64 in /lib/x86_64-linux-gnu/libc.so.6)
+
+Process Process-2:
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked shared_memory objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

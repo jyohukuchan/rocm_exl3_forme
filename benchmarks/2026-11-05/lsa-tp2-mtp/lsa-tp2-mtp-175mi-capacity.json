@@ -1,0 +1,3403 @@
+{
+  "model": "/work/models/qwen38-27b-exl3-4bpw",
+  "lsa": {
+    "projections": "/work/models/lsa/qwen38_27b.pt"
+  },
+  "cache_quant": "4,4",
+  "gpus": [
+    "AMD Radeon Pro V620",
+    "AMD Radeon Pro V620"
+  ],
+  "input_tokens": 8192,
+  "batch": 1,
+  "mtp": true,
+  "cache_tokens": 1835520,
+  "tp": true,
+  "runs": [
+    {
+      "repeat": 0,
+      "seconds": 103.92021938296966,
+      "finite_logits": true,
+      "jobs": [
+        {
+          "full_completion": "739182",
+          "prompt_tokens": 8192,
+          "new_tokens": 7,
+          "cached_tokens": 0,
+          "time_prefill": 98.54453587532043,
+          "time_generate": 5.3604559898376465,
+          "accepted_draft_tokens": 4,
+          "rejected_draft_tokens": 8
+        }
+      ]
+    }
+  ],
+  "rope_scaling": {
+    "rope_type": "yarn",
+    "factor": 40.0,
+    "original_max_position_embeddings": 262144
+  },
+  "draft_attention_window": 65536,
+  "tp_plan": [
+    {
+      "model.language_model.layers.0.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.0.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.0.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.0.mlp": [
+        0,
+        8320,
+        "channels"
+      ],
+      "model.language_model.layers.1.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.1.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.1.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.1.mlp": [
+        0,
+        8320,
+        "channels"
+      ],
+      "model.language_model.layers.2.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.2.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.2.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.2.mlp": [
+        0,
+        8320,
+        "channels"
+      ],
+      "model.language_model.layers.3.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.3.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.3.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.3.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.3.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.4.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.4.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.4.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.4.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.5.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.5.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.5.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.5.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.6.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.6.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.6.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.6.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.7.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.7.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.7.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.7.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.7.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.8.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.8.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.8.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.8.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.9.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.9.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.9.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.9.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.10.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.10.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.10.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.10.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.11.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.11.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.11.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.11.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.11.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.12.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.12.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.12.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.12.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.13.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.13.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.13.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.13.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.14.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.14.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.14.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.14.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.15.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.15.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.15.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.15.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.15.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.16.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.16.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.16.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.16.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.17.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.17.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.17.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.17.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.18.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.18.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.18.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.18.mlp": [
+        0,
+        8704,
+        "channels"
+      ],
+      "model.language_model.layers.19.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.19.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.19.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.19.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.19.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.20.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.20.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.20.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.20.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.21.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.21.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.21.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.21.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.22.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.22.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.22.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.22.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.23.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.23.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.23.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.23.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.23.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.24.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.24.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.24.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.24.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.25.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.25.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.25.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.25.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.26.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.26.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.26.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.26.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.27.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.27.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.27.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.27.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.27.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.28.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.28.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.28.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.28.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.29.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.29.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.29.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.29.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.30.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.30.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.30.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.30.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.31.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.31.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.31.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.31.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.31.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.32.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.32.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.32.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.32.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.33.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.33.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.33.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.33.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.34.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.34.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.34.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.34.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.35.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.35.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.35.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.35.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.35.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.36.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.36.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.36.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.36.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.37.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.37.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.37.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.37.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.38.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.38.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.38.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.38.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.39.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.39.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.39.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.39.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.39.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.40.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.40.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.40.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.40.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.41.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.41.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.41.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.41.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.42.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.42.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.42.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.42.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.43.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.43.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.43.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.43.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.43.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.44.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.44.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.44.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.44.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.45.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.45.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.45.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.45.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.46.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.46.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.46.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.46.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.47.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.47.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.47.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.47.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.47.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.48.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.48.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.48.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.48.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.49.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.49.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.49.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.49.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.50.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.50.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.50.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.50.mlp": [
+        0,
+        8832,
+        "channels"
+      ],
+      "model.language_model.layers.51.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.51.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.51.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.51.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.51.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.52.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.52.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.52.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.52.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.53.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.53.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.53.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.53.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.54.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.54.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.54.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.54.mlp": [
+        0,
+        8576,
+        "channels"
+      ],
+      "model.language_model.layers.55.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.55.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.55.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.55.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.55.mlp": [
+        0,
+        8960,
+        "channels"
+      ],
+      "model.language_model.layers.56.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.56.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.56.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.56.mlp": [
+        0,
+        8960,
+        "channels"
+      ],
+      "model.language_model.layers.57.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.57.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.57.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.57.mlp": [
+        0,
+        8960,
+        "channels"
+      ],
+      "model.language_model.layers.58.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.58.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.58.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.58.mlp": [
+        0,
+        8960,
+        "channels"
+      ],
+      "model.language_model.layers.59.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.59.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.59.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.59.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.59.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.60.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.60.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.60.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.60.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.61.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.61.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.61.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.61.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.62.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.62.linear_attn": [
+        0,
+        8,
+        "K-heads"
+      ],
+      "model.language_model.layers.62.post_attention_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.62.mlp": [
+        0,
+        8448,
+        "channels"
+      ],
+      "model.language_model.layers.63.input_layernorm": [
+        0,
+        0,
+        null
+      ],
+      "model.language_model.layers.63.self_attn": [
+        0,
+        2,
+        "heads"
+      ],
+      "model.language_model.layers.63.self_attn.lsa_index": [
+        0,
+        0,
+        "index"
+      ],
+      "model.language_model.layers.63.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.63.mlp": [
+        0,
+        9216,
+        "channels"
+      ],
+      "model.language_model.norm": [
+        0,
+        1,
+        null
+      ],
+      "lm_head": [
+        0,
+        130816,
+        "channels"
+      ]
+    },
+    {
+      "model.language_model.layers.0.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.0.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.0.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.0.mlp": [
+        8320,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.1.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.1.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.1.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.1.mlp": [
+        8320,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.2.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.2.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.2.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.2.mlp": [
+        8320,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.3.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.3.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.3.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.3.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.3.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.4.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.4.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.4.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.4.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.5.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.5.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.5.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.5.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.6.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.6.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.6.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.6.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.7.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.7.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.7.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.7.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.7.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.8.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.8.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.8.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.8.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.9.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.9.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.9.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.9.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.10.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.10.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.10.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.10.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.11.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.11.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.11.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.11.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.11.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.12.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.12.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.12.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.12.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.13.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.13.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.13.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.13.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.14.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.14.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.14.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.14.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.15.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.15.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.15.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.15.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.15.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.16.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.16.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.16.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.16.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.17.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.17.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.17.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.17.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.18.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.18.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.18.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.18.mlp": [
+        8704,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.19.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.19.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.19.self_attn.lsa_index": [
+        1,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.19.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.19.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.20.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.20.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.20.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.20.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.21.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.21.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.21.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.21.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.22.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.22.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.22.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.22.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.23.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.23.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.23.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.23.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.23.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.24.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.24.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.24.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.24.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.25.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.25.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.25.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.25.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.26.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.26.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.26.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.26.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.27.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.27.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.27.self_attn.lsa_index": [
+        1,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.27.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.27.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.28.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.28.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.28.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.28.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.29.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.29.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.29.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.29.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.30.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.30.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.30.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.30.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.31.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.31.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.31.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.31.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.31.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.32.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.32.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.32.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.32.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.33.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.33.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.33.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.33.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.34.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.34.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.34.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.34.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.35.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.35.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.35.self_attn.lsa_index": [
+        1,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.35.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.35.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.36.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.36.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.36.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.36.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.37.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.37.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.37.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.37.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.38.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.38.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.38.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.38.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.39.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.39.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.39.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.39.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.39.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.40.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.40.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.40.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.40.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.41.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.41.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.41.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.41.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.42.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.42.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.42.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.42.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.43.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.43.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.43.self_attn.lsa_index": [
+        1,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.43.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.43.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.44.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.44.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.44.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.44.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.45.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.45.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.45.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.45.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.46.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.46.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.46.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.46.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.47.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.47.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.47.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.47.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.47.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.48.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.48.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.48.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.48.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.49.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.49.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.49.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.49.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.50.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.50.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.50.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.50.mlp": [
+        8832,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.51.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.51.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.51.self_attn.lsa_index": [
+        1,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.51.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.51.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.52.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.52.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.52.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.52.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.53.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.53.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.53.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.53.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.54.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.54.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.54.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.54.mlp": [
+        8576,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.55.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.55.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.55.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.55.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.55.mlp": [
+        8960,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.56.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.56.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.56.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.56.mlp": [
+        8960,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.57.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.57.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.57.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.57.mlp": [
+        8960,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.58.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.58.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.58.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.58.mlp": [
+        8960,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.59.input_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.59.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.59.self_attn.lsa_index": [
+        1,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.59.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.59.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.60.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.60.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.60.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.60.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.61.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.61.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.61.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.61.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.62.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.62.linear_attn": [
+        8,
+        16,
+        "K-heads"
+      ],
+      "model.language_model.layers.62.post_attention_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.62.mlp": [
+        8448,
+        17408,
+        "channels"
+      ],
+      "model.language_model.layers.63.input_layernorm": [
+        0,
+        1,
+        null
+      ],
+      "model.language_model.layers.63.self_attn": [
+        2,
+        4,
+        "heads"
+      ],
+      "model.language_model.layers.63.self_attn.lsa_index": [
+        0,
+        1,
+        "index"
+      ],
+      "model.language_model.layers.63.post_attention_layernorm": [
+        1,
+        1,
+        null
+      ],
+      "model.language_model.layers.63.mlp": [
+        9216,
+        17408,
+        "channels"
+      ],
+      "model.language_model.norm": [
+        1,
+        1,
+        null
+      ],
+      "lm_head": [
+        130816,
+        248320,
+        "channels"
+      ]
+    }
+  ],
+  "loaded_stats": [
+    {
+      "device": 1,
+      "allocated_gib": 27.449753284454346,
+      "reserved_gib": 28.01171875,
+      "free_gib": 3.52734375,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        }
+      ]
+    },
+    {
+      "device": 0,
+      "allocated_gib": 27.693122386932373,
+      "reserved_gib": 28.291015625,
+      "free_gib": 3.248046875,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        }
+      ]
+    }
+  ],
+  "final_stats": [
+    {
+      "device": 1,
+      "allocated_gib": 27.79067611694336,
+      "reserved_gib": 28.71484375,
+      "free_gib": 2.127685546875,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        }
+      ]
+    },
+    {
+      "device": 0,
+      "allocated_gib": 27.91145086288452,
+      "reserved_gib": 28.859375,
+      "free_gib": 1.96142578125,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 3,
+          "attention_graph_replays": 3
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 3
+        }
+      ]
+    }
+  ],
+  "cache_layer_types": [
+    "CacheLayer_lsa_quant"
+  ],
+  "tree_groups": 0
+}

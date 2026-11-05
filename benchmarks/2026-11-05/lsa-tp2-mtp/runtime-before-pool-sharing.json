@@ -1,0 +1,62 @@
+{
+  "runtime_commit": "6dddfaddff30d80f6a76b52999934129bceee84c",
+  "runtime_sha256": {
+    "exllamav3/modules/lsa.py": "eb6f2a93bc81d05acdf7a37a56a5d03362999b5a8c3b0ba286550f2dc970aa96",
+    "exllamav3/cache/lsa.py": "37b9fcd07259891c1def3494ad4ea09d8523ade6dc78d10c662044fffe0cf97e",
+    "exllamav3/modules/attn.py": "ce438f47ce7cdcce13c58ebc330882e486e8100bb7994f98c64e8428ca2f7990",
+    "exllamav3/modules/attention_fn/lsa_decode.py": "ff2ff5fb630942cc1370c643267ad798e8d4a2fc8afd9589330c079e77c2f4b9",
+    "exllamav3/model/model_tp_alloc.py": "e72e80a48cc8842ce44174fd02be0264f55dc65523aa8276e0d7e52ff54177f5",
+    "exllamav3/model_init.py": "c74f8f26af854e21614b5d83b1cf72e94cfc1cf828afdbac8607a65710ba4aa1",
+    "rocm_tools/lsa_smoke.py": "dc93cf00a6c80977e48addf59f88430275378019a51b832c6cbe5bd2510daff1"
+  },
+  "model": {
+    "repo": "turboderp/Qwen3.8-27B-exl3",
+    "revision": "113cf7ab958054860e43fb7f3063b1af19171095",
+    "branch": "4.00bpw",
+    "target_bpw": 4.0,
+    "head_bits": 6,
+    "mtp_bits": 4
+  },
+  "cache_quant": [
+    4,
+    4
+  ],
+  "batch_size": 1,
+  "target_tensor_parallel": 2,
+  "tp_backend": "RCCL",
+  "mtp_device": 0,
+  "num_draft_tokens": 4,
+  "draft_attention_window": 65536,
+  "target_input_tokens": 1835008,
+  "cache_tokens": 1835520,
+  "chunk_size": 4096,
+  "rope_scaling": {
+    "rope_type": "yarn",
+    "factor": 40.0,
+    "original_max_position_embeddings": 262144
+  },
+  "environment": {
+    "OMP_NUM_THREADS": "8",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:False",
+    "EXL3_QC_STAGING": "0",
+    "PYTHONPATH": "/work/lib-context-mr-bounds:/src"
+  },
+  "power_mode": "auto",
+  "torch": "2.12.0+rocm7.2",
+  "native_binaries": {
+    "v620_native": {
+      "file": "/home/homelab1/datapool/rocm-exl3-rdna2/lib-context-mr-bounds/exllamav3_ext.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "57afa48c9a61b9e7ba2721917bf011096d7cc947e43b2a8444ee8350f0820718"
+    }
+  },
+  "verification": "Full-window request rerun after fixing padded page-table staging.",
+  "model_config_sha256": "dab9abc478e1b1b928ef354f27a26fc90e8191a4a3ce5f3d19aa21558216b267",
+  "projections_sha256": "24cee934f969756db228a8df7f2bc7613979b63ac3b1d5ac3d9aa42e4339bb9b",
+  "index_precision": "float32",
+  "index_ownership": "one owner per global-query attention layer; selection IDs broadcast to all TP ranks",
+  "gpu_selection": "V620 pair only",
+  "full_target_context": true,
+  "draft_window_is_optional": true,
+  "draft_kv_pool_truncated": false,
+  "previous_run_failure": "Before padding fix, prefill reached 1,834,752 tokens; graph staging rejected 7,184 padded columns for a 7,170-page physical cache."
+}

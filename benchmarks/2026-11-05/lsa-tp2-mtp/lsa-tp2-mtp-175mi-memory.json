@@ -1,0 +1,679 @@
+{
+  "synthetic_history": true,
+  "natural_full_prefill": false,
+  "cache_tokens": 1835520,
+  "initial_past_tokens": 1835007,
+  "physical_pages": 7170,
+  "padded_columns": 7184,
+  "runs": [
+    {
+      "queries": 1,
+      "past": 1835007,
+      "target_logits_finite": true,
+      "draft_state_finite": true,
+      "draft_token": 212630,
+      "post_rewind_position": 1835008
+    },
+    {
+      "queries": 5,
+      "past": 1835008,
+      "target_logits_finite": true,
+      "draft_state_finite": true,
+      "draft_token": 198,
+      "post_rewind_position": 1835009
+    },
+    {
+      "queries": 1,
+      "past": 1835009,
+      "target_logits_finite": true,
+      "draft_state_finite": true,
+      "draft_token": 157,
+      "post_rewind_position": 1835010
+    },
+    {
+      "queries": 5,
+      "past": 1835010,
+      "target_logits_finite": true,
+      "draft_state_finite": true,
+      "draft_token": 158,
+      "post_rewind_position": 1835011
+    }
+  ],
+  "complete": true,
+  "seeded_index_layers": [
+    10,
+    6
+  ],
+  "loaded_stats": [
+    {
+      "device": 1,
+      "graph_pool": [
+        0,
+        1
+      ],
+      "peak_allocated_gib": 27.55659770965576,
+      "allocated_gib": 27.446335315704346,
+      "reserved_gib": 28.125,
+      "free_gib": 3.404296875,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        }
+      ]
+    },
+    {
+      "device": 0,
+      "graph_pool": [
+        0,
+        1
+      ],
+      "peak_allocated_gib": 27.803386688232422,
+      "allocated_gib": 27.693124294281006,
+      "reserved_gib": 28.40625,
+      "free_gib": 3.123046875,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 0
+        }
+      ]
+    }
+  ],
+  "final_stats": [
+    {
+      "device": 1,
+      "graph_pool": [
+        0,
+        1
+      ],
+      "peak_allocated_gib": 29.096720218658447,
+      "allocated_gib": 28.970319747924805,
+      "reserved_gib": 29.765625,
+      "free_gib": 1.256591796875,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        }
+      ]
+    },
+    {
+      "device": 0,
+      "graph_pool": [
+        0,
+        1
+      ],
+      "peak_allocated_gib": 28.76084280014038,
+      "allocated_gib": 28.637770652770996,
+      "reserved_gib": 29.4140625,
+      "free_gib": 1.725341796875,
+      "layers": [
+        {
+          "key": "model.language_model.layers.3.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.7.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.11.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.15.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.19.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.23.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.27.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.31.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.35.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.39.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.43.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.47.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.51.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.55.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.59.self_attn",
+          "kv_heads": 2,
+          "index_owner": 0,
+          "owns_index": true,
+          "index_bytes": 543428640,
+          "selection_graph_replays": 4,
+          "attention_graph_replays": 4
+        },
+        {
+          "key": "model.language_model.layers.63.self_attn",
+          "kv_heads": 2,
+          "index_owner": 1,
+          "owns_index": false,
+          "index_bytes": 0,
+          "selection_graph_replays": 0,
+          "attention_graph_replays": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5607 @@
+[
+  {
+    "utc": "2026-11-04T21:02:47.059192+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "24682668032",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "15",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "25473298432",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "16",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:03:17.062870+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "32496070656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33304621056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:03:47.065411+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "32502505472",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33309057024",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:04:17.068543+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "32506716160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33311158272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:04:47.071575+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "32534138880",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33338728448",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:05:17.074020+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "32672432128",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33476976640",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:05:47.076422+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "32986390528",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33791557632",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:06:17.078644+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33351049216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34156269568",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:06:47.081084+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552707584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332237824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:07:17.083759+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552707584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332237824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:07:47.086384+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552707584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332237824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:08:17.088975+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552707584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332237824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:08:47.091509+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552707584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332237824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:09:17.094064+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552859136",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332389376",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:09:47.097088+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552859136",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332389376",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:10:17.100089+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552859136",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332389376",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:10:47.102487+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33552859136",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332389376",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:11:17.104810+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553010688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332540928",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:11:47.107365+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553010688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332540928",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:12:17.112289+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553010688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332540928",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:12:47.115137+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553010688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332540928",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:13:17.117525+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553162240",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332692480",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:13:47.120105+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553162240",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332692480",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:14:17.122561+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553162240",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332692480",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:14:47.125195+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553162240",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332692480",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:15:17.128736+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553313792",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332692480",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:15:47.133305+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553313792",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332844032",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:16:17.136057+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553313792",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332844032",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:16:47.138499+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553313792",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332844032",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:17:17.141049+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553313792",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332844032",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:17:47.144584+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553465344",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332999680",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:18:17.147329+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553465344",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332999680",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:18:47.150670+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553465344",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332999680",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:19:17.153197+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553465344",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34332999680",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:19:47.155842+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553616896",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333151232",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:20:17.159638+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553616896",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333151232",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:20:47.162192+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553616896",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333151232",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:21:17.165264+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553616896",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333151232",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:21:47.169313+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553616896",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333151232",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:22:17.172338+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553768448",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333302784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:22:47.175986+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553768448",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333302784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "93",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:23:17.179300+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553768448",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333302784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:23:47.182355+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553768448",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333302784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:24:17.186004+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553924096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333454336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:24:47.189103+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553924096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "91",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333454336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:25:17.192341+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553924096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333454336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:25:47.196073+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33553924096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333454336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:26:17.199218+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554075648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333605888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:26:47.201956+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554075648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333605888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:27:17.205533+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554075648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333605888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:27:47.209238+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554075648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333605888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:28:17.212184+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554075648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333605888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:28:47.215031+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554227200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333757440",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:29:17.218544+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554227200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333757440",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:29:47.221677+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554227200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333757440",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:30:17.225171+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554227200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333757440",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:30:47.228772+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554378752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333908992",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:31:17.231563+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554378752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333908992",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:31:47.234979+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554378752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333908992",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:32:17.238548+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554378752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333908992",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:32:47.241658+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554378752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34333908992",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:33:17.245196+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554530304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334060544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:33:47.248525+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554530304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334060544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:34:17.251656+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554530304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334060544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:34:47.254844+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554530304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334060544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:35:17.258003+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554681856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334060544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:35:47.265553+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554681856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334212096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:36:17.269143+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554681856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334212096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:36:47.272549+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554681856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334212096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:37:17.276123+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554681856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334212096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:37:47.279268+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554833408",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334363648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:38:17.282824+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554833408",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334363648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:38:47.286192+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554833408",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334363648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:39:17.289962+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554833408",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334363648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:39:47.294065+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554833408",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334363648",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:40:17.297548+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554984960",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334515200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:40:47.301019+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554984960",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334515200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:41:17.304486+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554984960",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334515200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:41:47.308233+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33554984960",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334515200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:42:17.311241+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555136512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334666752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:42:47.314957+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555136512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334666752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:43:17.317905+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555136512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334666752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:43:47.321265+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555136512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334666752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:44:17.324874+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555136512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334666752",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:44:47.328351+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555288064",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334818304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:45:17.332354+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555288064",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334818304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:45:47.336061+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555288064",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334818304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:46:17.339239+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555288064",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334818304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:46:47.343944+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555288064",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334818304",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:47:17.347566+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555439616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334969856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:47:47.351859+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555439616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334969856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:48:17.355083+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555439616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334969856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:48:47.359103+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555439616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34334969856",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:49:17.363245+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555591168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335125504",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:49:47.367380+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555591168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335125504",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:50:17.370920+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555591168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335125504",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "94",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:50:47.374917+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555591168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335125504",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:51:17.378009+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555591168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335125504",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:51:47.382404+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555742720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335277056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:52:17.386557+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555742720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335277056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:52:47.390530+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555742720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335277056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:53:17.394420+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555742720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335277056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:53:47.398306+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555742720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335277056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:54:17.402512+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555894272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335428608",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:54:47.406799+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555894272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335428608",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:55:17.410373+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555894272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335428608",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:55:47.414374+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555894272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335428608",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:56:17.417717+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33555894272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "97",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335428608",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:56:47.421352+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556049920",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335580160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:57:17.425375+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556049920",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335580160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:57:47.429218+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556049920",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335580160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:58:17.433818+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556049920",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335580160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:58:47.437268+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556049920",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335580160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:59:17.441547+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556201472",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335731712",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T21:59:47.446050+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556201472",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335731712",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:00:17.450371+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556201472",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335731712",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:00:47.454437+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556201472",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335731712",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:01:17.458289+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556201472",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335731712",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:01:47.462095+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556353024",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335879168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:02:17.466476+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556353024",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335879168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:02:47.470777+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556353024",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335879168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:03:17.474418+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556353024",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335879168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:03:47.478549+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556353024",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34335879168",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:04:17.483028+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556504576",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336030720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:04:47.487142+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556504576",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336030720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:05:17.491553+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556504576",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336030720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:05:47.496001+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556504576",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336030720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:06:17.500144+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556504576",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336030720",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:06:47.503894+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556656128",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336182272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:07:17.507819+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556656128",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "80",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336182272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "88",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:07:47.512212+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556656128",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336182272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:08:17.516567+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556656128",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336182272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:08:47.520900+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556656128",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336182272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:09:17.525266+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556803584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336182272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:09:47.538662+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556803584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336325632",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:10:17.543166+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556803584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336325632",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:10:47.547638+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556803584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336325632",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:11:17.552023+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556803584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336325632",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:11:47.556097+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556803584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336325632",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:12:17.560534+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556946944",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336456704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:12:47.564720+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556946944",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336456704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:13:17.569536+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556946944",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336456704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:13:47.574704+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556946944",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336456704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:14:17.578827+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33556946944",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336456704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:14:47.583504+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33557086208",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336579584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:15:17.587574+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33557086208",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336579584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:15:47.592225+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33557086208",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336579584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:16:17.596405+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33557086208",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336579584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:16:47.600962+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33557086208",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336579584",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:17:17.605063+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581232128",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34336759808",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:17:47.609681+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581363200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310537216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "90",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:18:17.613912+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581363200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310537216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:18:47.618182+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581363200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310537216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:19:17.622608+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581363200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310537216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:19:47.627262+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581363200",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310537216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:20:17.631750+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581506560",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310639616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:20:47.636526+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581506560",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310639616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:21:17.640810+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581506560",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310639616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:21:47.645102+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581506560",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310639616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:22:17.649836+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581506560",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310639616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:22:47.654152+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581645824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310782976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:23:17.658508+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581645824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310782976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:23:47.662649+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581645824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310782976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:24:17.667839+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581645824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "79",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310782976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:24:47.672208+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581645824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310782976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:25:17.677551+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581785088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310930432",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:25:47.681957+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581785088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310930432",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:26:17.686258+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581785088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "98",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310930432",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:26:47.692203+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581785088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310930432",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:27:17.696960+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581785088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310930432",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:27:47.701846+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581932544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34310930432",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:28:17.709581+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581932544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311077888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:28:47.714200+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581932544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311077888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:29:17.719724+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581932544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311077888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:29:47.724861+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581932544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311077888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:30:17.729948+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33581932544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311077888",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:30:47.734855+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582084096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311221248",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:31:17.739722+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582084096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311221248",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:31:47.744058+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582084096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311221248",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:32:17.748549+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582084096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311221248",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:32:47.753255+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582084096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311221248",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:33:17.757536+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582231552",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311368704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:33:47.761959+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582231552",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311368704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:34:17.767044+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582231552",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311368704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:34:47.772379+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582231552",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311368704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:35:17.777749+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582231552",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311368704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:35:47.782381+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582231552",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311368704",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:36:17.787541+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582379008",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311516160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:36:47.791845+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582379008",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311516160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:37:17.797206+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582379008",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311516160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:37:47.802702+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582379008",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "92",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311516160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:38:17.807905+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582379008",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "95",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311516160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:38:47.812397+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582526464",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311663616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:39:17.816949+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582526464",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311663616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:39:47.823503+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582526464",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311663616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:40:17.828532+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582526464",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311663616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:40:47.835568+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582526464",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311663616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:41:17.840533+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582526464",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311663616",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:41:47.845344+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582669824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311806976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:42:17.850683+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582669824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311806976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "98",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:42:47.856548+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582669824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311806976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:43:17.861951+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582669824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311806976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:43:47.866936+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582669824",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311806976",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:44:17.871524+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582817280",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311950336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:44:47.876606+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582817280",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311950336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:45:17.882123+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582817280",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311950336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:45:47.887328+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582817280",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311950336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:46:17.892292+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582817280",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311950336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:46:47.898312+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582817280",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34311950336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:47:17.903435+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582964736",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312089600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "76",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:47:47.908908+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582964736",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312089600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:48:17.914500+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582964736",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312089600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:48:47.919540+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582964736",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312089600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:49:17.924794+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33582964736",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312089600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:49:47.929534+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583108096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312089600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:50:17.939208+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583108096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312237056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:50:47.944571+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583108096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312237056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:51:17.950049+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583108096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312237056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:51:47.955679+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583108096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312237056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:52:17.962903+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583108096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312237056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:52:47.968182+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583251456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312384512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:53:17.973568+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583251456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312384512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:53:47.980496+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583251456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312384512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:54:17.986567+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583251456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312384512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:54:47.991934+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33583251456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312384512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:55:17.997824+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732071424",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312384512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:55:48.003370+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732218880",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312527872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:56:18.008544+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732218880",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312527872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:56:48.013963+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732218880",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312527872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:57:18.019993+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732218880",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312527872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:57:48.025328+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732218880",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312527872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:58:18.031251+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732218880",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312527872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:58:48.037111+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732366336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "50",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312675328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:59:18.042384+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732366336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312675328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T22:59:48.047914+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732366336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "1",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312675328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "98",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:00:18.053495+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732366336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312675328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:00:48.059599+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732366336",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312675328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:01:18.065296+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732509696",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312822784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:01:48.079051+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33732509696",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312822784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:02:18.084720+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889628160",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312822784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:02:48.090919+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889796096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312822784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:03:18.096296+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889796096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312822784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:03:48.101689+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889796096",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312822784",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:04:18.107109+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889939456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312962048",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:04:48.113007+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889939456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312962048",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:05:18.119176+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889939456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312962048",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:05:48.125484+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889939456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312962048",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:06:18.131169+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889939456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312962048",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:06:48.136695+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33889939456",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34312962048",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:07:18.142542+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890086912",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313113600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:07:48.147989+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890086912",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313113600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:08:18.153749+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890086912",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313113600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:08:48.159064+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890086912",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313113600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:09:18.164589+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890086912",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313113600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:09:48.170322+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890086912",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313113600",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:10:18.176202+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890230272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313261056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:10:48.184869+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890230272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313261056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:11:18.190877+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890230272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313261056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:11:48.196418+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890230272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313261056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:12:18.202127+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890230272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313261056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:12:48.208776+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890230272",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313261056",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:13:18.214677+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890377728",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313408512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "98",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:13:48.221218+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890377728",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313408512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:14:18.226436+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890377728",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313408512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:14:48.232023+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890377728",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313408512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:15:18.237565+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890377728",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313408512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:15:48.243811+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890377728",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313408512",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:16:18.249553+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890521088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313551872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:16:48.254904+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890521088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313551872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:17:18.260650+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890521088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313551872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:17:48.266334+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890521088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313551872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:18:18.272787+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890521088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313551872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:18:48.281325+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890521088",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313551872",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:19:18.286756+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890668544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313699328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:19:48.292260+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890668544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313699328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:20:18.298363+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890668544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313699328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:20:48.304772+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890668544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313699328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:21:18.311143+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890668544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313699328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:21:48.317545+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890668544",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313699328",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:22:18.323666+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890811904",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313842688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:22:48.329523+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890811904",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313842688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:23:18.335695+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890811904",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313842688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:23:48.342023+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890811904",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313842688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:24:18.348553+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33890922496",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "20",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34313842688",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:24:48.354621+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "33891110912",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "34314133504",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:25:18.360214+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:25:48.371579+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:26:18.379841+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:26:48.390116+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:27:18.401185+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:27:48.410378+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:28:18.422800+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:28:48.431727+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:29:18.440743+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-04T23:29:48.451105+00:00",
+    "devices": [
+      {
+        "uid": "76a08c022586fed6",
+        "mem_info_vram_used": "34327945216",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "0",
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "uid": "08b2ddcbd6e6b36c",
+        "mem_info_vram_used": "33821126656",
+        "mem_info_vram_total": "34342961152",
+        "gpu_busy_percent": "99",
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  }
+]

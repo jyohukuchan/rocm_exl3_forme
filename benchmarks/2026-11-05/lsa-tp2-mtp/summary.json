@@ -1,0 +1,59 @@
+{
+  "runtime_commit": "5332b20f70851512b8263ea073f02471313134f3",
+  "model_target_bpw": 4.0,
+  "head_bits": 6,
+  "mtp_bits": 4,
+  "tp": 2,
+  "mtp_device": 0,
+  "draft_attention_window": 65536,
+  "input_tokens": 1835008,
+  "cached_tokens": 0,
+  "cache_capacity_tokens": 1835520,
+  "response": "739182",
+  "correct_number": true,
+  "finite_logits": true,
+  "new_tokens": 7,
+  "accepted_draft_tokens": 2,
+  "rejected_draft_tokens": 18,
+  "prefill_seconds": 8993.476859331131,
+  "generation_seconds_including_first_graph_capture": 8.164686679840088,
+  "prefill_tokens_per_second": 204.03766293078274,
+  "wall_seconds": 9002.000545384013,
+  "full_request_exit_code": 0,
+  "focused_tests_passed": 38,
+  "gpus": [
+    {
+      "device": 1,
+      "graph_pool": [
+        0,
+        1
+      ],
+      "peak_allocated_gib": 29.07749366760254,
+      "allocated_gib": 28.96580457687378,
+      "reserved_gib": 29.84375,
+      "free_gib": 1.18896484375,
+      "index_owner_layers": 10,
+      "selection_graph_replays": 50,
+      "attention_graph_replays": 80
+    },
+    {
+      "device": 0,
+      "graph_pool": [
+        0,
+        1
+      ],
+      "peak_allocated_gib": 29.045674324035645,
+      "allocated_gib": 28.630855560302734,
+      "reserved_gib": 29.390625,
+      "free_gib": 1.70361328125,
+      "index_owner_layers": 6,
+      "selection_graph_replays": 30,
+      "attention_graph_replays": 80
+    }
+  ],
+  "peak_physical_vram_used_gib": {
+    "08b2ddcbd6e6b36c": 31.977497100830078,
+    "76a08c022586fed6": 31.563514709472656
+  },
+  "scope": "One repetitive-document number retrieval request; no MTP on/off throughput comparison or broad long-context quality evaluation."
+}

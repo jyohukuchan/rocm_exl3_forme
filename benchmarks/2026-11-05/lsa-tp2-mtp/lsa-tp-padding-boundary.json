@@ -1,0 +1,23 @@
+{
+  "physical_pages": 7170,
+  "padded_columns": 7184,
+  "cache_tokens": 1835520,
+  "past_tokens": 1835008,
+  "results": [
+    {
+      "queries": 1,
+      "finite": true,
+      "matches_eager": true
+    },
+    {
+      "queries": 5,
+      "finite": true,
+      "matches_eager": true
+    },
+    {
+      "queries": 1,
+      "finite": true,
+      "matches_eager": true
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "fixed_runtime_commit": "5332b20",
+  "failure": "Full-window selection sort failed to allocate 16MiB with per-layer graph scratch pools. Pool sharing alone still retained scratch in separate capture streams.",
+  "fix": "One graph pool and capture stream per serialized TP worker/model context. Outputs remain resident; temporary workspace can be reused across layers/query shapes.",
+  "preflight": "Actual target and draft models, full cache capacity, synthetic cached history near 1.75Mi: q1/q5/q1/q5 target and MTP finite, recurrent rewind passed. This is not natural-prefill or retrieval-quality evidence.",
+  "tests": "38 passed in 5.90s",
+  "full_request_after_fix": "passed: actual 1,835,008-token input, correct response, finite logits, MTP proposals and both-rank graph replays, exit 0"
+}

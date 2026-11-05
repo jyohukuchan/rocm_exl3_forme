@@ -1,0 +1,15 @@
+{
+  "failed_runtime_commit": "d8ee658",
+  "fixed_runtime_commit": "6dddfad",
+  "requested_input_tokens": 1835008,
+  "last_logged_prefill_tokens": 1834752,
+  "physical_cache_pages": 7170,
+  "generator_padded_columns": 7184,
+  "failure": "Static TP attention graph copied padded columns into an unpadded page-table buffer.",
+  "fix": "Copy only addressable columns; preserve every real page entry. Guard graph lifecycle on its capture GPU and retain cache tensors without a module reference cycle.",
+  "regression_checks": [
+    "37 tests passed twice",
+    "1.75Mi-size cache, 1/5/1 query rows: finite and equal to eager"
+  ],
+  "full_request_after_fix": "Completed prefill, then hit graph scratch-pool OOM; see pool-sharing-fix.json."
+}

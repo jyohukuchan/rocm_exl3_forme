@@ -1,0 +1,6344 @@
+[
+  {
+    "time": "2026-11-04T23:40:32.247850+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 17793413120,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 18582142976,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:41:02.256155+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 32496037888,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 33304760320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:41:32.259037+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 32500367360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 33309192192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:42:02.261108+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 32506683392,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 33311301632,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:42:32.263171+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 32534077440,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 33315840000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:43:02.265541+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 32672399360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 33338871808,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:43:32.268009+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 32986357760,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 33628291072,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:44:02.270614+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33351012352,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 33968037888,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:44:32.272746+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552666624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332385280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:45:02.274818+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552666624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332385280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:45:32.277074+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552666624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332385280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:46:02.279517+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552666624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332385280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 88,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:46:32.282275+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552666624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332385280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:47:02.284357+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552818176,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332536832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:47:32.286612+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552818176,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332536832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:48:02.289295+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552818176,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332536832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 94,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:48:32.292498+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552818176,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332536832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:49:02.294959+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552973824,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332688384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:49:32.297295+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552973824,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332688384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:50:02.299734+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552973824,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332688384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:50:32.302729+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33552973824,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332688384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:51:02.305277+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553125376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332839936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:51:32.307797+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553125376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332839936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:52:02.310013+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553125376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332839936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:52:32.312355+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553125376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332839936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:53:02.314793+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553178624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 19,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332839936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:53:32.319029+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553276928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332991488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:54:02.321657+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553276928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332991488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:54:32.323973+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553276928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332991488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:55:02.329492+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553276928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34332991488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:55:32.332513+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553428480,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333143040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:56:02.334953+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553428480,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333143040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:56:32.338207+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553428480,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333143040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:57:02.341055+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553428480,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333143040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:57:32.343995+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553580032,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333298688,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:58:02.346521+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553580032,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333298688,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:58:32.349017+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553580032,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333298688,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:59:02.352341+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553580032,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333298688,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-04T23:59:32.354846+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553580032,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333298688,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:00:02.357763+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553731584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333450240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:00:32.360841+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553731584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333450240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 89,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:01:02.364232+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553731584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333450240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:01:32.367045+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553731584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333450240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:02:02.370147+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553883136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333601792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:02:32.373135+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553883136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333601792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:03:02.376188+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553883136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333601792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:03:32.379142+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33553883136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333601792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:04:02.382075+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554038784,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333601792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:04:32.390277+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554038784,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333753344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:05:02.393131+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554038784,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333753344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:05:32.395957+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554038784,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333753344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:06:02.398710+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554038784,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333753344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:06:32.401592+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554186240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333904896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:07:02.405246+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554186240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333904896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:07:32.408535+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554186240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333904896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:08:02.411910+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554186240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333904896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:08:32.414683+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554337792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34333904896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:09:02.422434+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554337792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334056448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 95,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:09:32.426500+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554337792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334056448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:10:02.429189+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554337792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334056448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:10:32.432623+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554337792,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334056448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:11:02.435852+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554489344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334208000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:11:32.439290+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554489344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334208000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:12:02.443145+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554489344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334208000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:12:32.446650+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554489344,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 86,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334208000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:13:02.450022+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554640896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334208000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:13:32.458735+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554640896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334359552,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:14:02.461918+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554640896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334359552,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:14:32.465062+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554640896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334359552,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:15:02.468763+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554640896,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334359552,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:15:32.472231+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554792448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334511104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:16:02.475606+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554792448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334511104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:16:32.478643+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554792448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334511104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:17:02.482399+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554792448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334511104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:17:32.485773+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554792448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334511104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:18:02.488940+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554944000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334662656,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:18:32.492133+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554944000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334662656,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:19:02.495613+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554944000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334662656,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:19:32.499266+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33554944000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334662656,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 92,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:20:02.503122+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555099648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334814208,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:20:32.506731+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555099648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334814208,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:21:02.510387+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555099648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334814208,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:21:32.513697+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555099648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334814208,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:22:02.517509+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555099648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334814208,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:22:32.520787+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555251200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334965760,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:23:02.524381+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555251200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334965760,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:23:32.527974+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555251200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334965760,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:24:02.531422+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555251200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334965760,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:24:32.534921+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555251200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34334965760,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:25:02.538736+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555402752,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335117312,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:25:32.542081+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555402752,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335117312,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:26:02.546303+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555402752,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335117312,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:26:32.549635+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555402752,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335117312,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:27:02.552939+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555554304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335117312,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:27:32.558870+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555554304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335268864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:28:02.563271+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555554304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335268864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:28:32.566877+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555554304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335268864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:29:02.570327+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555554304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335268864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:29:32.573503+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555709952,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335424512,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:30:02.577298+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555709952,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335424512,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:30:32.581626+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555709952,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335424512,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:31:02.585151+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555709952,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335424512,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:31:32.588925+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555709952,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335424512,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:32:02.592600+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555857408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335576064,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:32:32.595984+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555857408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335576064,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:33:02.599548+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555857408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34335576064,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:33:32.603309+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555857408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310455296,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:34:02.607177+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33555857408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310455296,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:34:32.611063+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556066304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310664192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:35:02.614547+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556008960,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310606848,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:35:32.618299+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556066304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310664192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:36:02.622546+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556066304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310664192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:36:32.627544+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556066304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310664192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:37:02.633262+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556217856,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310815744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:37:32.637289+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556217856,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310815744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:38:02.641204+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556217856,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 56,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310815744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:38:32.645228+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556217856,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310815744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:39:02.650132+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556217856,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310815744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:39:32.654990+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556369408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310967296,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:40:02.659042+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556369408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310967296,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:40:32.665743+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556369408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310967296,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:41:02.670272+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556312064,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310909952,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:41:32.674418+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556365312,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310963200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:42:02.678503+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556463616,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311061504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:42:32.682841+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556463616,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311061504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:43:02.687739+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556463616,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311061504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:43:32.692116+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556463616,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311061504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:44:02.696335+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556463616,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311061504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:44:32.700576+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556664320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311262208,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:45:02.704753+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556668416,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311266304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:45:32.709094+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556615168,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311213056,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:46:02.713316+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556615168,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311213056,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:46:32.717586+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556668416,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311266304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:47:02.722293+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556668416,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311266304,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:47:32.726347+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556824064,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311413760,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:48:02.730782+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556815872,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311405568,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:48:32.734842+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556762624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311352320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:49:02.739161+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556762624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311352320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:49:32.743354+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556762624,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311352320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:50:02.747902+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556905984,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311487488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:50:32.752007+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556905984,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311487488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:51:02.758505+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556905984,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311487488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:51:32.762651+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556905984,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311487488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:52:02.766962+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33556905984,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311487488,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:52:32.771313+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33557045248,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311610368,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:53:02.775861+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33557045248,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311610368,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:53:32.780111+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33557045248,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311610368,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:54:02.784540+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33557045248,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311610368,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:54:32.789078+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33557045248,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311610368,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:55:02.794258+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33557184512,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 1,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311610368,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:55:32.800523+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581322240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310684672,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:56:02.805264+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581322240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 25,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310684672,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:56:32.809438+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581322240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310684672,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:57:02.813817+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581322240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310684672,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:57:32.818063+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581322240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310684672,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:58:02.822662+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581465600,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310823936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:58:32.827118+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581465600,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310823936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:59:02.831401+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581465600,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310823936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T00:59:32.835751+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581465600,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310823936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:00:02.840047+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581465600,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310823936,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:00:32.845337+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581608960,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310963200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:01:02.849903+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581608960,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310963200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:01:32.854403+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581608960,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310963200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:02:02.858552+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581608960,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310963200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:02:32.862986+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581608960,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34310963200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:03:02.868904+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581748224,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311106560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:03:32.874311+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581748224,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311106560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:04:02.879352+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581748224,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311106560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:04:32.883754+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581748224,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311106560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:05:02.888537+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581748224,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311106560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:05:32.893501+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581748224,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311106560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:06:02.899729+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581895680,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311258112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:06:32.904295+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581895680,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311258112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:07:02.908659+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581895680,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311258112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:07:32.913594+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581895680,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311258112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:08:02.918523+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33581895680,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311258112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:08:32.923506+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582043136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311401472,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:09:02.928419+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582043136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311401472,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:09:32.932863+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582043136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311401472,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:10:02.937290+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582043136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311401472,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 96,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:10:32.942504+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582043136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311401472,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:11:02.947708+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582190592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311401472,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:11:32.955989+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582190592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311548928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:12:02.960531+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582190592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311548928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:12:32.965875+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582190592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311548928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:13:02.971142+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582190592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311548928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:13:32.976483+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582190592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311548928,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:14:02.981478+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582338048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311696384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:14:32.986343+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582338048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311696384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:15:02.991531+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582338048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311696384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:15:32.996938+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582338048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311696384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:16:03.002638+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582338048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311696384,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:16:33.007559+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582481408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311839744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:17:03.012269+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582481408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311839744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:17:33.017270+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582481408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311839744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:18:03.023376+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582481408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311839744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:18:33.028875+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582481408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311839744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:19:03.034243+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582481408,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311839744,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:19:33.038901+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582628864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311983104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:20:03.044039+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582628864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311983104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:20:33.049512+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582628864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311983104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:21:03.054988+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582628864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311983104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:21:33.060112+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582628864,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34311983104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:22:03.065530+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582776320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312126464,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:22:33.071374+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582776320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312126464,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:23:03.076266+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582776320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312126464,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:23:33.081747+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582776320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312126464,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:24:03.087196+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582776320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312126464,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:24:33.092425+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582776320,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312126464,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:25:03.097964+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582923776,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312273920,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:25:33.103376+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582923776,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312273920,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:26:03.108717+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582923776,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312273920,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:26:33.114130+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582923776,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 77,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312273920,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:27:03.119527+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582923776,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312273920,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:27:33.124819+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33582923776,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312273920,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:28:03.130598+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583071232,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312421376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:28:33.136259+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583071232,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312421376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:29:03.142124+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583071232,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312421376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:29:33.147898+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583071232,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312421376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:30:03.153845+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583071232,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312421376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:30:33.160490+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583071232,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312421376,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:31:03.165784+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583210496,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:31:33.171502+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583210496,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:32:03.177784+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583210496,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:32:33.184150+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583210496,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 47,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 44,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:33:03.190857+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583210496,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:33:33.196813+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33583210496,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:34:03.202547+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33731862528,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:34:33.208798+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312568832,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:35:03.217369+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:35:33.224947+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 61,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 12,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:36:03.232595+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 69,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:36:33.238797+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 97,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 92,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:37:03.244487+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:37:33.251128+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 3,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 5,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:38:03.257899+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:38:33.268081+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 1,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 1,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:39:03.276022+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732186112,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312712192,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:39:33.282749+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732321280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312859648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:40:03.289164+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732321280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312859648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:40:33.295612+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732321280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312859648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:41:03.303150+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732321280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312859648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:41:33.309390+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732321280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312859648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:42:03.316051+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732321280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34312859648,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:42:33.322478+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732468736,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313007104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:43:03.329196+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33732468736,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313007104,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:43:33.336133+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889587200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313011200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:44:03.344514+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889755136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313011200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:44:33.357236+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889755136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313011200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:45:03.363350+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889755136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313011200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:45:33.369522+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889755136,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313011200,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:46:03.375787+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889902592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313154560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:46:33.381526+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889902592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313154560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:47:03.389244+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889902592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313154560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:47:33.395292+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889902592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313154560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:48:03.401792+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889902592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313154560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:48:33.407945+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33889902592,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313154560,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:49:03.414478+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:49:33.421044+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:50:03.427993+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:50:33.434397+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:51:03.440142+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 25,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:51:33.447912+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:52:03.453834+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:52:33.461975+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890050048,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313302016,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:53:03.467768+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890197504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313441280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:53:33.474526+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890197504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313441280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:54:03.481639+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890197504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 98,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313441280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 98,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:54:33.488948+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890197504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313441280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:55:03.496763+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890197504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313441280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:55:33.505047+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890197504,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313441280,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:56:03.514070+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890336768,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313584640,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:56:33.521698+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890336768,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313584640,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:57:03.528318+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890336768,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313584640,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:57:33.535038+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890336768,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313584640,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:58:03.541422+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890336768,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313584640,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:58:33.548063+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890336768,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313584640,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 22,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:59:03.554290+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T01:59:33.560736+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:00:03.579103+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:00:33.586356+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:01:03.592829+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 92,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 75,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:01:33.599173+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:02:03.605801+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:02:33.613357+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890480128,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313728000,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:03:03.620530+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:03:33.627623+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:04:03.634535+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:04:33.640808+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:05:03.647117+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:05:33.654408+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 88,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 61,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:06:03.660860+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 27,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 43,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:06:33.667381+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890627584,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34313871360,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:07:03.673553+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890775040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34314018816,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:07:33.680499+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890775040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34314018816,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:08:03.687476+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890775040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 12,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34314018816,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:08:33.695190+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890775040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34314018816,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:09:03.702342+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890775040,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34314018816,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:09:33.708872+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33890918400,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34314018816,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:10:03.717865+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33891065856,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 34314166272,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 99,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:10:33.724597+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 33062727680,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 38,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 31969550336,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 5,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  },
+  {
+    "time": "2026-11-05T02:11:03.731964+00:00",
+    "gpus": [
+      {
+        "unique_id": "76a08c022586fed6",
+        "card": "card1",
+        "mem_info_vram_used": 17162240,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      },
+      {
+        "unique_id": "08b2ddcbd6e6b36c",
+        "card": "card0",
+        "mem_info_vram_used": 19304448,
+        "mem_info_vram_total": 34342961152,
+        "gpu_busy_percent": 0,
+        "power_dpm_force_performance_level": "auto"
+      }
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+ -- Loading /work/models/qwen38-27b-exl3-4bpw
+ -- Loading /work/models/qwen38-27b-exl3-4bpw
+ -- RCCL init: world_size 2, rank 1, device 0, init_method tcp://127.0.0.1:51061, timeout 180.0s
+ -- RCCL init: world_size 2, rank 0, device 1, init_method tcp://127.0.0.1:51061, timeout 180.0s
+ -- RCCL warmup, device 0, please wait...
+ -- RCCL warmup, device 1, please wait...
+ -- Finished RCCL warmup, device 0
+ -- Finished RCCL warmup, device 1
+[rank1]:[W1104 23:39:30.267159726 ProcessGroupNCCL.cpp:4215] Warning: An unbatched P2P op (send/recv) was called on this ProcessGroup with size 2.  In lazy initialization mode, this will result in a new 2-rank NCCL communicator to be created. (function operator())
+[rank0]:[W1104 23:39:30.267341748 ProcessGroupNCCL.cpp:4215] Warning: An unbatched P2P op (send/recv) was called on this ProcessGroup with size 2.  In lazy initialization mode, this will result in a new 2-rank NCCL communicator to be created. (function operator())
+{"queries": 1, "past": 1835007, "target_logits_finite": true, "draft_state_finite": true, "draft_token": 212630, "post_rewind_position": 1835008}
+{"queries": 5, "past": 1835008, "target_logits_finite": true, "draft_state_finite": true, "draft_token": 198, "post_rewind_position": 1835009}
+{"queries": 1, "past": 1835009, "target_logits_finite": true, "draft_state_finite": true, "draft_token": 157, "post_rewind_position": 1835010}
+{"queries": 5, "past": 1835010, "target_logits_finite": true, "draft_state_finite": true, "draft_token": 158, "post_rewind_position": 1835011}

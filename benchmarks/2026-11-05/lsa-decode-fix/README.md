@@ -1,5 +1,8 @@
 # LSA decode修正の限定比較とV620×2の2M容量確認
 
+この測定はTP共有index対応より前の版を対象とする。現在のTP=2＋MTP構成は
+[1.75Miプロファイル](../../../doc/qwen38_27b_lsa_tp2_mtp_175mi.md)を参照。
+
 Treeのdecodeを公式既定のFlat検索へ合わせ、FP16および通常のbit量子化KVではQ/K/V投影から出力投影までをHIP graphで実行するよう修正した。クラスタ更新・ページ検査はgraph外で行う。GPUを分割した際のTriton device guardも修正した。
 
 実モデル8Kの生成では、階層探索eager比で1.30倍、Flat検索のgraph無効比で1.11倍を観測した。V620×2・K4/V4のレイヤー分割では2,097,664 token分のKV/indexと最大長decode用作業領域を確保し、短入力の生成まで成功した。2M全文のprefill・品質は測定していない。

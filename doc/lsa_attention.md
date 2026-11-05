@@ -131,8 +131,13 @@ workspace caches derived buckets by page identity/version. Overwrites,
 speculative rewinds and restored prefixes cannot reuse buckets of different
 keys. Page-version storage respects the native 16-byte rotation alignment.
 TP projects local heads before summing index partials and normalizing; headless
-ranks participate in the same collective. KV remains sharded, while the small
-index planes and maps are replicated and accounted for by the TP allocator.
+ranks participate in the same collective. KV remains sharded. With global
+query heads (the default), one TP rank owns each layer's index and broadcasts
+the selected logical key positions; other ranks allocate only their local KV.
+The TP allocator places index owners according to remaining memory, including
+any resident MTP model, while keeping owners on ranks with KV heads. Small
+projection maps remain replicated. Explicit rank-local queries preserve their
+separate selections and replicated indices.
 Tree node groups are cached by their child page versions in bounded workspaces.
 Each node has an opaque slot-incarnation identifier, so a higher level does not
 recursively hash every descendant when checking its cache identity.
@@ -155,9 +160,12 @@ index projection and append, selection, sparse attention, gate and output
 projection run in a HIP/CUDA graph. Clustering and prefix/page validation run
 outside the graph. One resident graph per attention module grows its bucket
 workspace in powers of two and reuses it across page and position changes.
-Other modules retain their existing dispatch. TP collectives, LoRA, special
-cache formats and nonstandard attention calls retain the eager fallback;
-decode still uses flat search. `EXL3_LSA_DECODE_GRAPH=0` is an A/B diagnostic,
+In TP, short queries capture owner selection and each rank's gathered read;
+projection collectives and index broadcast stay outside the graphs. Each
+serialized TP worker shares a capture stream and graph scratch pool across
+layers and query shapes. Other
+modules retain their existing dispatch. The full-block graph falls back for
+LoRA, special cache formats and nonstandard calls. `EXL3_LSA_DECODE_GRAPH=0` is an A/B diagnostic,
 not a required launch flag. Explicit `"decode":"descend"` retains the
 hierarchical decode research option, with eager execution.
 
@@ -172,6 +180,11 @@ Run numerical/cache checks in the usual ROCm environment:
 ```bash
 python -m pytest -q tests/test_lsa.py tests/test_tp_export_attention.py
 ```
+
+For TP index ownership and budget placement, also run
+`tests/test_lsa_tp_allocation.py`. The
+[V620-pair TP=2/MTP profile](qwen38_27b_lsa_tp2_mtp_175mi.md) documents the
+4bpw model, optional draft window and full-window validation command.
 
 These cover GQA projection, full-budget causal coverage, Ward/expansion versus
 the reference, FP16/quantized sparse reads versus an independent gather-softmax,
