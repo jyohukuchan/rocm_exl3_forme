@@ -3,6 +3,7 @@ from typing_extensions import override
 import os
 import torch
 from ..ext import exllamav3_ext as ext
+from .quant.exl3_lib.quantize import codebook_mul1_mult
 
 # Kernel-fused issue/collect for decode-size split jobs (EXL3_MOE_SPLIT_FUSED=0 restores the
 # cudaMemcpyAsync path for A/B testing)
@@ -325,6 +326,9 @@ class BlockSparseMLP_CPU:
             if stc.get_tensor(l.key + ".mul1", cpu, optional = True) is None:
                 print(f" !! {self.key}: experts are not mul1, CPU offload skipped")
                 return False
+        if codebook_mul1_mult != 0x83DCD12D:
+            print(f" !! {self.key}: the CPU expert kernels decode the mul1 multiplier only, CPU offload skipped")
+            return False
 
         def hdr_shape(l):
             return stc.list_tensors(l.key)[l.key + ".trellis"]["shape"]
@@ -444,6 +448,9 @@ class BlockSparseMLP_CPU:
             if stc.get_tensor(l.key + ".mul1", cpu, optional = True) is None:
                 print(f" !! {self.key}: experts are not mul1, CPU split skipped")
                 return False
+        if codebook_mul1_mult != 0x83DCD12D:
+            print(f" !! {self.key}: the CPU expert kernels decode the mul1 multiplier only, CPU split skipped")
+            return False
         def hdr_shape(l):
             return stc.list_tensors(l.key)[l.key + ".trellis"]["shape"]
         for l in probe:

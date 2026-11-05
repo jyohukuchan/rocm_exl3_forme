@@ -1,7 +1,7 @@
 from __future__ import annotations
 import torch
 from ...model.config import Config
-from .exl3_lib.quantize import preapply_had_l, preapply_had_r, had_k, had_n, mul24_to_mul1_gather, mul24_mult, codebook_mul1_mult
+from .exl3_lib.quantize import preapply_had_l, preapply_had_r, had_k, had_n, codebook_mul1_mult
 from ...ext import exllamav3_ext as ext
 from ...util.tensor import g_tensor_cache
 import os
@@ -72,14 +72,6 @@ def _hgemm_fp16_out() -> bool:
 
 # Shapes that already logged int8 engagement (one line per unique GEMM shape).
 _int8_logged_shapes = set()
-
-
-def _frag_fix(w: torch.Tensor):
-    # ext.reconstruct places stream position t at the mul1 tile slot; mul24 puts it at the fragment slot
-    g = mul24_to_mul1_gather(w.device)
-    k, n = w.shape
-    t = w.view(k // 16, 16, n // 16, 16).permute(0, 2, 1, 3).reshape(k // 16, n // 16, 256)
-    w.copy_(t[:, :, g].reshape(k // 16, n // 16, 16, 16).permute(0, 2, 1, 3).reshape(k, n))
 
 
 def _exact_int32_gemm(a8: torch.Tensor, w8: torch.Tensor) -> torch.Tensor:
@@ -179,9 +171,8 @@ class LinearEXL3:
         self.mul1_tensor = mul1
         self.mcg = self.mcg_tensor is not None
         self.mul1 = self.mul1_tensor is not None
-        # mul24: 24-bit multiplier, WMMA B-fragment tile order. The ext reconstructs in the mul1 tile order,
-        # so the weights are re-tiled after reconstruct and the fused / gemm kernels (mul1 order) are not used.
-        self.frag = self.mul1 and (int(self.mul1_tensor.item()) & 0xFFFFFFFF) == mul24_mult
+        # The multiplier (and with it the tile order) is a build-time property of the ext: a model made for the other
+        # format would decode to noise.
         if self.mul1:
             assert (int(self.mul1_tensor.item()) & 0xFFFFFFFF) == codebook_mul1_mult, \
                 f"{key}: model multiplier {int(self.mul1_tensor.item()) & 0xFFFFFFFF:#x} != ext build {codebook_mul1_mult:#x}"
@@ -259,9 +250,6 @@ class LinearEXL3:
         # responsible for contiguity (a silent copy here would hide a hot-path inefficiency
         # and break CUDA-graph address stability)
         assert x.is_contiguous(), f"LinearEXL3 {self.key}: non-contiguous input {tuple(x.shape)}"
-
-        if self.frag:
-            return self.reconstruct_hgemm(x, out_dtype, params)
 
         reconstruct = params.get("reconstruct")
         if not reconstruct:
@@ -350,7 +338,7 @@ class LinearEXL3:
         if self._fused_reconstruct is None:
             self._fused_reconstruct = (
                 self.in_features % 128 == 0 and self.out_features % 128 == 0
-                and not no_fused_reconstruct and not self.frag
+                and not no_fused_reconstruct
             )
 
         # The fused kernel costs ~4x plain reconstruct (k*n-proportional) while the saved
@@ -400,13 +388,9 @@ class LinearEXL3:
 
     def _recon(self, w):
         ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
-        if self.frag:
-            _frag_fix(w)
 
     def _recon_slice(self, w, n_start):
         ext.reconstruct_slice(w, self.trellis, self.K, self.mcg, self.mul1, n_start)
-        if self.frag:
-            _frag_fix(w)
 
     def _emu_w(self, x, out_dtype):
         shape = x.shape

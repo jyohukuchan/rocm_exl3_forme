@@ -252,8 +252,38 @@ __device__ __forceinline__ void dq8_aligned_4bits_bfe64(const Words& ptr, int t_
     frag1[1] = decode_3inst_2<cb>(w6, w7);
 }
 
+// Two consecutive stream positions tp, tp+1 (tp even) as a half2: (tp, tp+1).
 template <int bits, int cb, typename Words>
-__device__ __forceinline__ void dq_dispatch(const Words& ptr, int idx, FragB& frag0, FragB& frag1)
+__device__ __forceinline__ half2 dq_pair(const Words& ptr, int tp)
+{
+    int b0 = (tp + 257) * bits - 16;            // start of the first word
+    int b2 = b0 + bits + 16;                    // end of the last word
+    int i0 = b0 / 32;
+    int i2 = (b2 - 1) / 32;
+    int s2 = (i2 + 1) * 32 - b2;
+    uint32_t a = ptr[i0 % (bits * 256 / 32)];
+    uint32_t b = ptr[i2 % (bits * 256 / 32)];
+    uint32_t w1 = fshift(b, a, s2)        & 0xffff;
+    uint32_t w0 = fshift(b, a, s2 + bits) & 0xffff;
+    return decode_3inst_2<cb>(w0, w1);
+}
+
+// mul24 tile order (research/codebook): stream position t sits at row 8*(t/128) + t%8, column (t/8)%16.
+// Hands lane L the same 16x16 fragment slots as the mul1 order, i.e. rows (L%4)*2 + {0,1,8,9} of columns L/4 and
+// L/4 + 8, so every consumer of dq_dispatch is unchanged. The four row pairs come from four stream offsets.
+template <int bits, int cb, typename Words>
+__device__ __forceinline__ void dq_dispatch_mul24(const Words& ptr, int idx, FragB& frag0, FragB& frag1)
+{
+    const int lane = idx >> 3;
+    const int base = 8 * (lane >> 2) + 2 * (lane & 3);
+    frag0[0] = dq_pair<bits, cb>(ptr, base);
+    frag0[1] = dq_pair<bits, cb>(ptr, base + 128);
+    frag1[0] = dq_pair<bits, cb>(ptr, base + 64);
+    frag1[1] = dq_pair<bits, cb>(ptr, base + 192);
+}
+
+template <int bits, int cb, typename Words>
+__device__ __forceinline__ void dq_dispatch_mul1(const Words& ptr, int idx, FragB& frag0, FragB& frag1)
 {
     if constexpr (bits == 1)
     {
@@ -291,4 +321,15 @@ __device__ __forceinline__ void dq_dispatch(const Words& ptr, int idx, FragB& fr
         dq4<bits, cb>(ptr, idx, frag0);
         dq4<bits, cb>(ptr, idx + 4, frag1);
     }
+}
+
+// The tile order is a build-time property of the format (EXL3_MUL1_MULT, see setup.py): 0xDCD12D is mul24.
+template <int bits, int cb, typename Words>
+__device__ __forceinline__ void dq_dispatch(const Words& ptr, int idx, FragB& frag0, FragB& frag1)
+{
+#if EXL3_MUL1_MULT == 0xDCD12Du
+    dq_dispatch_mul24<bits, cb>(ptr, idx, frag0, frag1);
+#else
+    dq_dispatch_mul1<bits, cb>(ptr, idx, frag0, frag1);
+#endif
 }

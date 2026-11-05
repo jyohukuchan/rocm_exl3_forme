@@ -59,15 +59,6 @@ def tensor_core_perm(device):
 
 
 @lru_cache
-def mul24_to_mul1_gather(device):
-    """Index g such that tile_mul24 = tile_mul1[g]: re-tiles a weight tile the ext reconstructed in mul1 order."""
-    g = [0] * 256
-    for old, new in zip(_perm_mul1(), _perm_frag()):
-        g[new] = old
-    return torch.tensor(g, dtype = torch.long, device = device)
-
-
-@lru_cache
 def tensor_core_perm_i(device):
     return torch.argsort(tensor_core_perm(device))
 

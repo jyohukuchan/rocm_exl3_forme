@@ -16,10 +16,9 @@ if not torch.cuda.is_available():
     pytest.skip("no GPU", allow_module_level=True)
 
 from exllamav3.modules.quant.exl3_lib.quantize import (
-    quantize_tiles, pack_trellis, tensor_core_perm, tensor_core_perm_i, codebook_mul1_mult, mul24_to_mul1_gather,
-    tile_order_frag,
+    quantize_tiles, pack_trellis, tensor_core_perm, tensor_core_perm_i, codebook_mul1_mult,
 )
-from exllamav3.modules.quant.exl3 import _frag_fix
+from exllamav3.modules.quant.exl3 import LinearEXL3
 from exllamav3.ext import exllamav3_ext as ext
 from exllamav3.util.exl3_int8_ref import decode_q, S_FIX
 
@@ -43,6 +42,29 @@ def test_quantize_pack_decode_roundtrip(K):
 
     rec = torch.empty((kt * 16, nt * 16), dtype=torch.half, device=dev)
     ext.reconstruct(rec, trellis, K, False, True)
-    if tile_order_frag:
-        _frag_fix(rec)
     assert torch.equal(rec.float(), ref.half().float())
+
+
+@pytest.mark.parametrize("K", [1, 2, 3, 4, 5, 6, 7, 8])
+def test_native_kernels_match_reconstruct(K):
+    """Every GEMM path (GEMV, multi-row, cooperative, reconstruct + hgemm) reads the same tile order."""
+    dev = "cuda"
+    in_f, out_f = 512, 768
+    kt, nt = in_f // 16, out_f // 16
+    torch.manual_seed(100 + K)
+    w = torch.randn(in_f, out_f, device=dev)
+    tiles = w.reshape(kt, 16, nt, 16).permute(0, 2, 1, 3).reshape(kt * nt, 256)
+    _, qi = quantize_tiles(tiles[:, tensor_core_perm(dev)].contiguous(), {"K": K, "mul1": True})
+    trellis = pack_trellis(qi.reshape(kt, nt, 256), {"K": K})
+    suh = (torch.randint(0, 2, (in_f,), device=dev) * 2 - 1).half()
+    svh = (torch.randint(0, 2, (out_f,), device=dev) * 2 - 1).half()
+    mul1 = torch.tensor(codebook_mul1_mult, dtype=torch.uint32).view(torch.int)
+    lin = LinearEXL3(None, in_f, out_f, suh=suh, svh=svh, trellis=trellis, mul1=mul1, key="t")
+    wd = lin.get_weight_tensor().float()
+    for rows in (1, 2, 5, 16, 17, 64, 300):
+        x = torch.randn(rows, in_f, device=dev, dtype=torch.half)
+        ref = x.float() @ wd
+        for params in ({}, {"reconstruct": True}):
+            y = lin.forward(x, params, out_dtype=torch.half).float()
+            err = ((y - ref).norm() / ref.norm()).item()
+            assert err < 2e-3, (K, rows, params, err)
