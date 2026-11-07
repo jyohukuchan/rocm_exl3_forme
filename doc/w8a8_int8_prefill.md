@@ -1,3 +1,12 @@
+> **廃止 (2026-11-05)**: この文書のフォーマット案は EXL3-INT8 の mul24 形式
+> (`doc/exl3_int8.md`) に置き換わった。
+> - `--int8-grid` (tensor ごとの `s0` を持つ INT8-exact codebook) は**廃止**。固定グリッドは再量子化も `s0` も要らず、
+>   同じ目的を満たす。`convert.py --int8-grid` はエラーで止まる。`s0` を持つ既存モデル (`qwen38-27b-exl3-305-int8grid`、
+>   `q30b-exl3-305-iii`) を読むローダーだけ残す。shelf は読まない。
+> - `--share-input-su` (MoE の gate/up で入力側符号を共有) は**廃止していない**が、速度ゲートが no-go
+>   (expert ごとの小さい GEMM の起動固定費。融合カーネルが前提) で、現在の EXL3-INT8 の対象外。
+> - 以降の記録は経緯として残す。
+
 # W8A8 INT8 プリフィル (feat/w8a8-int8-prefill)
 
 ## 目的

@@ -34,6 +34,7 @@ TEMP_ROWS_GRAPH = 32
 # is rotated and quantized ONCE per token and reused by all active experts,
 # with per-expert int8 GEMMs. Engages for prefill-sized batches only.
 int8_moe_prefill = os.environ.get("EXL3_INT8_PREFILL", "0") != "0"
+EMU_W_EXPERTS = os.environ.get("EXL3_INT8_EMU_W_EXPERTS", "0") != "0"
 INT8_MOE_MIN_ROWS = int(os.environ.get("EXL3_INT8_MOE_MIN_ROWS", 32))
 # Grouped INT8 MoE (round 4): 3 strided-batched igemm launches per layer over
 # expert slabs instead of 3 per-expert launches per expert. =0 falls back to
@@ -986,6 +987,39 @@ class BlockSparseMLP(BlockSparseMLP_CPU, Module):
             handled.update(grp)
         return handled
 
+    def _forward_emu_w(self, y, bsz, selected_experts, routing_weights, params):
+        # Evaluation only: every expert runs through LinearEXL3._emu_w (weights
+        # rounded to the fixed int8 grid, fp32 matmul), one expert at a time.
+        from .quant.exl3 import EMU_W
+        out = torch.zeros((bsz, y.shape[1]), dtype = torch.float, device = y.device)
+        k = selected_experts.shape[1]
+        flat_e = selected_experts.reshape(-1)
+        order = flat_e.argsort()
+        tok = torch.arange(bsz, device = y.device).repeat_interleave(k)[order]
+        wts = routing_weights.reshape(-1)[order]
+        counts = torch.bincount(flat_e, minlength = self.num_experts).tolist()
+        start = 0
+        EMU_W["on"] = True
+        try:
+            for e in range(self.num_experts):
+                end = start + counts[e]
+                if end == start:
+                    continue
+                top_x = tok[start:end]
+                xc = y.index_select(0, top_x)
+                u = self.ups[e].forward(xc, params)
+                g = self.gates[e].forward(xc, params)
+                a = u if self.interm_dtype == torch.half else torch.empty_like(u, dtype = torch.half)
+                self.activation_fn_call(g, u, a, self.act_limit)
+                cs = self.downs[e].forward(a, params)
+                cs.mul_(wts[start:end].unsqueeze(1))
+                out.index_add_(0, top_x, cs)
+                start = end
+        finally:
+            EMU_W["on"] = False
+        return out
+
+
     def _int8_moe_state(self):
         # Cached eligibility for the INT8 MoE prototype: every gate/up/down
         # expert must be an int8-grid LinearEXL3, and all gate/up input
@@ -1494,6 +1528,10 @@ class BlockSparseMLP(BlockSparseMLP_CPU, Module):
         # INT8 MoE prototype (round 2 of the W8A8 prefill work): one shared
         # rotation + activation quant per token, per-expert int8 GEMMs. The
         # tail below (post norm, shared experts, TP reduce) runs unchanged.
+        elif EMU_W_EXPERTS and not params.get("autosplit_measure"):
+            final_hidden_states = self._forward_emu_w(y, bsz, selected_experts, routing_weights, params)
+            final_hidden_states = final_hidden_states.reshape(eshape)
+
         elif self._int8_moe_go(bsz, y, params):
             if INT8_MOE_GROUPED and getattr(ext, "igemm_batched", None) is not None:
                 final_hidden_states = self._forward_int8_moe_grouped(

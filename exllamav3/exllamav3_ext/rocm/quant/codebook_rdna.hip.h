@@ -126,7 +126,7 @@ __device__ inline half decode_3inst(uint32_t x)
     }
     if constexpr (cb == 2)
     {
-        x *= 0x83DCD12Du;
+        x *= EXL3_MUL1_MULT;
         const uint32_t acc = 0x6400u;
         uint32_t sum = __dp4a(x, 0x01010101u, acc);
         const __half k_inv_h = __ushort_as_half(0x1eee);
@@ -161,8 +161,8 @@ __device__ inline half2 decode_3inst_2(uint32_t x0, uint32_t x1)
     }
     if constexpr (cb == 2)
     {
-        x0 *= 0x83DCD12Du;
-        x1 *= 0x83DCD12Du;
+        x0 *= EXL3_MUL1_MULT;
+        x1 *= EXL3_MUL1_MULT;
         return decode_mul1_product_2(x0, x1);
     }
 }

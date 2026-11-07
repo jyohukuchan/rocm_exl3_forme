@@ -16,15 +16,12 @@ had_k, had_n = 128, 128
 codebook_scale = 1.24371088
 
 codebook_mcg_mult = 0xCBAC1FED
-codebook_mul1_mult = 0x83DCD12D
+codebook_mul1_mult = int(getattr(ext, "exl3_mul1_multiplier", lambda: 0x83DCD12D)())
+# EXL3-INT8 "mul24" (research/codebook): 24-bit multiplier and WMMA B-fragment tile order, selected by the ext build
+mul24_mult = 0xDCD12D
+tile_order_frag = codebook_mul1_mult == mul24_mult
 
-@lru_cache
-def tensor_core_perm(device):
-    """
-    Return the 16x16 tile permutation expected by the EXL3 tensor-core quantization kernels.
-
-    The cached index maps row-major tile elements into the lane/interleave order used by the CUDA encoder.
-    """
+def _perm_mul1():
     perm_a = [0] * 256
     for t in range(32):
         r0 = (t % 4) * 2
@@ -41,7 +38,24 @@ def tensor_core_perm(device):
         perm_a[t * 8 + 5] = r1 * 16 + c1
         perm_a[t * 8 + 6] = r2 * 16 + c1
         perm_a[t * 8 + 7] = r3 * 16 + c1
-    return torch.tensor(perm_a, dtype = torch.int, device = device)
+    return perm_a
+
+
+def _perm_frag():
+    # Stream position 8L + j is (row = 8 * (L // 16) + j, column = L % 16), i.e. lane L's eight values are one
+    # WMMA int8 B fragment (one column, eight consecutive k). See research/codebook.
+    return [(8 * (t // 8 // 16) + t % 8) * 16 + (t // 8) % 16 for t in range(256)]
+
+
+@lru_cache
+def tensor_core_perm(device):
+    """
+    Return the 16x16 tile permutation expected by the EXL3 tensor-core quantization kernels.
+
+    The cached index maps row-major tile elements into the stream order used by the CUDA encoder: the
+    tensor-core (mma B fragment) order, or the WMMA int8 B fragment order for the mul24 build.
+    """
+    return torch.tensor(_perm_frag() if tile_order_frag else _perm_mul1(), dtype = torch.int, device = device)
 
 
 @lru_cache

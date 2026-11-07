@@ -90,6 +90,8 @@ static const std::array<fp_quantize_tiles_kernel, 8> quantize_tiles_optimized_in
 // do not pay off for K=3 and K=6. K=7 depends on the codebook.
 // EXL3_QT_OPTIMIZED=1/0 forces the choice for testing purposes. The Python scratch allocation asks the
 // extension through quantize_tiles_scratch, so the layouts always agree
+int64_t exl3_mul1_multiplier() { return EXL3_MUL1_MULT; }
+
 bool quantize_tiles_use_optimized(int major, int minor, int K, int cb)
 {
     // RDNA: the dense specialisation is ported as quantize_tiles_optimized_rdna.hip.h

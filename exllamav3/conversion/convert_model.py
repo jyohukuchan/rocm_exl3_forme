@@ -90,7 +90,7 @@ parser.add_argument("-d", "--devices", type = str, default = "0", help = "List o
 parser.add_argument("-dr", "--device_ratios", type = str, default = "", help = "Split ratio for devices, e.g. --device_ratio 2,2,4")
 parser.add_argument("-img", "--image_dump", action = "store_true", help = "Save model tensors as images (saved to working directory)")
 parser.add_argument("-cb", "--codebook", type = str, default = "mul1", help = "Codebook: mul1 (default), mcg or 3inst")
-parser.add_argument("--int8-grid", action = "store_true", default = None, help = "INT8-exact codebook: round every codebook output to a per-tensor int8 grid (s0) inside the Viterbi search (round 2 of the W8A8 prefill work; default from EXL3_INT8_GRID=1)")
+parser.add_argument("--int8-grid", action = "store_true", default = None, help = "DEPRECATED (rejected): per-tensor s0 int8 grid. Superseded by the fixed grid + mul24 codebook, see doc/exl3_int8.md")
 parser.add_argument("--share-input-su", action = "store_true", default = None, help = "Share one hidden-side input vector across a layer's routed-expert gate/up projections (EXLR8-style shared rotation; default from EXL3_SHARE_INPUT_SU=1)")
 parser.add_argument("-pm", "--parallel_mode", action = "store_true", help = "Deprecated (no-op): parallel mode is now the default; layers with fewer tensors than devices fall back to tile splitting")
 parser.add_argument("--max_module", type = int, help = "End quantization after this many modules, includes embedding and norm layers (for debug purposes)", default = None)
@@ -320,7 +320,8 @@ def prepare(args) -> (dict, dict, bool, str):
     print(f"    Output scales: " + {True: "always", False: "never", None: "auto"}[in_args["apply_out_scales"]])
     print(f"    Codebook: {in_args['codebook']}")
     if in_args.get("int8_grid"):
-        print(f"    INT8-exact codebook grid: on (s0 per tensor)")
+        sys.exit(" !! --int8-grid (per-tensor s0) is deprecated. EXL3-INT8 uses the fixed grid with the mul24 codebook: "
+                 "build the extension with EXL3_MUL1_MULT=0xDCD12D and convert normally (doc/exl3_int8.md).")
     if in_args.get("share_input_su"):
         print(f"    Shared hidden-side input rotation: on (MoE gate/up)")
 

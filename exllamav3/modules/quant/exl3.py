@@ -1,7 +1,7 @@
 from __future__ import annotations
 import torch
 from ...model.config import Config
-from .exl3_lib.quantize import preapply_had_l, preapply_had_r, had_k, had_n
+from .exl3_lib.quantize import preapply_had_l, preapply_had_r, had_k, had_n, codebook_mul1_mult
 from ...ext import exllamav3_ext as ext
 from ...util.tensor import g_tensor_cache
 import os
@@ -30,6 +30,17 @@ no_fused_reconstruct = os.environ.get("EXL3_NO_FUSED_RECONSTRUCT", "0") != "0"
 # The math is backend-agnostic torch ops plus one int8->int32 GEMM; on ROCm
 # that GEMM is ext.igemm_recon (rocBLAS int8), elsewhere an exact emulation.
 int8_prefill = os.environ.get("EXL3_INT8_PREFILL", "0") != "0"
+# Fixed global int8 grid for mul1 models without a stored s0: the mul1 value is
+# (887*B - 452608) * 2^-17 with B in 0..1020, so a step of 4 * 887 * 2^-17
+# maps B onto [-128, 127] with no per-tensor/per-channel scale. Experimental.
+_int8_fixed_grid = os.environ.get("EXL3_INT8_FIXED_GRID", "0") != "0"
+INT8_FIXED_S0 = 4.0 * 887.0 / 131072.0
+# Weight-only emulation (evaluation): while EMU_W["on"] is set (the MoE emulation
+# path turns it on around the expert MLPs), every mul1 linear decodes its weights,
+# rounds them to the fixed grid (unless EXL3_INT8_EMU_NOROUND=1, the control) and runs
+# an fp32 matmul in the rotated basis. Speed is irrelevant here.
+EMU_W = {"on": False}
+_emu_noround = os.environ.get("EXL3_INT8_EMU_NOROUND", "0") != "0"
 
 # K-block size for the exact-int32 emulation GEMM: partial sums stay below
 # 2^24, so every fp32 block product is bit-exact and the fp64 tail is too.
@@ -43,6 +54,9 @@ _int8_ablate = os.environ.get("EXL3_INT8_ABLATE", "")
 # Minimum row count for INT8 engagement (perf heuristic; accuracy work such
 # as KLD can lower it to bring more cases onto the int8 path).
 _int8_min_rows = int(os.environ.get("EXL3_INT8_MIN_ROWS", "1024"))
+# Evaluation scope: "" = all eligible linears, "head" = only vocab-sized N
+# (lm_head), "nohead" = everything except the lm_head.
+_int8_scope = os.environ.get("EXL3_INT8_SCOPE", "")
 
 
 def _hgemm_fp16_out() -> bool:
@@ -157,6 +171,11 @@ class LinearEXL3:
         self.mul1_tensor = mul1
         self.mcg = self.mcg_tensor is not None
         self.mul1 = self.mul1_tensor is not None
+        # The multiplier (and with it the tile order) is a build-time property of the ext: a model made for the other
+        # format would decode to noise.
+        if self.mul1:
+            assert (int(self.mul1_tensor.item()) & 0xFFFFFFFF) == codebook_mul1_mult, \
+                f"{key}: model multiplier {int(self.mul1_tensor.item()) & 0xFFFFFFFF:#x} != ext build {codebook_mul1_mult:#x}"
 
         # INT8-exact codebook grid step (round 2 of the W8A8 prefill work).
         # Present only in models encoded with the int8 grid; the decoded tile
@@ -170,6 +189,9 @@ class LinearEXL3:
             self.s0_value = float(s0.item())
         else:
             self.s0_value = 0.0
+        if s0 is None and _int8_fixed_grid and self.mul1:
+            s0 = torch.tensor([INT8_FIXED_S0], dtype = torch.float32)
+            self.s0_value = INT8_FIXED_S0
         self.s0 = s0
 
         self._fused_reconstruct = None
@@ -219,6 +241,9 @@ class LinearEXL3:
             ovr = params["ovr"]
             if self.key in ovr and ovr[self.key].inner is not self:
                 return ovr[self.key].forward(x, params, out_dtype)
+
+        if EMU_W["on"] and self.mul1:
+            return self._emu_w(x, out_dtype)
 
         # The EXL3 kernels read x as contiguous rows; a strided view (e.g. a head-group slice
         # of a wider tensor) would be silently misread as interleaved garbage. Producers are
@@ -331,7 +356,7 @@ class LinearEXL3:
             if use_fused:
                 ext.reconstruct_had_slice(w, self.trellis, self.suh, self.svh, self.K, self.mcg, self.mul1, 0)
             else:
-                ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+                self._recon(w)
             ext.hgemm_recon(xh, w, y_)
         else:
             numel_ = self.in_features * MAX_RECONSTRUCT_SLICE_N
@@ -344,7 +369,7 @@ class LinearEXL3:
                     ext.reconstruct_had_slice(
                         w, self.trellis, self.suh, self.svh[n_start:], self.K, self.mcg, self.mul1, n_start)
                 else:
-                    ext.reconstruct_slice(w, self.trellis, self.K, self.mcg, self.mul1, n_start)
+                    self._recon_slice(w, n_start)
                 ext.hgemm_recon(xh, w, y_[:, n_start:n_end])
 
         if not use_fused:
@@ -359,6 +384,33 @@ class LinearEXL3:
             self.in_features % 16 == 0 and self.out_features % 16 == 0
             and self.trellis.is_cuda
         )
+
+
+    def _recon(self, w):
+        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+
+    def _recon_slice(self, w, n_start):
+        ext.reconstruct_slice(w, self.trellis, self.K, self.mcg, self.mul1, n_start)
+
+    def _emu_w(self, x, out_dtype):
+        shape = x.shape
+        rows = x.numel() // shape[-1]
+        x = x.view(rows, self.in_features).contiguous()
+        y = torch.empty(shape[:-1] + (self.out_features,), dtype = out_dtype or self.default_out_dtype, device = x.device)
+        y_ = y.view(rows, self.out_features)
+        xh = torch.empty_like(x)
+        ext.had_r_128(x, xh, self.suh, None, 1.0)
+        w = torch.empty((self.in_features, self.out_features), dtype = torch.half, device = self.trellis.device)
+        self._recon(w)
+        with torch.inference_mode():
+            wf = w.float()
+            if not _emu_noround:
+                wf = (wf / INT8_FIXED_S0).round().clamp(-128, 127) * INT8_FIXED_S0
+            y_.copy_((xh.float() @ wf).to(y_.dtype))
+        ext.had_r_128(y_, y_, None, self.svh, 1.0)
+        if self.bias is not None:
+            y += self.bias
+        return y
 
 
     def _quant_w8(self, w):
@@ -387,6 +439,9 @@ class LinearEXL3:
         # than hg16, measured per shape), while igemm accumulates int32.
         if rows < _int8_min_rows or self.out_features <= 2048:
             return None
+        is_head = self.out_features > MAX_RECONSTRUCT_SLICE_N
+        if (_int8_scope == "head" and not is_head) or (_int8_scope == "nohead" and is_head):
+            return None
         # Vocab-sized N (lm_head) takes the sliced path with one shared
         # activation quant; ablation modes decline it (fall back to fp16).
         if self.out_features > MAX_RECONSTRUCT_SLICE_N:
@@ -407,13 +462,13 @@ class LinearEXL3:
         ext.had_r_128(x, xh, self.suh, None, 1.0)
         w = torch.empty((self.in_features, self.out_features),
                         dtype=torch.half, device=self.trellis.device)
-        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        self._recon(w)
         w8, ws = self._quant_w8(w)
         if _int8_ablate == "w":
             # Weight-grid error only: fp32 activations, fp32 matmul on the
             # dequantized int8 weights, original svh.
             with torch.inference_mode():
-                y_.copy_((xh.float() @ (w8.float() * self._wscales(w))).to(y_.dtype))
+                y_.copy_((xh.float() @ (w8.float() * ws)).to(y_.dtype))
             del w
             ext.had_r_128(y_, y_, None, self.svh, 1.0)
             if self.bias is not None:
@@ -474,7 +529,7 @@ class LinearEXL3:
         del xh
         w = torch.empty((self.in_features, self.out_features),
                         dtype=torch.half, device=self.trellis.device)
-        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        self._recon(w)
         w8 = torch.empty((1, self.in_features, self.out_features),
                          dtype=torch.int8, device=w.device)
         s0t = self.s0.to(dtype=torch.float32, device=w.device)
@@ -528,7 +583,7 @@ class LinearEXL3:
             nw = n_end - n_start
             w = torch.empty((self.in_features, nw),
                             dtype=torch.half, device=self.trellis.device)
-            ext.reconstruct_slice(w, self.trellis, self.K, self.mcg, self.mul1, n_start)
+            self._recon_slice(w, n_start)
             if fast:
                 w8 = torch.empty((1, self.in_features, nw), dtype=torch.int8,
                                  device=w.device)
@@ -568,7 +623,7 @@ class LinearEXL3:
 
     def get_inner_weight_tensor(self, n_offset: int = 0, n_features: int | None = None):
         w = torch.empty((self.in_features, self.out_features), dtype = torch.half, device = self.trellis.device)
-        ext.reconstruct(w, self.trellis, self.K, self.mcg, self.mul1)
+        self._recon(w)
         if self.s0 is not None:
             # INT8-exact models: the states were chosen for the rounded grid
             # values, so decode must round (a stock decode reads measurably
